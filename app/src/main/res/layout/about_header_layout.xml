@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:layout_marginBottom="5dp">
+
+    <RelativeLayout
+        android:id="@+id/rlBanner"
+        android:layout_width="match_parent"
+        android:layout_height="170dp">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnEditProfile"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_border_white"
+            android:text="EDIT" />
+
+        <ImageView
+            android:id="@+id/imgShopLogoAbout"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_above="@+id/txtViewsAbout"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_border_white"
+            android:padding="1dp"
+            android:src="@mipmap/logo" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtShopNameAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txtTimingAbout"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/imgShopLogoAbout"
+            android:text="Shop name"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtTimingAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ratingBarAbout"
+            android:layout_marginLeft="5dp"
+            android:textColor="@android:color/white"
+            android:layout_toRightOf="@+id/imgShopLogoAbout"
+            android:text="Timing: 09:00 to 21:00"
+            android:textSize="13sp" />
+
+        <RatingBar
+            android:id="@+id/ratingBarAbout"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txtViewsAbout"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/imgShopLogoAbout"
+            android:backgroundTint="@android:color/white"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="@color/yellow_color"
+            android:secondaryProgressTint="@android:color/white" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtViewsAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txtLocationAbout"
+            android:layout_marginBottom="2dp"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Views:150k"
+            android:textSize="15sp" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtLocationAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:text="1st Floor, Ambience, Gurgaon"
+            android:textSize="15sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtFaverateCountAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:text="521"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toLeftOf="@+id/txtFaverateCountAbout"
+            android:padding="5dp"
+            android:src="@drawable/select" />
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlBanner"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtCategoryAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@android:color/white"
+            android:text="Clothing | Kitchen | Sports"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtRecentOffersAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:text="Recent Offers"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

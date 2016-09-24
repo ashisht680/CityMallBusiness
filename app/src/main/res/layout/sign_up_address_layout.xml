@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:ignore="NewApi">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/sign_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/wish_zee_logo"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="25dp"
+                android:src="@mipmap/logo" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lltop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sign_parent"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_State"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="STATE"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="phone"
+                android:nextFocusDown="@+id/et_email"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_City"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="CITY"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="phone"
+                android:nextFocusDown="@+id/et_State"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_Address"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:gravity="top"
+                android:hint="ADDRESS"
+                android:inputType="text"
+                android:lines="3"
+                android:nextFocusDown="@+id/et_City"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_Mall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="MALL"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="phone"
+                android:nextFocusDown="@+id/et_Address"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_PinCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="PINCODE"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="phone"
+                android:nextFocusDown="@+id/et_Mall"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/txtTermCondition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_regester"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_margin="8dp"
+                android:background="@android:color/white"
+                android:text="REGISTER"
+                android:textColor="@color/background_color" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/lltop"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
+
+</ScrollView>

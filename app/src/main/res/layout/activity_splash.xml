@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:ignore="NewApi">
+
+    <ImageView
+        android:id="@+id/wish_zee_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/logo"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/txt_splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/wish_zee_logo"
+        android:text="Welcome to\n Wishzee"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="#1b2d5e"
+        android:textStyle="italic"
+        android:textSize="24dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

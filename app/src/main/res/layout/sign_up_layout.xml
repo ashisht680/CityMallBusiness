@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg"
+    tools:ignore="NewApi">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llFields"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/sign_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/wish_zee_logo"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="25dp"
+                    android:src="@mipmap/logo" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_StoreNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="STORE NAME"
+                android:inputType="text"
+                android:nextFocusDown="@+id/et_email"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="OWNER NAME"
+                android:inputType="text"
+                android:nextFocusDown="@+id/et_StoreNum"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="EMAIL"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@+id/et_owner"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_MobileNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="MOBILE NUMBER"
+                android:inputType="phone"
+                android:nextFocusDown="@+id/et_email"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_Landline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="LANDLINE(optional)"
+                android:inputType="phone"
+                android:nextFocusDown="@+id/et_MobileNum"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="PASSWORD"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:nextFocusDown="@+id/et_Landline"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_ConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:nextFocusDown="@+id/et_password"
+                android:hint="CONFERM PASSWORD"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_margin="8dp"
+                android:background="@android:color/white"
+                android:nextFocusDown="@+id/et_ConfirmPassword"
+                android:text="Next"
+                android:textColor="@color/background_color" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/llFields"
+            android:layout_margin="8dp"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
+
+</ScrollView>

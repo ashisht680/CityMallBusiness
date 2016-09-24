@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llMain"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_margin="5dp"
+    android:background="@android:color/holo_purple"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/country_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="20sp"
+        />
+
+
+
+    <TextView
+        android:id="@+id/country_iso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ISo"
+        android:textSize="16sp"/>
+
+</LinearLayout>

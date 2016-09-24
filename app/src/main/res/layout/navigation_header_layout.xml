@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlHeaderRow"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <include layout="@layout/common_progressbar"/>
+    <ImageView
+        android:id="@+id/imgBanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:src="@android:color/holo_red_dark"
+        android:scaleType="fitXY" />
+    <ImageView
+        android:id="@+id/ProfileImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="35dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:alpha="0.8"
+        android:background="#000000"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_marginLeft="16dp"
+            android:text="Ashish Tiwari"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="bold"
+
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="5dp"
+            android:text="guptaajit2009@gmail.com"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlUpdateImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/updateImage"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@mipmap/ic_launcher"
+        android:background="@android:color/transparent"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_uploadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/updateImage"
+        android:text="Update banner"
+        android:layout_centerVertical="true"
+        />
+    </RelativeLayout>
+    <!--<app.wishzee.com.wishzee.customview.CircleImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="38dp"
+        android:src="@drawable/pic" />-->
+</RelativeLayout>
