@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.javinindia.citymalls">
+    package="com.javinindia.citymallsbusiness">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.javinindia.citymalls.activity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +32,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.javinindia.citymalls.activity.NavigationActivity"
+            android:name=".activity.NavigationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.javinindia.citymalls.activity.CustomPhotoGalleryActivity"
+            android:name=".activity.CustomPhotoGalleryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
     </application>

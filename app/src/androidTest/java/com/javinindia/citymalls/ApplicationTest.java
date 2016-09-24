@@ -1,4 +1,4 @@
-package com.javinindia.citymalls;
+package com.javinindia.citymallsbusiness;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

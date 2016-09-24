@@ -1,4 +1,4 @@
-package com.javinindia.citymalls;
+package com.javinindia.citymallsbusiness;
 
 import org.junit.Test;
 
