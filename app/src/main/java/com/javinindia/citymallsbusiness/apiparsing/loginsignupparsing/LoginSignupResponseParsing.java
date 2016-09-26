@@ -179,23 +179,39 @@ public class LoginSignupResponseParsing extends ApiBaseData {
             JSONObject jsonObject = new JSONObject(response.toString());
             setStatus(jsonObject.optString("status"));
             setMsg(jsonObject.optString("msg"));
+            if (jsonObject.has("shopid"))
+                setShopid(jsonObject.optString("shopid"));
+            if (jsonObject.has("storeName"))
+                setStoreName(jsonObject.optString("storeName"));
+            if (jsonObject.has("ownerName"))
+                setOwnerName(jsonObject.optString("ownerName"));
+            if (jsonObject.has("email"))
+                setEmail(jsonObject.optString("email"));
+            if (jsonObject.has("mobile"))
+                setMobile(jsonObject.optString("mobile"));
+            if (jsonObject.has("landline"))
+                setLandline(jsonObject.optString("landline"));
+            if (jsonObject.has("state"))
+                setState(jsonObject.optString("state"));
+            if (jsonObject.has("city"))
+                setCity(jsonObject.optString("city"));
+            if (jsonObject.has("address"))
+                setAddress(jsonObject.optString("address"));
+            if (jsonObject.has("profilepic"))
+                setProfilepic(jsonObject.optString("profilepic"));
+            if (jsonObject.has("mallid"))
+                setMallId(jsonObject.optString("mallid"));
+            if (jsonObject.has("description"))
+                setDescription(jsonObject.optString("description"));
+            if (jsonObject.has("mallAddress"))
+                setMallAddress(jsonObject.optString("mallAddress"));
+            if (jsonObject.has("mallLandmark"))
+                setMallLandmark(jsonObject.optString("mallLandmark"));
+            if (jsonObject.has("mallLat"))
+                setMallLat(jsonObject.optString("mallLat"));
+            if (jsonObject.has("mallLong"))
+                setMallLong(jsonObject.optString("mallLong"));
 
-            setShopid((jsonObject.optJSONObject("shopid") != null)? jsonObject.optString("shopid") : "");
-            setStoreName((jsonObject.optJSONObject("storeName") != null)? jsonObject.optString("storeName") : "");
-            setOwnerName((jsonObject.optJSONObject("ownerName") != null)? jsonObject.optString("ownerName") : "");
-            setEmail((jsonObject.optJSONObject("email") != null)? jsonObject.optString("email") : "");
-            setMobile((jsonObject.optJSONObject("mobile") != null)? jsonObject.optString("mobile") : "");
-            setLandline((jsonObject.optJSONObject("landline") != null)? jsonObject.optString("landline") : "");
-            setState((jsonObject.optJSONObject("state") != null)? jsonObject.optString("state") : "");
-            setCity((jsonObject.optJSONObject("city") != null)? jsonObject.optString("city") : "");
-            setAddress((jsonObject.optJSONObject("address") != null)? jsonObject.optString("address") : "");
-            setProfilepic((jsonObject.optJSONObject("profilepic") != null)? jsonObject.optString("profilepic") : "");
-            setMallId((jsonObject.optJSONObject("mallid") != null)? jsonObject.optString("mallid") : "");
-            setDescription((jsonObject.optJSONObject("description") != null)? jsonObject.optString("description") : "");
-            setMallAddress((jsonObject.optJSONObject("mallAddress") != null)? jsonObject.optString("mallAddress") : "");
-            setMallLandmark((jsonObject.optJSONObject("mallLandmark") != null)? jsonObject.optString("mallLandmark") : "");
-            setMallLat((jsonObject.optJSONObject("mallLat") != null)? jsonObject.optString("mallLat") : "");
-            setMallLong((jsonObject.optJSONObject("mallLong") != null)? jsonObject.optString("mallLong") : "");
 
             Log.d("Response", this.toString());
 
