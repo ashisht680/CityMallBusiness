@@ -66,7 +66,11 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
 
         String username = SharedPreferencesManager.getUsername(getApplicationContext());
         String loc = SharedPreferencesManager.getLocation(getApplicationContext());
-        if (TextUtils.isEmpty(username)) {
+//        Log.e("username", username);
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
+        mFragmentTransaction.replace(R.id.navigationContainer, new OffersFragment()).commit();
+       /* if (TextUtils.isEmpty(username)) {
             mFragmentManager = getSupportFragmentManager();
             mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
             mFragmentTransaction.replace(R.id.navigationContainer, new LoginFragment()).commit();
@@ -75,7 +79,7 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
             mFragmentManager = getSupportFragmentManager();
             mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
             mFragmentTransaction.replace(R.id.navigationContainer, new OffersFragment()).commit();
-        }
+        }*/
     }
 
 
@@ -172,7 +176,7 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
                         SharedPreferencesManager.setLatitude(getApplicationContext(),null);
                         SharedPreferencesManager.setLongitude(getApplicationContext(),null);
                         SharedPreferencesManager.setProfileImage(getApplicationContext(),null);
-                        Intent refresh = new Intent(getApplicationContext(), NavigationActivity.class);
+                        Intent refresh = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(refresh);//Start the same Activity
                         finish();
                     }
