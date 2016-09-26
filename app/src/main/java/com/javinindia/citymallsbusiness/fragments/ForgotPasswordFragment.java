@@ -40,7 +40,7 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity.getSupportActionBar().hide();
+      //  activity.getSupportActionBar().hide();
     }
 
     @Nullable

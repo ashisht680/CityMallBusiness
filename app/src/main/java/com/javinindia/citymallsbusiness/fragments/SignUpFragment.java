@@ -26,7 +26,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity.getSupportActionBar().hide();
+     //   activity.getSupportActionBar().hide();
     }
 
     @Nullable
@@ -120,7 +120,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         bundle.putString("landline", landline);
         bundle.putString("password", password);
         signUpFragment.setArguments(bundle);
-        callFragmentMethod(signUpFragment, this.getClass().getSimpleName(), R.id.navigationContainer);
+        callFragmentMethod(signUpFragment, this.getClass().getSimpleName(), R.id.container);
     }
 
     private boolean registerValidation(String storeName, String owner, String email, String mobileNum, String landline, String password, String confirmPassword) {

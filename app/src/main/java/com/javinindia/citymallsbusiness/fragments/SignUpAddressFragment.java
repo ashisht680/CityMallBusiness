@@ -2,6 +2,7 @@ package com.javinindia.citymallsbusiness.fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
+import com.javinindia.citymallsbusiness.activity.NavigationActivity;
 import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.apiparsing.shopmalllistparsing.ShopMallListResponseParsing;
 import com.javinindia.citymallsbusiness.apiparsing.stateparsing.CityMasterParsing;
@@ -60,7 +62,7 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity.getSupportActionBar().hide();
+     //   activity.getSupportActionBar().hide();
         storeName = getArguments().getString("storeName");
         owner = getArguments().getString("owner");
         email = getArguments().getString("email");
@@ -423,8 +425,11 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                         if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
                             Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + sAddress + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
                             saveDataOnPreference(sEmail, sName, mLat,mLong, sID,sPic);
-                            fragment = new OffersFragment();
-                            callFragmentMethodDead(fragment, this.getClass().getSimpleName());
+                            Intent refresh = new Intent(activity, NavigationActivity.class);
+                            startActivity(refresh);//Start the same Activity
+                            activity.finish();
+                          /*  fragment = new OffersFragment();
+                            callFragmentMethodDead(fragment, this.getClass().getSimpleName());*/
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod(msg);

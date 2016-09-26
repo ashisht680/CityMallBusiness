@@ -1,6 +1,7 @@
 package com.javinindia.citymallsbusiness.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -19,6 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
+import com.javinindia.citymallsbusiness.activity.LoginActivity;
+import com.javinindia.citymallsbusiness.activity.NavigationActivity;
 import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontRalewayMediumSingleTonClass;
@@ -41,7 +44,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity.getSupportActionBar().hide();
+//        activity.getSupportActionBar().hide();
         Log.e("device",SharedPreferencesManager.getDeviceToken(activity));
     }
 
@@ -104,11 +107,11 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.forgot_password:
                 baseFragment = new ForgotPasswordFragment();
-                callFragmentMethod(baseFragment, this.getClass().getSimpleName(), R.id.navigationContainer);
+                callFragmentMethod(baseFragment, this.getClass().getSimpleName(), R.id.container);
                 break;
             case R.id.txtRegistration:
                 baseFragment = new SignUpFragment();
-                callFragmentMethod(baseFragment, this.getClass().getSimpleName(), R.id.navigationContainer);
+                callFragmentMethod(baseFragment, this.getClass().getSimpleName(), R.id.container);
                 break;
         }
     }
@@ -137,6 +140,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
+                        Log.e("response",response);
                         String status = null, sID = null, msg = null,sPic = null;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         hideLoader();
@@ -144,6 +148,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                         loginSignupResponseParsing.responseParseMethod(response);
 
                         status = loginSignupResponseParsing.getStatus().trim();
+                        msg = loginSignupResponseParsing.getMsg();
 
                         if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
                             sID = loginSignupResponseParsing.getShopid();
@@ -162,8 +167,11 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                             mLong = loginSignupResponseParsing.getMallLong();
                             Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + sAddress + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
                             saveDataOnPreference(sEmail, sName, mLat,mLong, sID,sPic);
-                            fragment = new OffersFragment();
-                            callFragmentMethodDead(fragment, this.getClass().getSimpleName());
+                            Intent refresh = new Intent(activity, NavigationActivity.class);
+                            startActivity(refresh);//Start the same Activity
+                            activity.finish();
+                           /* fragment = new OffersFragment();
+                            callFragmentMethodDead(fragment, this.getClass().getSimpleName());*/
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod(msg);
