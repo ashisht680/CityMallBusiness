@@ -36,7 +36,7 @@
             android:layout_above="@+id/txtTimingAbout"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
-            android:text="Shop name"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -49,7 +49,7 @@
             android:layout_marginLeft="5dp"
             android:textColor="@android:color/white"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
-            android:text="Timing: 09:00 to 21:00"
+            android:text="Timing:"
             android:textSize="13sp" />
 
         <RatingBar
@@ -88,7 +88,7 @@
             android:textColor="@android:color/white"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="10dp"
-            android:text="1st Floor, Ambience, Gurgaon"
+            android:text=""
             android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -126,7 +126,7 @@
             android:padding="5dp"
             android:layout_marginLeft="5dp"
             android:textColor="@android:color/white"
-            android:text="Clothing | Kitchen | Sports"
+            android:text=""
             android:textSize="15sp"
             android:textStyle="bold" />
 
