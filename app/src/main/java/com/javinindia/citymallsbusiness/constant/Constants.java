@@ -9,6 +9,7 @@ public class Constants {
     public static final String FORGET_PASSWORD_URL = Constants.NEW_BASE_URL + "shopownersignup.php";
     public static final String STATE_URL = Constants.TEST_URL + "countryMaster.php";
     public static final String MALL_LIST_URL = Constants.NEW_BASE_URL + "shopMallList.php";
+    public static final String SHOP_PROFILE_URL = Constants.NEW_BASE_URL + "shopView.php";
 
     public static final String APP_SETTINGS = "APP_SETTINGS";
     public static final String USERNAME = "username";
