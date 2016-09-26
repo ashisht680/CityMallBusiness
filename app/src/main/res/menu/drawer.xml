@@ -22,36 +22,36 @@
 
         <item
             android:id="@+id/drawer_home"
-            android:checked="false"
+            android:checkable="false"
             android:icon="@mipmap/ic_launcher"
             android:title="Home"/>
         <item
             android:id="@+id/drawer_profile"
-            android:checked="false"
+            android:checkable="false"
             android:icon="@mipmap/ic_launcher"
             android:title="Profile"/>
 
         <item
             android:id="@+id/drawer_downloaded"
-            android:checked="false"
+            android:checkable="false"
             android:icon="@mipmap/ic_launcher"
             android:title="Invite Amigo"/>
 
         <item
             android:id="@+id/drawer_more"
-            android:checked="false"
+            android:checkable="false"
             android:icon="@mipmap/ic_launcher"
             android:title="more"/>
 
         <item
             android:id="@+id/drawer_settings"
-            android:checked="false"
+            android:checkable="false"
             android:icon="@mipmap/ic_launcher"
             android:title="settings"/>
 
         <item
             android:id="@+id/drawer_favourite"
-            android:checked="false"
+            android:checkable="false"
             android:icon="@mipmap/ic_launcher"
             android:title="Logout"/>
 
