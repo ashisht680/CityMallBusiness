@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -57,6 +58,13 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         sendDataOnRegistrationApi();
         return view;
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        disableTouchOfBackFragment(savedInstanceState);
+    }
+
     private void sendDataOnRegistrationApi() {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SHOP_PROFILE_URL,
@@ -64,7 +72,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                     @Override
                     public void onResponse(String response) {
                         Log.e("response",response);
-                        String status = null, sID = null, msg = null,sPic = null;
+                        String status = null, sID = null, msg = null,sPic = null,banner;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime,distance;
                         int offerCount;
@@ -92,14 +100,15 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                         country = shopViewResponse.getCountry().trim();
                         pincode = shopViewResponse.getPincode().trim();
                         rating = shopViewResponse.getRating().trim();
-                        openTime = shopViewResponse.getOpenTime().trim();
-                        closeTime = shopViewResponse.getCloseTime().trim();
+                        openTime = shopViewResponse.getShopOpenTime().trim();
+                        closeTime = shopViewResponse.getShopCloseTime().trim();
                         distance = shopViewResponse.getDistance().trim();
                         offerCount = shopViewResponse.getOfferCount();
+                        banner = shopViewResponse.getBanner().trim();
                        /*  context,  sName,  oName,  sEmail,  sMobileNum,  sLandline,  sState,  sCity,  sAddress,  mName,  mAddress,  mLat,  mLong,  sPic,  shopCategory,  shopSubCategory,  country,  pincode,  rating,  openTime,  closeTime,  distance,  offerCount*/
                         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
                         recyclerview.setLayoutManager(layoutManager);
-                        adapter = new AboutAdaptar(activity,  sName,  oName,  sEmail,  sMobileNum,  sLandline,  sState,  sCity,  sAddress,  mName,  mAddress,  mLat,  mLong,  sPic,  shopCategory,  shopSubCategory,  country,  pincode,  rating,  openTime,  closeTime,  distance,  offerCount);
+                        adapter = new AboutAdaptar(activity,  sName,  oName,  sEmail,  sMobileNum,  sLandline,  sState,  sCity,  sAddress,  mName,  mAddress,  mLat,  mLong,  sPic,  shopCategory,  shopSubCategory,  country,  pincode,  rating,  openTime,  closeTime,  distance,  offerCount,banner);
                         recyclerview.setAdapter(adapter);
                         recyclerview.setItemAnimator(new DefaultItemAnimator());
                         if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
@@ -182,4 +191,12 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 break;*/
         }
     }
+
+   /* @Override
+    public void onEditClick(int position) {
+        Toast.makeText(activity,"aaaaa",Toast.LENGTH_LONG).show();
+      *//*  EditProfileFragment fragment1 = new EditProfileFragment();
+        // fragment1.setMyCallBackListener(this);
+        callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.navigationContainer);*//*
+    }*/
 }

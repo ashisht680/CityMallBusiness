@@ -91,8 +91,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         txtAddProductImages = (AppCompatTextView) view.findViewById(R.id.txtAddProductImages);
         etProductTitle = (AppCompatEditText) view.findViewById(R.id.etProductTitle);
         etProductDiscription = (AppCompatEditText) view.findViewById(R.id.etProductDiscription);
-        btnStartTime = (AppCompatTextView) view.findViewById(R.id.txtStartTime);
-        btnEndTime = (AppCompatTextView) view.findViewById(R.id.txtEndTime);
+        btnStartTime = (AppCompatTextView) view.findViewById(R.id.etStartTime);
+        btnEndTime = (AppCompatTextView) view.findViewById(R.id.etEndTime);
         btnSubmitOffer = (AppCompatButton) view.findViewById(R.id.btnSubmitOffer);
         btnSubmitOffer.setOnClickListener(this);
         btnStartTime.setOnClickListener(this);
@@ -122,11 +122,11 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 activity.onBackPressed();
                 callback.OnCallBackMall();
                 break;
-            case R.id.txtStartTime:
+            case R.id.etStartTime:
                 int flag1 = 0;
                 methodOpenDatePicker(flag1);
                 break;
-            case R.id.txtEndTime:
+            case R.id.etEndTime:
                 int flag2 = 1;
                 methodOpenDatePicker(flag2);
                 break;
