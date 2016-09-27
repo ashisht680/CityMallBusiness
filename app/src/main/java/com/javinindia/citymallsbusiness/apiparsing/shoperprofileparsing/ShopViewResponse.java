@@ -14,6 +14,7 @@ public class ShopViewResponse extends ApiBaseData {
     String shopid;
     String shopCategory;
     String shopSubCategory;
+    String banner;
     String storeName;
     String ownerName;
     String email;
@@ -37,6 +38,8 @@ public class ShopViewResponse extends ApiBaseData {
     String closeTime;
     int offerCount;
     String distance;
+    String shopOpenTime;
+    String shopCloseTime;
 
     public String getAddress() {
         return address;
@@ -246,6 +249,30 @@ public class ShopViewResponse extends ApiBaseData {
         this.storeName = storeName;
     }
 
+    public String getShopCloseTime() {
+        return shopCloseTime;
+    }
+
+    public void setShopCloseTime(String shopCloseTime) {
+        this.shopCloseTime = shopCloseTime;
+    }
+
+    public String getShopOpenTime() {
+        return shopOpenTime;
+    }
+
+    public void setShopOpenTime(String shopOpenTime) {
+        this.shopOpenTime = shopOpenTime;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
+
     public void responseParseMethod(Object response) {
         try {
             JSONObject jsonObject = new JSONObject(response.toString());
@@ -258,6 +285,8 @@ public class ShopViewResponse extends ApiBaseData {
                 setShopCategory(jsonObject.optString("shopCategory"));
             if (jsonObject.has("shopSubCategory"))
                 setShopSubCategory(jsonObject.optString("shopSubCategory"));
+            if (jsonObject.has("banner"))
+                setBanner(jsonObject.optString("banner"));
             if (jsonObject.has("storeName"))
                 setStoreName(jsonObject.optString("storeName"));
             if (jsonObject.has("ownerName"))
@@ -282,6 +311,10 @@ public class ShopViewResponse extends ApiBaseData {
                 setMallName(jsonObject.optString("mallName"));
             if (jsonObject.has("description"))
                 setDescription(jsonObject.optString("description"));
+            if (jsonObject.has("shopOpenTime"))
+                setShopOpenTime(jsonObject.optString("shopOpenTime"));
+            if (jsonObject.has("shopCloseTime"))
+                setShopCloseTime(jsonObject.optString("shopCloseTime"));
             if (jsonObject.has("mallAddress"))
                 setMallAddress(jsonObject.optString("mallAddress"));
             if (jsonObject.has("mallLandmark"))
