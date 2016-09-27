@@ -78,7 +78,7 @@
                 android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txtStartTime"
+                android:id="@+id/etStartTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -92,7 +92,7 @@
                 android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txtEndTime"
+                android:id="@+id/etEndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"

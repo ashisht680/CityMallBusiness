@@ -10,6 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="170dp">
 
+        <ImageView
+            android:id="@+id/imgBannerAbout"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"/>
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnEditProfile"
             android:layout_width="50dp"
@@ -18,7 +24,7 @@
             android:textColor="@android:color/white"
             android:background="@drawable/button_border_white"
             android:text="EDIT" />
-
+        <include layout="@layout/common_progressbar"/>
         <ImageView
             android:id="@+id/imgShopLogoAbout"
             android:layout_width="120dp"
