@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
+import com.javinindia.citymallsbusiness.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +31,10 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
     MyClickListener myClickListener;
     ArrayList<CountryModel> countryModelArrayList;
     private String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sPic;
-    private String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance;
+    private String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance,sbanner;
     private int offerCount;
 
-    public AboutAdaptar(Context context, String storeName, String ownerName, String Email, String MobileNum, String Landline, String State, String City, String storeAddress, String mallName, String mallAddress, String Lat, String Long, String storePic, String shopCat, String shopSubCat, String storeCountry, String storePincode, String storeRating, String storeOpenTime, String storeCloseTime, String storeDistance, int storeOfferCount) {
+    public AboutAdaptar(Context context, String storeName, String ownerName, String Email, String MobileNum, String Landline, String State, String City, String storeAddress, String mallName, String mallAddress, String Lat, String Long, String storePic, String shopCat, String shopSubCat, String storeCountry, String storePincode, String storeRating, String storeOpenTime, String storeCloseTime, String storeDistance, int storeOfferCount,String banner) {
         this.context = context;
         this.country = storeCountry;
         this.closeTime = storeCloseTime;
@@ -56,6 +58,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         this.sName = storeName;
         this.sPic = storePic;
         this.sState = State;
+        this.sbanner = banner;
     }
 
   /*  public AboutAdaptar(List<CountryModel> mCountryModel) {
@@ -84,9 +87,10 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         public ImageView imgShopLogo;
 
         //********************** about header
+        ProgressBar progressBar;
+        ImageView profileImageView,imgBannerAbout;
         public AppCompatTextView txtShopNameHeader, txtTimingHeader, txtViewsHeader, txtLocationHeader, txtCategoryHeader, txtFaverateCountHeader;
         public AppCompatButton btnEditProfile;
-        public ImageView imgLogoAbout;
         public RatingBar ratingBarAbout;
 
 
@@ -107,6 +111,9 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 btnViewOffers = (AppCompatButton)itemLayoutView.findViewById(R.id.btnViewOffers);*/
                 holderId = 1;
             } else {
+                profileImageView = (ImageView) itemLayoutView.findViewById(R.id.imgShopLogoAbout);
+                imgBannerAbout = (ImageView)itemLayoutView.findViewById(R.id.imgBannerAbout);
+                progressBar = (ProgressBar) itemLayoutView.findViewById(R.id.progress);
                 txtShopNameHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtShopNameAbout);
                 txtTimingHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtTimingAbout);
                 txtViewsHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtViewsAbout);
@@ -179,29 +186,38 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
 
             viewHolder.txtShopNameHeader.setText(sName);
 
-
             viewHolder.txtTimingHeader.setText(openTime + " to " + closeTime);
 
-
-            viewHolder.txtLocationHeader.setText(sAddress);
-
+            viewHolder.txtLocationHeader.setText(sAddress + "," + sCity + "," + sState);
 
             viewHolder.txtCategoryHeader.setText(shopCategory);
 
+            if (sPic != null)
+                Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.profileImageView, sPic);
+            if (sbanner != null)
+                Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.imgBannerAbout, sbanner);
 
-//            viewHolder.ratingBarAbout.setRating(Float.valueOf(rating));
+            viewHolder.ratingBarAbout.setRating(Float.valueOf(rating));
+
+        /*    viewHolder.btnEditProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myClickListener.onEditClick(0);
+                }
+            });*/
+
 
 
         }
     }
 
-  /*  @Override
+    /*  @Override
+      public int getItemCount() {
+          return list != null ? list.size() + 1 : 1;
+      }*/
     public int getItemCount() {
-        return list != null ? list.size() + 1 : 1;
-    }*/
-  public int getItemCount() {
-      return 100;
-  }
+        return 100;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -216,7 +232,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
     }
 
     public interface MyClickListener {
-
+       // void onEditClick(int position);
     }
 
     public void setMyClickListener(MyClickListener myClickListener) {
