@@ -10,6 +10,9 @@ public class Constants {
     public static final String STATE_URL = Constants.TEST_URL + "countryMaster.php";
     public static final String MALL_LIST_URL = Constants.NEW_BASE_URL + "shopMallList.php";
     public static final String SHOP_PROFILE_URL = Constants.NEW_BASE_URL + "shopView.php";
+    public static final String UPDATE_SHOP_PROFILE_URL = Constants.NEW_BASE_URL + "updateShopDetails.php";
+    public static final String UPDATE_SHOP_LOGO_URL = Constants.NEW_BASE_URL + "imgUpload/shoplogoupdate.php";
+    public static final String UPDATE_SHOP_BANNER_URL = Constants.NEW_BASE_URL + "imgUpload/shopbannerupdate.php";
 
     public static final String APP_SETTINGS = "APP_SETTINGS";
     public static final String USERNAME = "username";
