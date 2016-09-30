@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlMain"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imgShopLogoOffer"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:background="@drawable/button_border_black"
+        android:padding="1dp"
+        android:src="@mipmap/logo" />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtShopName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/chkImage"
+        android:layout_toRightOf="@+id/imgShopLogoOffer"
+        android:singleLine="true"
+        android:text="Bharat sweets"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtShopName"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/imgShopLogoOffer"
+        android:text="Shubhash nagar,New Delhi"
+        android:textSize="12sp" />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtOfferAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgShopLogoOffer"
+        android:layout_below="@+id/txtAddress"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:text="30% Off"/>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtOfferCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgShopLogoOffer"
+        android:layout_below="@+id/txtOfferAmount"
+        android:layout_marginLeft="5dp"
+        android:textSize="16sp"
+        android:text="On clothes"/>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtTimingOffer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtOfferCategory"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/imgShopLogoOffer"
+        android:text="02-09-16 till 10-09-16"
+        android:textSize="12sp" />
+
+
+
+</RelativeLayout>
