@@ -40,7 +40,7 @@ public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> 
     public OfferAdaptar.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.shop_item_layout, parent, false);
+                .inflate(R.layout.offer_item_layout, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);
         return viewHolder;
@@ -53,7 +53,7 @@ public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> 
         final String name = countryModel.getName();
 
 
-        viewHolder.ratingBar.setRating(Float.parseFloat("2.0"));
+     //   viewHolder.ratingBar.setRating(Float.parseFloat("2.0"));
 
   /*      viewHolder.chkImage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -67,7 +67,7 @@ public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> 
         });*/
 
 
-        viewHolder.txtShopName.setOnClickListener(new View.OnClickListener() {
+       /* viewHolder.txtShopName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -79,7 +79,7 @@ public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> 
             public void onClick(View v) {
                 myClickListener.onItemClick(position, countryModel);
             }
-        });
+        });*/
     }
 
     public void filter(String charText) {
@@ -109,7 +109,7 @@ public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> 
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            txtShopName = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtShopName);
+          /*  txtShopName = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtShopName);
             txtRating = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtRating);
             txtAddress = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtAddress);
             txtTiming = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtTimingAbout);
@@ -117,7 +117,7 @@ public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> 
             txtOffers = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtOffers);
             ratingBar = (RatingBar) itemLayoutView.findViewById(R.id.ratingBar);
             rlMain = (RelativeLayout)itemLayoutView.findViewById(R.id.rlMain);
-            chkImage = (CheckBox) itemLayoutView.findViewById(R.id.chkImage);
+            chkImage = (CheckBox) itemLayoutView.findViewById(R.id.chkImage);*/
            /* btnDirection = (AppCompatButton)itemLayoutView.findViewById(R.id.btnDirection);
             btnViewOffers = (AppCompatButton)itemLayoutView.findViewById(R.id.btnViewOffers);*/
 
