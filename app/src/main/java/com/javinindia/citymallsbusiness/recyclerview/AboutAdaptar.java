@@ -98,7 +98,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             super(itemLayoutView);
 
             if (ViewType == TYPE_ITEM) {
-                txtShopName = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtShopName);
+               /* txtShopName = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtShopName);
                 txtRating = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtRating);
                 txtAddress = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtAddress);
                 txtTiming = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtTimingAbout);
@@ -106,7 +106,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 txtOffers = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtOffers);
                 ratingBar = (RatingBar) itemLayoutView.findViewById(R.id.ratingBar);
                 rlMain = (RelativeLayout) itemLayoutView.findViewById(R.id.rlMain);
-                chkImage = (CheckBox) itemLayoutView.findViewById(R.id.chkImage);
+                chkImage = (CheckBox) itemLayoutView.findViewById(R.id.chkImage);*/
                /* btnDirection = (AppCompatButton)itemLayoutView.findViewById(R.id.btnDirection);
                 btnViewOffers = (AppCompatButton)itemLayoutView.findViewById(R.id.btnViewOffers);*/
                 holderId = 1;
@@ -132,7 +132,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
     public AboutAdaptar.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (viewType == TYPE_ITEM) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_item_layout, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_item_layout, parent, false);
             ViewHolder vhItem = new ViewHolder(v, viewType);
             return vhItem;
         } else if (viewType == TYPE_HEADER) {
@@ -153,7 +153,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             final String name = countryModel.getName();*/
 
 
-            viewHolder.ratingBar.setRating(Float.parseFloat("2.0"));
+           // viewHolder.ratingBar.setRating(Float.parseFloat("2.0"));
 
           /*  viewHolder.chkImage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -166,7 +166,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 }
             });*/
 
-
+/*
             viewHolder.txtShopName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -179,7 +179,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 public void onClick(View v) {
                     //  myClickListener.onItemClick(position, countryModel);
                 }
-            });
+            });*/
 
 
         } else {
