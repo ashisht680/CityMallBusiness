@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="@color/background_color">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtSelectCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:background="@drawable/button_border_black_fill_white"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtSelectSubCat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subcategory"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_border_black_fill_white"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Submit"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="right"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:background="@color/toolbar_color"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -13,6 +13,12 @@ public class Constants {
     public static final String UPDATE_SHOP_PROFILE_URL = Constants.NEW_BASE_URL + "updateShopDetails.php";
     public static final String UPDATE_SHOP_LOGO_URL = Constants.NEW_BASE_URL + "imgUpload/shoplogoupdate.php";
     public static final String UPDATE_SHOP_BANNER_URL = Constants.NEW_BASE_URL + "imgUpload/shopbannerupdate.php";
+    public static final String SHOP_CAT_SUBCAT_LIST_URL = Constants.NEW_BASE_URL + "shopCategoryList.php";
+    public static final String SHOP_CATEGORY_URL = Constants.NEW_BASE_URL + "shopCategory.php";
+    public static final String SHOP_SUBCATEGORY_URL = Constants.NEW_BASE_URL + "shopSubCategory.php";
+    public static final String INSERT_SHOP_CATEGORY_URL = Constants.NEW_BASE_URL + "insertShopCategoryList.php";
+    public static final String DELETE_SHOP_CATEGORY_URL = Constants.NEW_BASE_URL + "deleteshopCategoryList.php";
+
 
     public static final String APP_SETTINGS = "APP_SETTINGS";
     public static final String USERNAME = "username";

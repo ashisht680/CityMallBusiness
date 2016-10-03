@@ -234,7 +234,9 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                 startTimeMethod(i);
                 break;
             case R.id.txtChooseCategory:
-
+                ListShopProductCategoryFragment categoryFragment = new ListShopProductCategoryFragment();
+               // categoryFragment.setMyCallBackBannerListener(this);
+                callFragmentMethod(categoryFragment, this.getClass().getSimpleName(),R.id.navigationContainer);
                 break;
             case R.id.btnSubmitOffer:
                 methodUpdateView();

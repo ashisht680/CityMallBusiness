@@ -37,7 +37,7 @@ public class OffersFragment extends BaseFragment implements TextWatcher, View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity.getSupportActionBar().show();
+//        activity.getSupportActionBar().show();
     }
 
     @Nullable

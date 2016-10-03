@@ -71,7 +71,19 @@
             android:textColor="@android:color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
-        <LinearLayout
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtChooseCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_border_black"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Add category"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -98,7 +110,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"/>
-        </LinearLayout>
+        </LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -256,7 +268,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnSubmitOffer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="@drawable/button_red"
             android:text="Save"
             android:layout_margin="8dp"
