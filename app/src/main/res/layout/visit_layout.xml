@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:padding="8dp">
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="NAME"
+        android:padding="5dp"
+        android:inputType="text"
+        android:lines="1"
+        android:background="@drawable/button_border_black"/>
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/etMobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="MOBILE NUMBER"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:inputType="phone"
+        android:lines="1"
+        android:background="@drawable/button_border_black"/>
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="EMAIL"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:inputType="textEmailAddress"
+        android:lines="1"
+        android:background="@drawable/button_border_black"/>
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:hint="DESCRIPTION"
+        android:gravity="top"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:inputType="text"
+        android:lines="5"
+        android:background="@drawable/button_border_black"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="8dp"
+        android:text="Submit"/>
+
+</LinearLayout>

@@ -30,6 +30,37 @@
             android:textSize="20sp"
             android:textColor="@android:color/black"
             android:gravity="center"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtSelectBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Brands"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_border_black_fill_white"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-----OR-----"
+            android:layout_marginTop="20dp"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/etBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="type brand name"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_border_black_fill_white"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"

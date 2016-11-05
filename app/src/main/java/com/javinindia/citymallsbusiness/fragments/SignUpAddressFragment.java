@@ -31,8 +31,7 @@ import com.javinindia.citymallsbusiness.apiparsing.shopmalllistparsing.ShopMallL
 import com.javinindia.citymallsbusiness.apiparsing.stateparsing.CityMasterParsing;
 import com.javinindia.citymallsbusiness.apiparsing.stateparsing.CountryMasterApiParsing;
 import com.javinindia.citymallsbusiness.constant.Constants;
-import com.javinindia.citymallsbusiness.font.FontRalewayMediumSingleTonClass;
-import com.javinindia.citymallsbusiness.font.FontRalewayRegularSingleTonClass;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.utility.Utility;
 
@@ -46,7 +45,7 @@ import java.util.Map;
  */
 public class SignUpAddressFragment extends BaseFragment implements View.OnClickListener {
 
-    private AppCompatEditText et_State, et_City, et_PinCode, et_Address, et_Mall;
+    private AppCompatEditText et_State, et_City, et_PinCode, et_Mall,etStoreNum,etFloor;
     RadioButton radioButton;
     TextView txtTermCondition;
     private RequestQueue requestQueue;
@@ -93,20 +92,24 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
         ImageView imgBack = (ImageView) view.findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         AppCompatButton btn_regester = (AppCompatButton) view.findViewById(R.id.btn_regester);
-        btn_regester.setTypeface(FontRalewayMediumSingleTonClass.getInstance(activity).getTypeFace());
+        btn_regester.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_State = (AppCompatEditText) view.findViewById(R.id.et_State);
-        et_State.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_State.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_City = (AppCompatEditText) view.findViewById(R.id.et_City);
-        et_City.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_City.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_PinCode = (AppCompatEditText) view.findViewById(R.id.et_PinCode);
-        et_PinCode.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
-        et_Address = (AppCompatEditText) view.findViewById(R.id.et_Address);
-        et_Address.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_PinCode.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+     //   et_Address = (AppCompatEditText) view.findViewById(R.id.et_Address);
+     //   et_Address.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_Mall = (AppCompatEditText) view.findViewById(R.id.et_Mall);
-        et_Mall.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_Mall.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        etStoreNum = (AppCompatEditText)view.findViewById(R.id.etStoreNum);
+        etStoreNum.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        etFloor = (AppCompatEditText)view.findViewById(R.id.etFloor);
+        etFloor.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         radioButton = (RadioButton) view.findViewById(R.id.radioButton);
         txtTermCondition = (TextView) view.findViewById(R.id.txtTermCondition);
-        txtTermCondition.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        txtTermCondition.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtTermCondition.setText(Html.fromHtml("<font color=#000000>" + "I Accept the" + "</font>" + "\t" + "<font color=#0d7bbf>" + "Terms and conditions" + "</font>"));
         txtTermCondition.setOnClickListener(this);
 
@@ -386,44 +389,48 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
         String state = et_State.getText().toString().trim();
         String city = et_City.getText().toString().trim();
         String pinCode = et_PinCode.getText().toString().trim();
-        String address = et_Address.getText().toString().trim();
+        String storeNum = etStoreNum.getText().toString().trim();
         String mallname = et_Mall.getText().toString().trim();
+        String floor = etFloor.getText().toString().trim();
 
-        if (registerValidation(state, city, pinCode, address, mallname)) {
-            sendDataOnRegistrationApi(state, city, pinCode, address, mallId, storeName, owner, email, mobileNum, landline, password);
+        if (registerValidation(state, city, pinCode, storeNum, mallname,floor)) {
+            sendDataOnRegistrationApi(state, city, pinCode, storeNum, mallId, storeName, owner, email, mobileNum, landline, password,floor);
         }
 
     }
 
-    private void sendDataOnRegistrationApi(final String statehit, final String cityhit, final String pinCodehit, final String addresshit, final String mallhit, final String storeNamehit, final String ownerhit, final String emailhit, final String mobileNumhit, final String landlinehit, final String passwordhit) {
+    private void sendDataOnRegistrationApi(final String statehit, final String cityhit, final String pinCodehit, final String storeNumshit, final String mallhit, final String storeNamehit, final String ownerhit, final String emailhit, final String mobileNumhit, final String landlinehit, final String passwordhit,final String floorhit) {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SIGN_UP_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        Log.e("response",response);
                         String status = null, sID = null, msg = null,sPic = null;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         loading.dismiss();
                         LoginSignupResponseParsing loginSignupResponseParsing = new LoginSignupResponseParsing();
                         loginSignupResponseParsing.responseParseMethod(response);
 
-                        sID = loginSignupResponseParsing.getShopid().trim();
-                        sPic = loginSignupResponseParsing.getProfilepic().trim();
-                        status = loginSignupResponseParsing.getStatus().trim();
-                        sName = loginSignupResponseParsing.getStoreName().trim();
-                        oName = loginSignupResponseParsing.getOwnerName().trim();
-                        sEmail = loginSignupResponseParsing.getEmail().trim();
-                        sMobileNum = loginSignupResponseParsing.getMobile().trim();
-                        sLandline = loginSignupResponseParsing.getLandline().trim();
-                        sState = loginSignupResponseParsing.getState().trim();
-                        sCity = loginSignupResponseParsing.getCity().trim();
-                        sAddress = loginSignupResponseParsing.getAddress().trim();
-                        mName = loginSignupResponseParsing.getMallName().trim();
-                        mAddress = loginSignupResponseParsing.getMallAddress();
-                        mLat = loginSignupResponseParsing.getMallLat();
-                        mLong = loginSignupResponseParsing.getMallLong();
+
                         if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
-                            Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + sAddress + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
+                            status = loginSignupResponseParsing.getStatus().trim();
+                            sID = loginSignupResponseParsing.getShopid().trim();
+                            sPic = loginSignupResponseParsing.getProfilepic().trim();
+                            sName = loginSignupResponseParsing.getStoreName().trim();
+                            oName = loginSignupResponseParsing.getOwnerName().trim();
+                            sEmail = loginSignupResponseParsing.getEmail().trim();
+                            sMobileNum = loginSignupResponseParsing.getMobile().trim();
+                            sLandline = loginSignupResponseParsing.getLandline().trim();
+                            sState = loginSignupResponseParsing.getState().trim();
+                            sCity = loginSignupResponseParsing.getCity().trim();
+                         //   sAddress = loginSignupResponseParsing.getAddress().trim();
+                            mName = loginSignupResponseParsing.getMallName().trim();
+                            mAddress = loginSignupResponseParsing.getMallAddress();
+                            mLat = loginSignupResponseParsing.getMallLat();
+                            mLong = loginSignupResponseParsing.getMallLong();
+                            Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t"  + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
                             saveDataOnPreference(sEmail, sName, mLat,mLong, sID,sPic);
                             Intent refresh = new Intent(activity, NavigationActivity.class);
                             startActivity(refresh);//Start the same Activity
@@ -446,7 +453,7 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                String completeAddress = addresshit + ",\t" + pinCodehit;
+              //  String completeAddress = addresshit + ",\t" + pinCodehit;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("storeName", storeNamehit);
                 params.put("ownerName", ownerhit);
@@ -457,7 +464,9 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                 params.put("state", statehit);
                 params.put("city", cityhit);
                 params.put("mall", mallId);
-                params.put("address", completeAddress);
+                params.put("shopNo",storeNumshit);
+                params.put("floor",floorhit);
+               // params.put("address", completeAddress);
                 return params;
             }
 
@@ -468,23 +477,19 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
         requestQueue.add(stringRequest);
     }
 
-    private boolean registerValidation(String state, String city, String pinCode, String address, String mallname) {
+    private boolean registerValidation(String state, String city, String pinCode, String storeNum, String mallname,String floor) {
         if (TextUtils.isEmpty(state)) {
             Toast.makeText(activity, "Please enter your state", Toast.LENGTH_LONG).show();
             return false;
         } else if (TextUtils.isEmpty(city)) {
             Toast.makeText(activity, "Please enter your city", Toast.LENGTH_LONG).show();
             return false;
-        } else if (TextUtils.isEmpty(address)) {
-            et_Address.setError("Please enter your address");
-            et_Address.requestFocus();
-            return false;
-        } else if (pinCode.length() < 6) {
-            et_PinCode.setError("Please enter valid pincode");
-            et_PinCode.requestFocus();
-            return false;
-        } else if (TextUtils.isEmpty(mallname)) {
+        }  else if (TextUtils.isEmpty(mallname)) {
             Toast.makeText(activity, "Please enter mall", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (TextUtils.isEmpty(floor)) {
+            etFloor.setError("Please enter floor number");
+            etFloor.requestFocus();
             return false;
         } else if (!radioButton.isChecked()) {
             Toast.makeText(activity, "Accept Terms and conditions first", Toast.LENGTH_LONG).show();

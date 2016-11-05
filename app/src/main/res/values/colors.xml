@@ -17,4 +17,6 @@
     <color name="highlight_color">#4a4a4a</color>
     <color name="mini_black_color">#191919</color>
     <color name="text_color">#7b7b7b</color>
+    <color name="black_transparent_color">#99000000</color>
+    <color name="brown_color">#613535</color>
 </resources>

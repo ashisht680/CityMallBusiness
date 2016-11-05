@@ -9,10 +9,29 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_above="@+id/rlButton"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp" />
+
+    <RelativeLayout
+        android:id="@+id/rlButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:padding="5dp">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnAddOffer"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@android:color/holo_red_dark"
+            android:text="Add Offer"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -6,7 +6,7 @@ public class Constants {
     public static final String TEST_URL = "http://hnwkart.com/";
     public static final String LOGIN_URL = Constants.NEW_BASE_URL + "shopownerlogin.php";
     public static final String SIGN_UP_URL = Constants.NEW_BASE_URL + "shopownersignup.php";
-    public static final String FORGET_PASSWORD_URL = Constants.NEW_BASE_URL + "shopownersignup.php";
+    public static final String FORGET_PASSWORD_URL = Constants.NEW_BASE_URL + "forget_password.php";
     public static final String STATE_URL = Constants.TEST_URL + "countryMaster.php";
     public static final String MALL_LIST_URL = Constants.NEW_BASE_URL + "shopMallList.php";
     public static final String SHOP_PROFILE_URL = Constants.NEW_BASE_URL + "shopView.php";
@@ -16,9 +16,19 @@ public class Constants {
     public static final String SHOP_CAT_SUBCAT_LIST_URL = Constants.NEW_BASE_URL + "shopCategoryList.php";
     public static final String SHOP_CATEGORY_URL = Constants.NEW_BASE_URL + "shopCategory.php";
     public static final String SHOP_SUBCATEGORY_URL = Constants.NEW_BASE_URL + "shopSubCategory.php";
+    public static final String SHOP_BRAND_URL = Constants.NEW_BASE_URL + "brandlist.php";
     public static final String INSERT_SHOP_CATEGORY_URL = Constants.NEW_BASE_URL + "insertShopCategoryList.php";
     public static final String DELETE_SHOP_CATEGORY_URL = Constants.NEW_BASE_URL + "deleteshopCategoryList.php";
+    public static final String OFFER_CATEGORY_URL = Constants.NEW_BASE_URL + "offerCategory.php";
+    public static final String OFFER_SUBCATEGORY_URL = Constants.NEW_BASE_URL + "offerSubCategory.php";
+    public static final String OFFER_BRAND_URL = Constants.NEW_BASE_URL + "brandlist2.php";
+    public static final String OFFER_IMAGE_UPLOAD_URL = Constants.NEW_BASE_URL + "imgUpload/shopOfferBanner.php";
+    public static final String INSERT_OFFER_URL = Constants.NEW_BASE_URL + "insertOffer.php";
+    public static final String UPDATE_OFFER_URL = Constants.NEW_BASE_URL + "updateOffer.php";
+    public static final String OFFER_LIST_URL = Constants.NEW_BASE_URL + "offer.php";
 
+    public static final String ABC = "http://propertymantratv.com/service/";
+    public static final String VISIT_URL = Constants.ABC + "insertBookvisit.php";
 
     public static final String APP_SETTINGS = "APP_SETTINGS";
     public static final String USERNAME = "username";

@@ -12,8 +12,7 @@ import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.javinindia.citymallsbusiness.R;
-import com.javinindia.citymallsbusiness.font.FontRalewayMediumSingleTonClass;
-import com.javinindia.citymallsbusiness.font.FontRalewayRegularSingleTonClass;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.utility.Utility;
 
 
@@ -47,22 +46,22 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         ImageView imgBack = (ImageView) view.findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         AppCompatButton btnNext = (AppCompatButton) view.findViewById(R.id.btnNext);
-        btnNext.setTypeface(FontRalewayMediumSingleTonClass.getInstance(activity).getTypeFace());
+        btnNext.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         btnNext.setOnClickListener(this);
         et_StoreNum = (AppCompatEditText) view.findViewById(R.id.et_StoreNum);
-        et_StoreNum.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_StoreNum.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_owner = (AppCompatEditText) view.findViewById(R.id.et_owner);
-        et_owner.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_owner.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_email = (AppCompatEditText) view.findViewById(R.id.et_email);
-        et_email.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_email.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_MobileNum = (AppCompatEditText) view.findViewById(R.id.et_MobileNum);
-        et_MobileNum.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_MobileNum.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_Landline = (AppCompatEditText) view.findViewById(R.id.et_Landline);
-        et_Landline.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_Landline.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_password = (AppCompatEditText) view.findViewById(R.id.et_password);
-        et_password.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_password.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_ConfirmPassword = (AppCompatEditText) view.findViewById(R.id.et_ConfirmPassword);
-        et_ConfirmPassword.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        et_ConfirmPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
 

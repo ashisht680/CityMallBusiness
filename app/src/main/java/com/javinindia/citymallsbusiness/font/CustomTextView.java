@@ -11,18 +11,18 @@ public class CustomTextView extends AppCompatTextView {
 
     public CustomTextView(Context context) {
         super(context);
-        setTypeface(FontRalewayBlackSingleTonClass.getInstance(context).getTypeFace());
+        setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
     }
 
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setTypeface(FontRalewayBlackSingleTonClass.getInstance(context).getTypeFace());
+        setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
     }
 
     public CustomTextView(Context context, AttributeSet attrs,
                                   int defStyle) {
         super(context, attrs, defStyle);
-        setTypeface(FontRalewayBlackSingleTonClass.getInstance(context).getTypeFace());
+        setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
     }
 
 }

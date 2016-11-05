@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtTagItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:padding="2dp"
+            android:lines="1"
+            android:layout_margin="1dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_border_white"
+            android:gravity="center"
+            android:textStyle="bold|italic"
+            android:textSize="14sp" />
+
+
+</RelativeLayout>

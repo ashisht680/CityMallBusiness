@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true" />
 
-    <include layout="@layout/progress_bar_layout" />
+   <!-- <include layout="@layout/progress_bar_layout" />-->
 
 
 </RelativeLayout>

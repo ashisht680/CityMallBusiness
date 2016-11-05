@@ -4,40 +4,40 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.javinindia.citymallsbusiness.R;
-import com.javinindia.citymallsbusiness.apiparsing.productcategory.ProductCategoryDetails;
 import com.javinindia.citymallsbusiness.apiparsing.productcategory.ShopCategoryList;
-import com.javinindia.citymallsbusiness.apiparsing.productcategory.ShopSubCatDetail;
-import com.javinindia.citymallsbusiness.utility.Utility;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Ashish on 03-10-2016.
  */
 public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdaptar.ViewHolder> {
-    List<Object> list;
+    List<ShopCategoryList> list;
     Context context;
     MyClickListener myClickListener;
+    ArrayList<ShopCategoryList> shopCategoryListArrayList;
 
     public ShopCatSubCatAdaptar(Context context) {
         this.context = context;
     }
 
-    public void setData(List<Object> list) {
+    public void setData(List<ShopCategoryList> list) {
         this.list = list;
+        this.shopCategoryListArrayList = new ArrayList<>();
+        this.shopCategoryListArrayList.addAll(list);
     }
 
-    public List<Object> getData() {
+    public List<ShopCategoryList> getData() {
         return list;
     }
 
@@ -54,7 +54,7 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
         final ShopCategoryList shopCategoryDetails = (ShopCategoryList) list.get(position);
         String catListId = shopCategoryDetails.getId();
         String shopCatId = shopCategoryDetails.getShopCatId();
-        String shopCategory = shopCategoryDetails.getShopCategory();
+        String shopCategory = shopCategoryDetails.getShopCategory().trim();
         List listSub = shopCategoryDetails.getSubCatDetailArrayList();
         ArrayList<String> arrayList = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
             viewHolder.txtCategory.setText(shopCategory);
 
         for(int i =0;i<listSub.size();i++){
-           arrayList.add(shopCategoryDetails.getSubCatDetailArrayList().get(i).getShoSubpCategory());
+           arrayList.add(shopCategoryDetails.getSubCatDetailArrayList().get(i).getShoSubpCategory().trim());
         }
 
         if(arrayList.size()>0){
@@ -102,9 +102,9 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             txtCategory = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtCategory);
-            // namePerson.setTypeface(FontRalewayMediumSingleTonClass.getInstance(context).getTypeFace());
+            txtCategory.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
             txtSubCat = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtSubCat);
-            // time.setTypeface(FontRalewayMediumSingleTonClass.getInstance(context).getTypeFace());
+            txtSubCat.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
             llMain = (LinearLayout)itemLayoutView.findViewById(R.id.llMain);
         }
     }
@@ -118,15 +118,31 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
     public void setMyClickListener(MyClickListener myClickListener) {
         this.myClickListener = myClickListener;
     }
-
+/*
     public void addItem(List dataObj, int index) {
         list.add(dataObj);
         notifyItemInserted(index);
-    }
+    }*/
 
     public void deleteItem(int index) {
         list.remove(index);
         notifyItemRemoved(index);
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        list.clear();
+        if (charText.length() == 0) {
+            list.addAll(shopCategoryListArrayList);
+        } else {
+            for (ShopCategoryList thankFulDetail : shopCategoryListArrayList) {
+                if (thankFulDetail.getShopCategory().toLowerCase(Locale.getDefault())
+                        .contains(charText)) {
+                    list.add(thankFulDetail);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
 }

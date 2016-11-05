@@ -71,7 +71,7 @@
 
 
 
-            <android.support.v7.widget.AppCompatEditText
+       <!--     <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_Address"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -84,7 +84,7 @@
                 android:nextFocusDown="@+id/et_City"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:textColorHint="@android:color/white" />-->
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_Mall"
@@ -103,6 +103,30 @@
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/etStoreNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="STORE NUMBER"
+                android:inputType="text"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/etFloor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_border_white"
+                android:hint="FLOOR"
+                android:inputType="number"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"/>
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_PinCode"
                 android:layout_width="match_parent"

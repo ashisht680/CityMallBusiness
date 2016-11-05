@@ -55,7 +55,7 @@
         android:text="Rating:3/5"
         android:textSize="12sp" />
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtAddress"
+        android:id="@+id/txtCategoryItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ratingBar"
@@ -67,7 +67,7 @@
         android:id="@+id/txtTiming"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtAddress"
+        android:layout_below="@+id/txtCategoryItem"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/imgShopLogo"
         android:text="Timing: 10:00 AM to 11:00 PM"

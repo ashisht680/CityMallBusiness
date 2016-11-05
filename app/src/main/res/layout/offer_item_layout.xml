@@ -3,70 +3,153 @@
     android:id="@+id/rlMain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/llOffItem"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="3dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/holo_red_dark"
+        android:layout_alignParentRight="true">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtOfferTypeOrActualPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:lines="1"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="9sp"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtOfferPercentOrDiscountPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:lines="1"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="11sp" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp">
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/imgShopLogoOffer"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/button_border_black"
+            android:padding="1dp"
+            android:src="@mipmap/logo" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtShopName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_toRightOf="@+id/imgShopLogoOffer"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/imgShopLogoOffer"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:background="@drawable/button_border_black"
-        android:padding="1dp"
-        android:src="@mipmap/logo" />
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtShopName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_toLeftOf="@+id/chkImage"
-        android:layout_toRightOf="@+id/imgShopLogoOffer"
-        android:singleLine="true"
-        android:text="Bharat sweets"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtSubCategoryItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtShopName"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_toRightOf="@+id/imgShopLogoOffer"
+            android:singleLine="true"
+            android:text=""
+            android:textSize="12sp" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtOfferTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgShopLogoOffer"
+            android:layout_below="@+id/txtSubCategoryItem"
+            android:textColor="@android:color/holo_red_dark"
+            android:singleLine="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:text="" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtOfferCategoryItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgShopLogoOffer"
+            android:layout_below="@+id/txtOfferTitle"
+            android:layout_marginLeft="5dp"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:text=""/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtTimingOffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtOfferCategoryItem"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/imgShopLogoOffer"
+            android:singleLine="true"
+            android:text=""
+            android:textSize="12sp" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtViewItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTimingOffer"
+            android:layout_toRightOf="@+id/imgShopLogoOffer"
+            android:background="@color/toolbar_color"
+            android:textColor="@android:color/white"
+            android:padding="1dp"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            android:text="985 Views"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtAvailedItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTimingOffer"
+            android:layout_toRightOf="@+id/txtViewItem"
+            android:background="@android:color/holo_green_dark"
+            android:textColor="@android:color/white"
+            android:padding="1dp"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            android:text="650 Availed"
+            android:visibility="gone"/>
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtShopName"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/imgShopLogoOffer"
-        android:text="Shubhash nagar,New Delhi"
-        android:textSize="12sp" />
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtOfferAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgShopLogoOffer"
-        android:layout_below="@+id/txtAddress"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp"
-        android:text="30% Off"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtOfferCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgShopLogoOffer"
-        android:layout_below="@+id/txtOfferAmount"
-        android:layout_marginLeft="5dp"
-        android:textSize="16sp"
-        android:text="On clothes"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtTimingOffer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtOfferCategory"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/imgShopLogoOffer"
-        android:text="02-09-16 till 10-09-16"
-        android:textSize="12sp" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtEditOfferItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Edit Offer >"
+            android:background="@color/sq_background_blue"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_below="@+id/txtTimingOffer"
+            android:layout_alignParentRight="true"/>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/imgShopLogoOffer"
+            android:background="@color/wow_gray"></View>
+    </RelativeLayout>
+
+
 
 
 

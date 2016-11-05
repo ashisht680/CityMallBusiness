@@ -2,119 +2,166 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black"
-    android:layout_marginBottom="5dp">
+    android:background="@android:color/black">
 
     <RelativeLayout
         android:id="@+id/rlBanner"
         android:layout_width="match_parent"
-        android:layout_height="170dp">
+        android:layout_height="180dp">
 
         <ImageView
             android:id="@+id/imgBannerAbout"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:visibility="gone" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnEditProfile"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_margin="5dp"
-            android:textColor="@android:color/white"
-            android:background="@drawable/button_border_white"
-            android:text="EDIT" />
-        <include layout="@layout/common_progressbar"/>
+        <include layout="@layout/common_progressbar" />
+
         <ImageView
             android:id="@+id/imgShopLogoAbout"
             android:layout_width="120dp"
-            android:layout_height="80dp"
-            android:layout_above="@+id/txtViewsAbout"
+            android:layout_height="120dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/button_border_white"
             android:padding="1dp"
+            android:scaleType="centerCrop"
             android:src="@mipmap/logo" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtShopNameAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/txtTimingAbout"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/imgFav"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
-            android:text=""
+            android:text="WoodLand"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtTimingAbout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ratingBarAbout"
-            android:layout_marginLeft="5dp"
-            android:textColor="@android:color/white"
-            android:layout_toRightOf="@+id/imgShopLogoAbout"
-            android:text="Timing:"
-            android:textSize="13sp" />
 
         <RatingBar
             android:id="@+id/ratingBarAbout"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/txtViewsAbout"
+            android:layout_below="@+id/txtShopNameAbout"
             android:layout_gravity="left"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
-            android:backgroundTint="@android:color/white"
             android:clickable="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:isIndicator="true"
             android:numStars="5"
             android:progressTint="@color/yellow_color"
-            android:secondaryProgressTint="@android:color/white" />
+            android:secondaryProgressTint="@color/wow_gray"
+            android:progressBackgroundTint="@android:color/white"
+            android:backgroundTint="@android:color/white"/>
+
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtViewsAbout"
+            android:id="@+id/txtRatingAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/txtLocationAbout"
-            android:layout_marginBottom="2dp"
-            android:textColor="@android:color/white"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:text="Views:150k"
-            android:textSize="15sp" />
+            android:layout_below="@+id/txtShopNameAbout"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@+id/txtFaverateCountAbout"
+            android:layout_toRightOf="@+id/ratingBarAbout"
+            android:text=""
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtLocationAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/ratingBarAbout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/imgShopLogoAbout"
+            android:lines="1"
             android:text=""
-            android:textSize="15sp" />
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtTimingAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtLocationAbout"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/imgShopLogoAbout"
+            android:lines="1"
+            android:text=""
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtOffersAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTimingAbout"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/imgShopLogoAbout"
+            android:background="@color/highlight_color"
+            android:lines="1"
+            android:padding="2dp"
+            android:text="35 Offers"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgShopLogoAbout"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"
+                android:text="EDIT PROFILE"
+                android:textColor="@android:color/white"
+                android:visibility="visible" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnAllOffer"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="ALL OFFER"
+                android:textColor="@android:color/black"
+                android:visibility="visible" />
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtFaverateCountAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="@android:color/white"
-            android:padding="5dp"
+            android:layout_below="@+id/imgFav"
+            android:paddingRight="5dp"
             android:text="521"
-            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/imgFav"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_toLeftOf="@+id/txtFaverateCountAbout"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
             android:padding="5dp"
             android:src="@drawable/select" />
-
 
 
     </RelativeLayout>
@@ -129,22 +176,49 @@
             android:id="@+id/txtCategoryAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:text="All Categories"
             android:textColor="@android:color/white"
-            android:text=""
             android:textSize="15sp"
             android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerviewCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnAddCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/white"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="Add category"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/background_color"></View>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtRecentOffersAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background_color"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:padding="5dp"
-            android:text="Recent Offers"
+            android:background="@android:color/white"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:text="Running Offers"
+            android:textColor="@android:color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 

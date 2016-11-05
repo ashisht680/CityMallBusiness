@@ -27,7 +27,9 @@ import com.javinindia.citymallsbusiness.fragments.BaseFragment;
 import com.javinindia.citymallsbusiness.fragments.EditProfileFragment;
 import com.javinindia.citymallsbusiness.fragments.LocationSearchFragment;
 import com.javinindia.citymallsbusiness.fragments.LoginFragment;
+import com.javinindia.citymallsbusiness.fragments.NavigationAboutFragment;
 import com.javinindia.citymallsbusiness.fragments.OffersFragment;
+import com.javinindia.citymallsbusiness.fragments.VisitFragment;
 import com.javinindia.citymallsbusiness.picasso.CircleTransform;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
@@ -69,7 +71,7 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
 //        Log.e("username", username);
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
-        mFragmentTransaction.replace(R.id.navigationContainer, new OffersFragment()).commit();
+        mFragmentTransaction.replace(R.id.navigationContainer, new NavigationAboutFragment()).commit();
        /* if (TextUtils.isEmpty(username)) {
             mFragmentManager = getSupportFragmentManager();
             mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
@@ -145,11 +147,10 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
                     .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
             drawerLayout.closeDrawers();
         } else if (title.equals("settings")) {
-            Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-            /*BaseFragment fragment = new BrandsFragment();
+            /*BaseFragment fragment = new VisitFragment();
             mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
+                    .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();*/
             drawerLayout.closeDrawers();
         } else if (title.equals("Logout")) {
             Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
@@ -161,7 +162,7 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
     public void dialogBox() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Logout");
-        alertDialogBuilder.setMessage("Thanks for visiting WishZee! Be back soon!");
+        alertDialogBuilder.setMessage("Thanks for visiting City mall business! Be back soon!");
         alertDialogBuilder.setPositiveButton("Ok!",
                 new DialogInterface.OnClickListener() {
 

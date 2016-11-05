@@ -1,20 +1,15 @@
 package com.javinindia.citymallsbusiness.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,45 +18,44 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
-import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
-import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.OfferListResponseparsing;
-import com.javinindia.citymallsbusiness.apiparsing.shoperprofileparsing.ShopViewResponse;
 import com.javinindia.citymallsbusiness.constant.Constants;
-import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
-import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
+import com.javinindia.citymallsbusiness.recyclerview.OfferAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
- * Created by Ashish on 09-09-2016.
+ * Created by Ashish on 22-10-2016.
  */
-public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener,ListShopProductCategoryFragment.OnCallBackCategoryListListener,AddNewOfferFragment.OnCallBackAddOfferListener,EditProfileFragment1.OnCallBackEditProfileListener,UpdateOfferFragment.OnCallBackUpdateOfferListener,AllOffersFragment.OnCallBackRefreshListener {
+public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyClickListener,UpdateOfferFragment.OnCallBackUpdateOfferListener {
     private RecyclerView recyclerview;
-    private List<CountryModel> mCountryModel;
-    private AboutAdaptar adapter;
+    private int startLimit = 0;
+    private int countLimit = 10;
+    private boolean loading = true;
     private RequestQueue requestQueue;
-    ArrayList catArray;
+    private OfferAdapter adapter;
+    ArrayList arrayList;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private OnCallBackRefreshListener onCallBackRefreshListener;
+
+    public interface OnCallBackRefreshListener {
+        void OnCallBackRefreshOffer();
+    }
+
+    public void setMyCallBackRefreshListener(OnCallBackRefreshListener callback) {
+        this.onCallBackRefreshListener = callback;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Log.e("id", SharedPreferencesManager.getUserID(activity));
-        initialize(view);
-        sendDataOnRegistrationApi();
+        initializeMethod(view);
+        sendRequestOnReplyFeed(startLimit, countLimit);
         return view;
     }
 
@@ -71,91 +65,16 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         disableTouchOfBackFragment(savedInstanceState);
     }
 
-    private void sendDataOnRegistrationApi() {
-        final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SHOP_PROFILE_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("response", response);
-                        String status = null, sID = null, msg = null, sPic = null, banner;
-                        String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
-                        String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance;
-                        int offerCount;
-                        loading.dismiss();
-                        ShopViewResponse shopViewResponse = new ShopViewResponse();
-                        shopViewResponse.responseParseMethod(response);
-
-                        sID = shopViewResponse.getShopid().trim();
-                        sPic = shopViewResponse.getProfilepic().trim();
-                        status = shopViewResponse.getStatus().trim();
-                        sName = shopViewResponse.getStoreName().trim();
-                        oName = shopViewResponse.getOwnerName().trim();
-                        sEmail = shopViewResponse.getEmail().trim();
-                        sMobileNum = shopViewResponse.getMobile().trim();
-                        sLandline = shopViewResponse.getLandline().trim();
-                        sState = shopViewResponse.getState().trim();
-                        sCity = shopViewResponse.getCity().trim();
-                        sAddress = shopViewResponse.getAddress().trim();
-                        mName = shopViewResponse.getMallName().trim();
-                        mAddress = shopViewResponse.getMallAddress();
-                        mLat = shopViewResponse.getMallLat();
-                        mLong = shopViewResponse.getMallLong();
-                        country = shopViewResponse.getCountry().trim();
-                        pincode = shopViewResponse.getPincode().trim();
-                        rating = shopViewResponse.getRating().trim();
-                        openTime = shopViewResponse.getShopOpenTime().trim();
-                        closeTime = shopViewResponse.getShopCloseTime().trim();
-                        distance = shopViewResponse.getDistance().trim();
-                        offerCount = shopViewResponse.getOfferCount();
-                        banner = shopViewResponse.getBanner().trim();
-                        catArray = shopViewResponse.getShopCategoryDetailsArrayList();
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
-                        recyclerview.setLayoutManager(layoutManager);
-                        adapter = new AboutAdaptar(activity, sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sPic,country, pincode, rating, openTime, closeTime, distance, offerCount, banner,catArray);
-                        recyclerview.setAdapter(adapter);
-                        adapter.setMyClickListener(NavigationAboutFragment.this);
-                        recyclerview.setItemAnimator(new DefaultItemAnimator());
-                        if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
-                            offerRequestApi();
-                        } else {
-                            if (!TextUtils.isEmpty(msg)) {
-                                showDialogMethod(msg);
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        loading.dismiss();
-                        volleyErrorHandle(error);
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", SharedPreferencesManager.getUserID(activity));
-
-                return params;
-            }
-
-        };
-        stringRequest.setTag(this.getClass().getSimpleName());
-        volleyDefaultTimeIncreaseMethod(stringRequest);
-        requestQueue = Volley.newRequestQueue(activity);
-        requestQueue.add(stringRequest);
-    }
-
-    private void offerRequestApi() {
+    private void sendRequestOnReplyFeed(final int AstartLimit, final int AcountLimit) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.OFFER_LIST_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("limits",AstartLimit+""+AcountLimit);
                         OfferListResponseparsing responseparsing = new OfferListResponseparsing();
                         responseparsing.responseParseMethod(response);
                         Log.e("request", response);
-                        ArrayList arrayList = responseparsing.getDetailsListArrayList();
+                        arrayList = responseparsing.getDetailsListArrayList();
                         String status = responseparsing.getStatus().trim();
                         if(status.equals("true")){
                             if(arrayList.size()>0){
@@ -169,7 +88,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                                 }
                             }
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -182,8 +100,8 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", SharedPreferencesManager.getUserID(activity));
-                params.put("startlimit", "0");
-                params.put("countlimit", "5");
+                params.put("startlimit", String.valueOf(AstartLimit));
+                params.put("countlimit", String.valueOf(AcountLimit));
                 return params;
             }
 
@@ -194,16 +112,21 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         requestQueue.add(stringRequest);
     }
 
-    private void initialize(View view) {
+    private void initializeMethod(View view) {
         recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
-        AppCompatButton btnAddOffer = (AppCompatButton) view.findViewById(R.id.btnAddOffer);
-        btnAddOffer.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        btnAddOffer.setOnClickListener(this);
+        adapter = new OfferAdapter(activity);
+        LinearLayoutManager layoutMangerDestination
+                = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
+        recyclerview.setLayoutManager(layoutMangerDestination);
+        recyclerview.addOnScrollListener(new replyScrollListener());
+        recyclerview.setAdapter(adapter);
+        adapter.setMyClickListener(AllOffersFragment.this);
+
     }
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.about_layout;
+        return R.layout.all_offers_layout;
     }
 
     @Override
@@ -217,40 +140,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnAddOffer:
-                AddNewOfferFragment fragment = new AddNewOfferFragment();
-                fragment.setMyCallBackOfferListener(this);
-                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.navigationContainer);
-                break;
-        }
-    }
-
-    @Override
-    public void onEditClick(int position) {
-        Toast.makeText(activity, "aaaaa", Toast.LENGTH_LONG).show();
-        EditProfileFragment1 fragment1 = new EditProfileFragment1();
-        fragment1.setMyCallBackOfferListener(this);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
-    }
-
-    @Override
-    public void onAllOffers(int position) {
-        AllOffersFragment fragment1 = new AllOffersFragment();
-        fragment1.setMyCallBackRefreshListener(this);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
-    }
-
-    @Override
-    public void onAddCategory(int position) {
-        ListShopProductCategoryFragment categoryFragment = new ListShopProductCategoryFragment();
-        categoryFragment.setMyCallBackCategoryListener(this);
-        callFragmentMethod(categoryFragment, this.getClass().getSimpleName(),R.id.navigationContainer);
-    }
-
-    @Override
-    public void onOfferClick(int position, DetailsList detailsList) {
+    public void onOfferItemClick(int position, DetailsList detailsList) {
         String brandName = detailsList.getOfferBrandDetails().getBrandName().trim();
         String brandPic = detailsList.getOfferBrandDetails().getBrandLogo().trim();
         String shopName = detailsList.getOfferShopDetails().getShopName().trim();
@@ -269,6 +159,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         String offerDescription = detailsList.getOfferDetails().getOfferDescription().trim();
         String shopOpenTime = detailsList.getOfferShopDetails().getShopOpenTime().trim();
         String shopCloseTime = detailsList.getOfferShopDetails().getShopCloseTime().trim();
+
         OfferPostFragment fragment1 = new OfferPostFragment();
 
         Bundle bundle = new Bundle();
@@ -293,6 +184,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("shopCloseTime",shopCloseTime);
         fragment1.setArguments(bundle);
         callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+
     }
 
     @Override
@@ -352,27 +244,47 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
     @Override
-    public void onCallBackCatList() {
-        sendDataOnRegistrationApi();
-    }
-
-    @Override
-    public void OnCallBackAddOffer() {
-        sendDataOnRegistrationApi();
-    }
-
-    @Override
-    public void OnCallBackEditProfile() {
-        sendDataOnRegistrationApi();
-    }
-
-    @Override
     public void OnCallBackUpdateOffer() {
-        sendDataOnRegistrationApi();
+        arrayList.removeAll(arrayList);
+        adapter.notifyDataSetChanged();
+        adapter.setData(arrayList);
+        if (arrayList.size() > 0) {
+        } else {
+            sendRequestOnReplyFeed(0, 10);
+            onCallBackRefreshListener.OnCallBackRefreshOffer();
+        }
     }
 
-    @Override
-    public void OnCallBackRefreshOffer() {
-        sendDataOnRegistrationApi();
+    public class replyScrollListener extends RecyclerView.OnScrollListener {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            LinearLayoutManager recyclerLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int visibleItemCount = recyclerView.getChildCount();
+            int totalItemCount = recyclerLayoutManager.getItemCount();
+
+            int visibleThreshold = ((totalItemCount / 2) < 20) ? totalItemCount / 2 : 20;
+            int firstVisibleItem = recyclerLayoutManager.findFirstVisibleItemPosition();
+
+            if (loading) {
+                if (totalItemCount > startLimit) {
+                    loading = false;
+                    startLimit = totalItemCount;
+                }
+            } else {
+                int nonVisibleItemCounts = totalItemCount - visibleItemCount;
+                int effectiveVisibleThreshold = firstVisibleItem + visibleThreshold;
+
+                if (nonVisibleItemCounts <= effectiveVisibleThreshold) {
+                    startLimit = startLimit + 1;
+                    countLimit = 10;
+
+                    showLoader();
+
+                    sendRequestOnReplyFeed(startLimit, countLimit);
+                    loading = true;
+                }
+            }
+            super.onScrollStateChanged(recyclerView, newState);
+        }
     }
 }

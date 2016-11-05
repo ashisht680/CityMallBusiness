@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,8 @@ import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.productcategory.ShopCategoryList;
 import com.javinindia.citymallsbusiness.apiparsing.productcategory.ShopCategoryListResponse;
 import com.javinindia.citymallsbusiness.constant.Constants;
+import com.javinindia.citymallsbusiness.font.FontAsapBoldSingleTonClass;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.recyclerview.ShopCatSubCatAdaptar;
 
@@ -33,26 +38,36 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * Created by Ashish on 03-10-2016.
  */
-public class ListShopProductCategoryFragment extends BaseFragment  implements ShopCatSubCatAdaptar.MyClickListener,View.OnClickListener,AddSubCatFragment.OnCallBackCAtegoryListener {
+public class ListShopProductCategoryFragment extends BaseFragment  implements ShopCatSubCatAdaptar.MyClickListener,View.OnClickListener,AddSubCatFragment.OnCallBackCAtegoryListener, TextWatcher {
     private ArrayList list;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RequestQueue requestQueue;
     private ShopCatSubCatAdaptar mAdapter;
     private RecyclerView recyclerView;
-    AppCompatTextView txtNoData;
+    AppCompatTextView txtNoData,txtTitle;
+    AppCompatEditText etSearchCat;
+
+    private OnCallBackCategoryListListener onCallBackCategoryList;
+
+    public interface OnCallBackCategoryListListener {
+        void onCallBackCatList();
+    }
+
+    public void setMyCallBackCategoryListener(OnCallBackCategoryListListener callback) {
+        this.onCallBackCategoryList = callback;
+    }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
-        showLoader();
-        Bundle bundle = this.getArguments();
         sendRequestOnWowFeed();
         initializeMethod(view);
         return view;
@@ -65,6 +80,11 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
     }
 
     private void initializeMethod(View view) {
+        txtTitle = (AppCompatTextView)view.findViewById(R.id.txtTitle);
+        txtTitle.setTypeface(FontAsapBoldSingleTonClass.getInstance(activity).getTypeFace());
+        etSearchCat = (AppCompatEditText)view.findViewById(R.id.etSearchCat);
+        etSearchCat.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        etSearchCat.addTextChangedListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerviewCatList);
         LinearLayoutManager layoutMangerDestination
                 = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
@@ -74,10 +94,9 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         txtNoData = (AppCompatTextView) view.findViewById(R.id.txtNoData);
-       // txtNoData.setTypeface(FontRalewayMediumSingleTonClass.getInstance(activity).getTypeFace());
+        txtNoData.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         FloatingActionButton flotBtnAddCat = (FloatingActionButton)view.findViewById(R.id.flotBtnAddCat);
         flotBtnAddCat.setOnClickListener(this);
-
     }
 
     private void sendRequestOnWowFeed() {
@@ -240,6 +259,23 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
         if (list.size() > 0) {
         } else {
             sendRequestOnWowFeed();
+            onCallBackCategoryList.onCallBackCatList();
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        String text = s.toString().toLowerCase(Locale.getDefault());
+        mAdapter.filter(text);
     }
 }

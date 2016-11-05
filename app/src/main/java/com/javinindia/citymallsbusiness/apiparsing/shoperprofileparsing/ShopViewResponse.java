@@ -3,43 +3,57 @@ package com.javinindia.citymallsbusiness.apiparsing.shoperprofileparsing;
 import android.util.Log;
 
 import com.javinindia.citymallsbusiness.apiparsing.base.ApiBaseData;
+import com.javinindia.citymallsbusiness.apiparsing.shopmalllistparsing.MallDetails;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Ashish on 26-09-2016.
  */
 public class ShopViewResponse extends ApiBaseData {
-    String shopid;
-    String shopCategory;
-    String shopSubCategory;
-    String banner;
-    String storeName;
-    String ownerName;
-    String email;
-    String mobile;
-    String landline;
-    String state;
-    String city;
-    String address;
-    String profilepic;
-    String mallId;
-    String mallName;
-    String description;
-    String mallAddress;
-    String mallLandmark;
-    String mallLat;
-    String mallLong;
-    String country;
-    String pincode;
-    String rating;
-    String openTime;
-    String closeTime;
-    int offerCount;
-    String distance;
-    String shopOpenTime;
-    String shopCloseTime;
+   private String shopid;
+   private String banner;
+   private String storeName;
+   private String ownerName;
+   private String email;
+   private String mobile;
+   private String landline;
+   private String state;
+   private String city;
+   private String address;
+   private String profilepic;
+   private String mallId;
+   private String mallName;
+   private String description;
+   private String mallAddress;
+   private String mallLandmark;
+   private String mallLat;
+   private String mallLong;
+   private String country;
+   private String pincode;
+   private String rating;
+   private String openTime;
+   private String closeTime;
+   private int offerCount;
+   private String distance;
+   private String shopOpenTime;
+   private String shopCloseTime;
+   private String shopNum;
+   private String floor;
+
+    private ArrayList<ShopCategoryDetails> shopCategoryDetailsArrayList;
+
+    public ArrayList<ShopCategoryDetails> getShopCategoryDetailsArrayList() {
+        return shopCategoryDetailsArrayList;
+    }
+
+    public void setShopCategoryDetailsArrayList(ArrayList<ShopCategoryDetails> shopCategoryDetailsArrayList) {
+        this.shopCategoryDetailsArrayList = shopCategoryDetailsArrayList;
+    }
 
     public String getAddress() {
         return address;
@@ -209,14 +223,6 @@ public class ShopViewResponse extends ApiBaseData {
         this.rating = rating;
     }
 
-    public String getShopCategory() {
-        return shopCategory;
-    }
-
-    public void setShopCategory(String shopCategory) {
-        this.shopCategory = shopCategory;
-    }
-
     public String getShopid() {
         return shopid;
     }
@@ -225,13 +231,6 @@ public class ShopViewResponse extends ApiBaseData {
         this.shopid = shopid;
     }
 
-    public String getShopSubCategory() {
-        return shopSubCategory;
-    }
-
-    public void setShopSubCategory(String shopSubCategory) {
-        this.shopSubCategory = shopSubCategory;
-    }
 
     public String getState() {
         return state;
@@ -273,6 +272,22 @@ public class ShopViewResponse extends ApiBaseData {
         this.banner = banner;
     }
 
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public String getShopNum() {
+        return shopNum;
+    }
+
+    public void setShopNum(String shopNum) {
+        this.shopNum = shopNum;
+    }
+
     public void responseParseMethod(Object response) {
         try {
             JSONObject jsonObject = new JSONObject(response.toString());
@@ -281,10 +296,6 @@ public class ShopViewResponse extends ApiBaseData {
 
             if (jsonObject.has("shopid"))
                 setShopid(jsonObject.optString("shopid"));
-            if (jsonObject.has("shopCategory"))
-                setShopCategory(jsonObject.optString("shopCategory"));
-            if (jsonObject.has("shopSubCategory"))
-                setShopSubCategory(jsonObject.optString("shopSubCategory"));
             if (jsonObject.has("banner"))
                 setBanner(jsonObject.optString("banner"));
             if (jsonObject.has("storeName"))
@@ -338,6 +349,12 @@ public class ShopViewResponse extends ApiBaseData {
                 setOfferCount(jsonObject.optInt("offerCount"));
             if (jsonObject.has("distance"))
                 setDistance(jsonObject.optString("distance"));
+            if (jsonObject.has("ShopNo"))
+                setShopNum(jsonObject.optString("ShopNo"));
+            if (jsonObject.has("floorNo"))
+                setFloor(jsonObject.optString("floorNo"));
+            if (jsonObject.has("CategoryDetails"))
+                setShopCategoryDetailsArrayList(getCategoryListMethod(jsonObject.optJSONArray("CategoryDetails")));
 
 
             Log.d("Response", this.toString());
@@ -345,5 +362,20 @@ public class ShopViewResponse extends ApiBaseData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private ArrayList<ShopCategoryDetails> getCategoryListMethod(JSONArray categoryDetails) {
+        ArrayList<ShopCategoryDetails> mallDetailses = new ArrayList<>();
+        for (int i = 0; i < categoryDetails.length(); i++) {
+            ShopCategoryDetails details = new ShopCategoryDetails();
+            JSONObject jsonObject = categoryDetails.optJSONObject(i);
+            if (jsonObject.has("CategoryId"))
+                details.setCategoryId(jsonObject.optString("CategoryId"));
+            if (jsonObject.has("CategoryName"))
+                details.setCategoryName(jsonObject.optString("CategoryName"));
+
+            mallDetailses.add(details);
+        }
+        return mallDetailses;
     }
 }

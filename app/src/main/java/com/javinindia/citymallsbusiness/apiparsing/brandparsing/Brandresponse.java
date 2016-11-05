@@ -45,6 +45,12 @@ public class Brandresponse extends ApiBaseData {
             detail.setOfferSubCatId(jsonObject.optString("offerSubCatId"));
             detail.setName(jsonObject.optString("name"));
             detail.setBrandLogo(jsonObject.optString("brandLogo"));
+
+          /*  "id":"1",
+                    "offerCatId":"1",
+                    "offerSubCatId":"1",
+                    "name":"Precor",
+                    "brandLogo":*/
             brandDetails.add(detail);
         }
         return brandDetails;

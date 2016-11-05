@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * Created by Ashish on 08-09-2016.
  */
-public class OffersFragment extends BaseFragment implements TextWatcher, View.OnClickListener, OfferAdaptar.MyClickListener,AddNewOfferFragment.OnCallBackMallListener {
+public class OffersFragment extends BaseFragment implements TextWatcher, View.OnClickListener, OfferAdaptar.MyClickListener{
 
     private RecyclerView recyclerview;
     private List<CountryModel> mCountryModel;
@@ -99,7 +99,7 @@ public class OffersFragment extends BaseFragment implements TextWatcher, View.On
         switch (v.getId()) {
             case R.id.rlOffers:
                 AddNewOfferFragment fragment = new AddNewOfferFragment();
-                fragment.setMyCallBackListener(this);
+               // fragment.setMyCallBackListener(this);
                 callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.navigationContainer);
                 break;
             case R.id.rlProfile:
@@ -145,8 +145,4 @@ public class OffersFragment extends BaseFragment implements TextWatcher, View.On
 
     }
 
-    @Override
-    public void OnCallBackMall() {
-        Toast.makeText(activity,"OnCallBackMall",Toast.LENGTH_LONG).show();
-    }
 }

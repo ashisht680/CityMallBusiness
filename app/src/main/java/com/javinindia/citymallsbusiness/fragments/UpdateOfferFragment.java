@@ -60,9 +60,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Ashish on 15-09-2016.
+ * Created by Ashish on 28-10-2016.
  */
-public class AddNewOfferFragment extends BaseFragment implements View.OnClickListener {
+public class UpdateOfferFragment extends BaseFragment implements View.OnClickListener {
     private String day = "";
     private String month = "";
     private String year = "";
@@ -98,19 +98,45 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     Bitmap photo;
     int size = 0;
 
-    private OnCallBackAddOfferListener callbackAddOffer;
+    String offerId,brandName, brandPic, shopName, mallName, offerRating, offerPic, offerTitle, offerCategory, offerSubCategory, offerPercentType,
+            offerPercentage, offerActualPrice, offerDiscountPr, offerStartDate, offerCloseDate, offerDescription, shopOpenTime, shopCloseTime;
+
+    private OnCallBackUpdateOfferListener callbackUpdateOffer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //   images = (ArrayList<PostImage>) getArguments().getSerializable("images");
+        brandId = getArguments().getString("brandId");
+        catId = getArguments().getString("offerCatId");
+        subCatId = getArguments().getString("offerSubCatId");
+        offerId = getArguments().getString("offerId");
+        brandName = getArguments().getString("brandName");
+        brandPic = getArguments().getString("brandPic");
+        shopName = getArguments().getString("shopName");
+        mallName = getArguments().getString("mallName");
+        offerRating = getArguments().getString("offerRating");
+        offerPic = getArguments().getString("offerPic");
+        offerTitle = getArguments().getString("offerTitle");
+        offerCategory = getArguments().getString("offerCategory");
+        offerSubCategory = getArguments().getString("offerSubCategory");
+        offerPercentType = getArguments().getString("offerPercentType");
+        offerPercentage = getArguments().getString("offerPercentage");
+        offerActualPrice = getArguments().getString("offerActualPrice");
+        offerDiscountPr = getArguments().getString("offerDiscountPrice");
+        offerStartDate = getArguments().getString("offerStartDate");
+        offerCloseDate = getArguments().getString("offerCloseDate");
+        offerDescription = getArguments().getString("offerDescription");
+        shopOpenTime = getArguments().getString("shopOpenTime");
+        shopCloseTime = getArguments().getString("shopCloseTime");
     }
 
-    public interface OnCallBackAddOfferListener {
-        void OnCallBackAddOffer();
+    public interface OnCallBackUpdateOfferListener {
+        void OnCallBackUpdateOffer();
     }
 
-    public void setMyCallBackOfferListener(OnCallBackAddOfferListener callback) {
-        this.callbackAddOffer = callback;
+    public void setMyCallBackUpdateOfferListener(OnCallBackUpdateOfferListener callback) {
+        this.callbackUpdateOffer = callback;
     }
 
     @Nullable
@@ -119,9 +145,67 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         View view = inflater.inflate(getFragmentLayout(), container, false);
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initialize(view);
+        setDateMethod();
         tempId = Utility.getRandomNumberInRange(10000000, 999999999);
         captureImageInitialization();
         return view;
+    }
+
+    private void setDateMethod() {
+      /*  AppCompatTextView txtChooseCategory, txtAddProductImages, btnStartTime, btnEndTime, txtChooseSubCategory, txtChooseBrand,
+                txtChoosePercent, txtAdditional, txtEnterPercentTitle, txtOr, txtEnterPriceTitle, txtTitle, txtTitleDisc;
+        AppCompatEditText etProductTitle, etProductDescription, etPercentage, etActualPrice, etDiscountPrice;*/
+        if (!TextUtils.isEmpty(offerCategory))
+            txtChooseCategory.setText(offerCategory);
+        if (!TextUtils.isEmpty(offerSubCategory))
+            txtChooseSubCategory.setText(offerSubCategory);
+        if (!TextUtils.isEmpty(brandName))
+            txtChooseBrand.setText(brandName);
+        if (!TextUtils.isEmpty(offerTitle))
+            etProductTitle.setText(offerTitle);
+        if (!TextUtils.isEmpty(offerDescription))
+            etProductDescription.setText(offerDescription);
+        if (!TextUtils.isEmpty(offerStartDate))
+            btnStartTime.setText(offerStartDate);
+        if (!TextUtils.isEmpty(offerCloseDate))
+            btnEndTime.setText(offerCloseDate);
+        if (!TextUtils.isEmpty(offerPercentType)){
+            txtChoosePercent.setText(offerPercentType);
+
+            checkboxPrise.setChecked(false);
+            checkboxPercent.setChecked(true);
+
+            etPercentage.setEnabled(true);
+            etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
+
+            etActualPrice.setEnabled(false);
+            etActualPrice.setBackgroundColor(Color.GRAY);
+
+            etDiscountPrice.setEnabled(false);
+            etDiscountPrice.setBackgroundColor(Color.GRAY);
+        }
+        if (!TextUtils.isEmpty(offerPercentage))
+            etPercentage.setText(offerPercentage);
+
+        if (!TextUtils.isEmpty(offerActualPrice)) {
+            etActualPrice.setText(offerActualPrice);
+
+            checkboxPercent.setChecked(false);
+            checkboxPrise.setChecked(true);
+
+            etPercentage.setEnabled(false);
+            etPercentage.setBackgroundColor(Color.GRAY);
+
+            etActualPrice.setEnabled(true);
+            etActualPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
+
+            etDiscountPrice.setEnabled(true);
+            etDiscountPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
+        }
+        if (!TextUtils.isEmpty(offerDiscountPr))
+            etDiscountPrice.setText(offerDiscountPr);
+
+
     }
 
     @Override
@@ -178,30 +262,19 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         btnStartTime.setOnClickListener(this);
         btnEndTime.setOnClickListener(this);
         txtAddProductImages.setOnClickListener(this);
-        txtChooseCategory.setOnClickListener(this);
-        txtChooseSubCategory.setOnClickListener(this);
-        txtChooseBrand.setOnClickListener(this);
+        //  txtChooseCategory.setOnClickListener(this);
+        //  txtChooseSubCategory.setOnClickListener(this);
+        //  txtChooseBrand.setOnClickListener(this);
         txtChoosePercent.setOnClickListener(this);
         checkboxPercent.setOnClickListener(this);
         checkboxPrise.setOnClickListener(this);
         mImageView.setOnClickListener(this);
 
-        checkboxPrise.setChecked(false);
-        checkboxPercent.setChecked(true);
-
-        etPercentage.setEnabled(true);
-        etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-        etActualPrice.setEnabled(false);
-        etActualPrice.setBackgroundColor(Color.GRAY);
-
-        etDiscountPrice.setEnabled(false);
-        etDiscountPrice.setBackgroundColor(Color.GRAY);
     }
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.add_new_offer_layout;
+        return R.layout.update_offer_layout;
     }
 
     @Override
@@ -263,6 +336,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
                     etDiscountPrice.setEnabled(true);
                     etDiscountPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
+
+                    txtChoosePercent.setText("Select Percentage Type");
                 } else {
                     checkboxPrise.setChecked(false);
                     checkboxPercent.setChecked(true);
@@ -380,7 +455,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void methodAddOffer(final String catId, final String subCatId, final String brandId, final String title, final String desc, final String sDate, final String edate, final String percentType, final String percent, final String actualPrice, final String discountPrice) {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.INSERT_OFFER_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.UPDATE_OFFER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -402,7 +477,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                         }
 
                         if (status.equals("true") && !TextUtils.isEmpty(status)) {
-                            callbackAddOffer.OnCallBackAddOffer();
+                            callbackUpdateOffer.OnCallBackUpdateOffer();
                             activity.onBackPressed();
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
@@ -424,6 +499,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("offerid",offerId);
                 params.put("shopId", SharedPreferencesManager.getUserID(activity));
                 params.put("offerTitle", title);
                 params.put("offerDescription", desc);
@@ -468,7 +544,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void sendRequestOnBrand() {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.OFFER_BRAND_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SHOP_BRAND_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -521,9 +597,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("shopCatId", catId);
-                params.put("shopSubCatId", subCatId);
-                params.put("shopId",SharedPreferencesManager.getUserID(activity));
+                params.put("offerCatId", catId);
+                params.put("offerSubCatId", subCatId);
                 return params;
             }
 
@@ -697,7 +772,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                         }
                         day = Integer.toString(dayOfMonth);
                         month = Integer.toString(monthOfYear + 1);
-                        AddNewOfferFragment.this.year = Integer.toString(year);
+                        UpdateOfferFragment.this.year = Integer.toString(year);
                     }
                 }, mYear, mMonth, mDay);
         long now = System.currentTimeMillis() - 1000;

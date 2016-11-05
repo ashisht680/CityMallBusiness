@@ -95,7 +95,7 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
         etStoreName = (AppCompatEditText) view.findViewById(R.id.etStoreName);
         etAddress = (AppCompatEditText) view.findViewById(R.id.etAddress);
         etDiscription = (AppCompatEditText) view.findViewById(R.id.etDiscription);
-        txtCategoryAbout = (AppCompatTextView) view.findViewById(R.id.txtCategoryAbout);
+       // txtCategoryAbout = (AppCompatTextView) view.findViewById(R.id.txtCategoryAbout);
         etStartTime = (AppCompatEditText) view.findViewById(R.id.etStartTime);
         etEndTime = (AppCompatEditText) view.findViewById(R.id.etEndTime);
         txtChooseCategory = (AppCompatTextView) view.findViewById(R.id.txtChooseCategory);
@@ -117,7 +117,7 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         Log.e("response", response);
-                        String status = null, sID = null, msg = null, sPic = null,banner;
+                        String status = null, sID = null, msg = null, sPic = null,banner,mallId;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         String shopCategory, shopSubCategory, country, pincode, rating, mallOpenTime, mallCloseTime, distance, dicription,shopOpenTime,shopCloseTime;
                         int offerCount;
@@ -136,12 +136,11 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                             sState = shopViewResponse.getState().trim();
                             sCity = shopViewResponse.getCity().trim();
                             sAddress = shopViewResponse.getAddress().trim();
+                            mallId = shopViewResponse.getMallId().trim();
                             mName = shopViewResponse.getMallName().trim();
                             mAddress = shopViewResponse.getMallAddress();
                             mLat = shopViewResponse.getMallLat();
                             mLong = shopViewResponse.getMallLong();
-                            shopCategory = shopViewResponse.getShopCategory().trim();
-                            shopSubCategory = shopViewResponse.getShopSubCategory().trim();
                             country = shopViewResponse.getCountry().trim();
                             pincode = shopViewResponse.getPincode().trim();
                             rating = shopViewResponse.getRating().trim();
@@ -155,9 +154,6 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                             banner = shopViewResponse.getBanner().trim();
                             if (!TextUtils.isEmpty(sName)) {
                                 etStoreName.setText(sName);
-                            }
-                            if (!TextUtils.isEmpty(shopCategory)) {
-                                txtCategoryAbout.setText("Categories:\n" + shopCategory);
                             }
                             if (!TextUtils.isEmpty(shopOpenTime)) {
                                 etStartTime.setText(shopOpenTime);
@@ -400,10 +396,22 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", SharedPreferencesManager.getUserID(activity));
+                params.put("shopId", SharedPreferencesManager.getUserID(activity));
                 params.put("description", disc);
-                params.put("openTime", open);
-                params.put("closeTime", close);
+                params.put("shopOpenTime", open);
+                params.put("shopClosetime", close);
+                params.put("shopName", disc);
+                params.put("ownerName", open);
+                params.put("shopMobile", close);
+                params.put("state", disc);
+                params.put("city", open);
+                params.put("address", close);
+                params.put("shopNo", disc);
+                params.put("floorNo", open);
+                params.put("shopProfilePic", close);
+                params.put("landline", disc);
+                params.put("mall", open);
+                params.put("email", close);
                 return params;
             }
 

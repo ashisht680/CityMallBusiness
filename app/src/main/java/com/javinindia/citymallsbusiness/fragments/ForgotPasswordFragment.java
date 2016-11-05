@@ -20,8 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.constant.Constants;
-import com.javinindia.citymallsbusiness.font.FontRalewayMediumSingleTonClass;
-import com.javinindia.citymallsbusiness.font.FontRalewayRegularSingleTonClass;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.utility.Utility;
 
 import org.json.JSONException;
@@ -61,13 +60,13 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
         ImageView imgBack=(ImageView)view.findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         TextView txtForgot = (TextView)view.findViewById(R.id.txtForgot);
-        txtForgot.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        txtForgot.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         TextView txtForgotdiscription = (TextView)view.findViewById(R.id.txtForgotdiscription);
-        txtForgotdiscription.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        txtForgotdiscription.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         AppCompatButton buttonResetPassword = (AppCompatButton) view.findViewById(R.id.btn_reset_password);
-        buttonResetPassword.setTypeface(FontRalewayMediumSingleTonClass.getInstance(activity).getTypeFace());
+        buttonResetPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etEmailAddress = (EditText) view.findViewById(R.id.et_email_address);
-        etEmailAddress.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        etEmailAddress.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         buttonResetPassword.setOnClickListener(this);
     }
 

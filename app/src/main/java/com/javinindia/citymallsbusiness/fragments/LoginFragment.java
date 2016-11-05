@@ -24,8 +24,7 @@ import com.javinindia.citymallsbusiness.activity.LoginActivity;
 import com.javinindia.citymallsbusiness.activity.NavigationActivity;
 import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.constant.Constants;
-import com.javinindia.citymallsbusiness.font.FontRalewayMediumSingleTonClass;
-import com.javinindia.citymallsbusiness.font.FontRalewayRegularSingleTonClass;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.utility.Utility;
 
@@ -59,17 +58,17 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
     private void initialize(View view) {
         AppCompatButton buttonLogin = (AppCompatButton) view.findViewById(R.id.btn_login);
-        buttonLogin.setTypeface(FontRalewayMediumSingleTonClass.getInstance(activity).getTypeFace());
+        buttonLogin.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         TextView txtForgotPass = (TextView) view.findViewById(R.id.forgot_password);
-        txtForgotPass.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        txtForgotPass.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etUsername = (EditText) view.findViewById(R.id.et_username);
-        etUsername.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        etUsername.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etPassword = (EditText) view.findViewById(R.id.et_password);
-        etPassword.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        etPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etUsername.setText(SharedPreferencesManager.getEmail(activity));
         etPassword.setText(SharedPreferencesManager.getPassword(activity));
         TextView txtRegistration = (TextView) view.findViewById(R.id.txtRegistration);
-        txtRegistration.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        txtRegistration.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         buttonLogin.setOnClickListener(this);
         txtForgotPass.setOnClickListener(this);
         txtRegistration.setOnClickListener(this);
