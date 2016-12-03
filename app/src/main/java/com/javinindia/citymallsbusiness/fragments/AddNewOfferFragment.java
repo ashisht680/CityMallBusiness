@@ -1,5 +1,7 @@
 package com.javinindia.citymallsbusiness.fragments;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -7,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,7 +18,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -95,14 +101,20 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     private static final int PICK_FROM_CAMERA = 1;
     private static final int CROP_FROM_CAMERA = 2;
     private static final int PICK_FROM_FILE = 3;
-    Bitmap photo;
+    Bitmap photo=null;
     int size = 0;
+    public static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
 
     private OnCallBackAddOfferListener callbackAddOffer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // takePictureButton.setEnabled(false);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+        }
     }
 
     public interface OnCallBackAddOfferListener {
@@ -322,6 +334,9 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 photo = null;
                 mImageView.setVisibility(View.GONE);
                 break;
+            case R.id.txtAddProductImages:
+                dialog.show();
+                break;
         }
 
     }
@@ -439,7 +454,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 params.put("discountedPrice", discountPrice);
                 params.put("tempId", SharedPreferencesManager.getUserID(activity).concat("@").concat(String.valueOf(tempId)));
                 //  params.put("banner","");
-                if (size != 0) {
+                if (photo != null) {
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     photo.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                     byte[] data = bos.toByteArray();
@@ -478,36 +493,41 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                         hideLoader();
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
-                        for (int i = 0; i < cityMasterParsing.getBrandDetailArrayList().size(); i++) {
-                            brandList.add(cityMasterParsing.getBrandDetailArrayList().get(i).getName().trim());
-                        }
-                        if (brandList.size() > 0) {
-                            brandArray = new String[brandList.size()];
-                            brandList.toArray(brandArray);
+                        if (cityMasterParsing.getStatus().equals("true")) {
+                            if (cityMasterParsing.getBrandDetailArrayList().size() > 0) {
+                                for (int i = 0; i < cityMasterParsing.getBrandDetailArrayList().size(); i++) {
+                                    brandList.add(cityMasterParsing.getBrandDetailArrayList().get(i).getName().trim());
+                                }
+                                if (brandList.size() > 0) {
+                                    brandArray = new String[brandList.size()];
+                                    brandList.toArray(brandArray);
 
-                            if (brandList != null && brandList.size() > 0) {
-                                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                builder.setTitle("Select Brand");
-                                builder.setNegativeButton(android.R.string.cancel, null);
-                                builder.setItems(brandArray, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int item) {
-                                        // Do something with the selection
-                                        txtChooseBrand.setText(brandArray[item]);
-                                        int index = Arrays.asList(brandArray).indexOf(brandArray[item]);
-                                        ;
-                                        brandId = cityMasterParsing.getBrandDetailArrayList().get(index).getId();
-                                        // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                        Log.e("brandId", brandId + "\t" + index);
-                                        dialog.dismiss();
+                                    if (brandList != null && brandList.size() > 0) {
+                                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                                        builder.setTitle("Select Brand");
+                                        builder.setNegativeButton(android.R.string.cancel, null);
+                                        builder.setItems(brandArray, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                // Do something with the selection
+                                                txtChooseBrand.setText(brandArray[item]);
+                                                int index = Arrays.asList(brandArray).indexOf(brandArray[item]);
+                                                ;
+                                                brandId = cityMasterParsing.getBrandDetailArrayList().get(index).getId();
+                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
+                                                Log.e("brandId", brandId + "\t" + index);
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.create();
+                                        builder.show();
                                     }
-                                });
-                                builder.create();
-                                builder.show();
+                                }
+                            } else {
+                                showDialogMethod("No brand found\nplease add some brands");
                             }
                         } else {
-                            showDialogMethod("No brand found");
+                            showDialogMethod("No brand found\nplease add some brands");
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -523,7 +543,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("shopCatId", catId);
                 params.put("shopSubCatId", subCatId);
-                params.put("shopId",SharedPreferencesManager.getUserID(activity));
+                params.put("shopId", SharedPreferencesManager.getUserID(activity));
                 return params;
             }
 
@@ -547,45 +567,47 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("MasterTags", response);
+                        Log.e("cat", response);
                         hideLoader();
                         final OfferCategoryresponse countryMasterApiParsing = new OfferCategoryresponse();
                         countryMasterApiParsing.responseImplement(response);
-                        if (countryMasterApiParsing.getSetShopCategoryDetailsArrayList().size() > 0) {
-                            for (int i = 0; i < countryMasterApiParsing.getSetShopCategoryDetailsArrayList().size(); i++) {
-                                categoryList.add(countryMasterApiParsing.getSetShopCategoryDetailsArrayList().get(i).getOfferCategory().trim());
-                            }
-                            if (categoryList.size() > 0) {
-                                categoryArray = new String[categoryList.size()];
-                                categoryList.toArray(categoryArray);
+                        if (countryMasterApiParsing.getStatus().equals("true")) {
+                            if (countryMasterApiParsing.getSetShopCategoryDetailsArrayList().size() > 0) {
+                                for (int i = 0; i < countryMasterApiParsing.getSetShopCategoryDetailsArrayList().size(); i++) {
+                                    categoryList.add(countryMasterApiParsing.getSetShopCategoryDetailsArrayList().get(i).getOfferCategory().trim());
+                                }
+                                if (categoryList.size() > 0) {
+                                    categoryArray = new String[categoryList.size()];
+                                    categoryList.toArray(categoryArray);
 
-                                if (categoryList != null && categoryList.size() > 0) {
-                                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                    builder.setTitle("Select Category");
-                                    builder.setNegativeButton(android.R.string.cancel, null);
-                                    builder.setItems(categoryArray, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int item) {
-                                            // Do something with the selection
-                                            txtChooseCategory.setText(categoryArray[item]);
-                                            txtChooseSubCategory.setText("Choose subcategory");
-                                            txtChooseBrand.setText("Choose Brand");
-                                            int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
-                                            ;
-                                            catId = countryMasterApiParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
-                                            // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                            Log.e("catId", catId + "\t" + index);
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    builder.create();
-                                    builder.show();
+                                    if (categoryList != null && categoryList.size() > 0) {
+                                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                                        builder.setTitle("Select Category");
+                                        builder.setNegativeButton(android.R.string.cancel, null);
+                                        builder.setItems(categoryArray, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                // Do something with the selection
+                                                txtChooseCategory.setText(categoryArray[item]);
+                                                txtChooseSubCategory.setText("Choose subcategory");
+                                                txtChooseBrand.setText("Choose Brand");
+                                                int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
+                                                ;
+                                                catId = countryMasterApiParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
+                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
+                                                Log.e("catId", catId + "\t" + index);
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.create();
+                                        builder.show();
+                                    }
                                 }
                             } else {
-                                showDialogMethod("No Category found");
+                                showDialogMethod("No Category found\nPlease add some categories");
                             }
+                        } else {
+                            showDialogMethod("No Category found\nPlease add some categories");
                         }
-
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -627,31 +649,37 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                         hideLoader();
                         final OfferCategoryresponse cityMasterParsing = new OfferCategoryresponse();
                         cityMasterParsing.responseImplement(response);
-                        for (int i = 0; i < cityMasterParsing.getSetShopCategoryDetailsArrayList().size(); i++) {
-                            suCatList.add(cityMasterParsing.getSetShopCategoryDetailsArrayList().get(i).getOfferCategory().trim());
-                        }
-                        if (suCatList.size() > 0) {
-                            suCatArray = new String[suCatList.size()];
-                            suCatList.toArray(suCatArray);
+                        if (cityMasterParsing.getStatus().equals("true")) {
+                            if (cityMasterParsing.getSetShopCategoryDetailsArrayList().size() > 0) {
+                                for (int i = 0; i < cityMasterParsing.getSetShopCategoryDetailsArrayList().size(); i++) {
+                                    suCatList.add(cityMasterParsing.getSetShopCategoryDetailsArrayList().get(i).getOfferCategory().trim());
+                                }
+                                if (suCatList.size() > 0) {
+                                    suCatArray = new String[suCatList.size()];
+                                    suCatList.toArray(suCatArray);
 
-                            if (suCatList != null && suCatList.size() > 0) {
-                                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                builder.setTitle("Select Subcategory");
-                                builder.setNegativeButton(android.R.string.cancel, null);
-                                builder.setItems(suCatArray, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int item) {
-                                        txtChooseSubCategory.setText(suCatArray[item]);
-                                        int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
-                                        subCatId = cityMasterParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
-                                        Log.e("subCatId", subCatId + "\t" + index);
-                                        dialog.dismiss();
+                                    if (suCatList != null && suCatList.size() > 0) {
+                                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                                        builder.setTitle("Select Subcategory");
+                                        builder.setNegativeButton(android.R.string.cancel, null);
+                                        builder.setItems(suCatArray, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                txtChooseSubCategory.setText(suCatArray[item]);
+                                                int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
+                                                subCatId = cityMasterParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
+                                                Log.e("subCatId", subCatId + "\t" + index);
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.create();
+                                        builder.show();
                                     }
-                                });
-                                builder.create();
-                                builder.show();
+                                }
+                            } else {
+                                showDialogMethod("No Subcategory found\nplease add some subcategory");
                             }
                         } else {
-                            showDialogMethod("No Subcategory found");
+                            showDialogMethod("No Subcategory found\nplease add some subcategory");
                         }
 
                     }
@@ -746,7 +774,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
             public void onClick(DialogInterface dialog, int item) { // pick from
                 // camera
                 if (item == 0) {
-
+                    // methodCameraPermissions();
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     mImageCaptureUri = Uri.fromFile(new File(Environment
                             .getExternalStorageDirectory(), "tmp_avatar_"
@@ -763,6 +791,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     } catch (ActivityNotFoundException e) {
                         e.printStackTrace();
                     }
+
                 } else {
                     // pick from file
                     Intent intent = new Intent();
@@ -847,11 +876,17 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                  */
                 if (extras != null) {
                     photo = extras.getParcelable("data");
-                    mImageView.setVisibility(View.VISIBLE);
-                    mImageView.setImageBitmap(photo);
+                    if (photo != null) {
+                        mImageView.setVisibility(View.VISIBLE);
+                        mImageView.setImageBitmap(photo);
+                    }
+
+                } else {
+
                 }
 
                 File f = new File(mImageCaptureUri.getPath());
+
                 /**
                  * Delete the temporary image
                  */
@@ -865,12 +900,24 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void doCrop() {
         final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
+        /**
+         * Open image crop app by starting an intent
+         * �com.android.camera.action.CROP�.
+         */
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setType("image/*");
+
+        /**
+         * Check if there is image cropper app installed.
+         */
         List<ResolveInfo> list = activity.getPackageManager().queryIntentActivities(
                 intent, 0);
 
-        size = list.size();
+        int size = list.size();
+
+        /**
+         * If there is no image cropper app, display warning message
+         */
         if (size == 0) {
 
             Toast.makeText(activity, "Can not find image crop app",
@@ -878,71 +925,70 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
             return;
         } else {
+            /**
+             * Specify the image path, crop dimension and scale
+             */
             intent.setData(mImageCaptureUri);
 
-            intent.putExtra("outputX", 900);
-            intent.putExtra("outputY", 300);
+            intent.putExtra("outputX", 600);
+            intent.putExtra("outputY", 400);
             intent.putExtra("aspectX", 3);
             intent.putExtra("aspectY", 2);
-            intent.putExtra("scale", true);
+          //  intent.putExtra("scale", true);
             intent.putExtra("return-data", true);
+            /**
+             * There is posibility when more than one image cropper app exist,
+             * so we have to check for it first. If there is only one app, open
+             * then app.
+             */
+            for (ResolveInfo res : list) {
+                final CropOption co = new CropOption();
 
-            if (size == 1) {
-                Intent i = new Intent(intent);
-                ResolveInfo res = list.get(0);
+                co.title = activity.getPackageManager().getApplicationLabel(
+                        res.activityInfo.applicationInfo);
+                co.icon = activity.getPackageManager().getApplicationIcon(
+                        res.activityInfo.applicationInfo);
+                co.appIntent = new Intent(intent);
 
-                i.setComponent(new ComponentName(res.activityInfo.packageName,
-                        res.activityInfo.name));
+                co.appIntent
+                        .setComponent(new ComponentName(
+                                res.activityInfo.packageName,
+                                res.activityInfo.name));
 
-                startActivityForResult(i, CROP_FROM_CAMERA);
-            } else {
-                for (ResolveInfo res : list) {
-                    final CropOption co = new CropOption();
-
-                    co.title = activity.getPackageManager().getApplicationLabel(
-                            res.activityInfo.applicationInfo);
-                    co.icon = activity.getPackageManager().getApplicationIcon(
-                            res.activityInfo.applicationInfo);
-                    co.appIntent = new Intent(intent);
-
-                    co.appIntent
-                            .setComponent(new ComponentName(
-                                    res.activityInfo.packageName,
-                                    res.activityInfo.name));
-
-                    cropOptions.add(co);
-                }
-
-                CropOptionAdapter adapter = new CropOptionAdapter(
-                        activity, cropOptions);
-
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                builder.setTitle("Choose Crop App");
-                builder.setAdapter(adapter,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                startActivityForResult(
-                                        cropOptions.get(item).appIntent,
-                                        CROP_FROM_CAMERA);
-                            }
-                        });
-
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-
-                        if (mImageCaptureUri != null) {
-//                            activity.getContentResolver().delete(mImageCaptureUri, null,null);
-                            mImageCaptureUri = null;
-                        }
-                    }
-                });
-
-                android.app.AlertDialog alert = builder.create();
-
-                alert.show();
+                cropOptions.add(co);
+                break;
             }
+
+            CropOptionAdapter adapter = new CropOptionAdapter(
+                    activity, cropOptions);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setTitle("Choose Crop App");
+            builder.setAdapter(adapter,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            startActivityForResult(
+                                    cropOptions.get(item).appIntent,
+                                    CROP_FROM_CAMERA);
+                        }
+                    });
+
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                    if (mImageCaptureUri != null) {
+                        // getContentResolver().delete(mImageCaptureUri, null, null);
+                        mImageCaptureUri = null;
+                    }
+                }
+            });
+
+            AlertDialog alert = builder.create();
+
+            alert.show();
         }
+        //}
     }
 
     private void persentType() {
@@ -958,5 +1004,24 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         });
         builder.create();
         builder.show();
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    return;
+
+
+                }
+
+
+            }
+        }
     }
 }

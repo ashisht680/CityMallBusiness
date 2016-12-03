@@ -12,11 +12,17 @@
     <color name="orange_color">#ff9a7f</color>
     <color name="tab_text_color">#a1a1a1</color>
     <color name="yellow_color">#F2E230</color>
-    <color name="toolbar_color">#1da6b9</color>
-    <color name="background_color">#ed6269</color>
+    <!--  <color name="toolbar_color">#1da6b9</color>-->
+    <color name="toolbar_color">#ff6326</color>
+    <!--<color name="background_color">#ed6269</color>-->
+    <color name="background_color">#d6ecf9</color>
     <color name="highlight_color">#4a4a4a</color>
     <color name="mini_black_color">#191919</color>
     <color name="text_color">#7b7b7b</color>
     <color name="black_transparent_color">#99000000</color>
+    <!--<color name="direction_button_color">#a1161d</color>-->
+    <color name="direction_button_color">#ff6326</color>
     <color name="brown_color">#613535</color>
+    <color name="blue_button_color">#1da6b9</color>
+
 </resources>

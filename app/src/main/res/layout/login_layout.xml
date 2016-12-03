@@ -4,7 +4,7 @@
     android:id="@+id/login_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@color/toolbar_color"
     android:orientation="vertical"
     tools:ignore="NewApi">
 
@@ -55,6 +55,13 @@
             android:nextFocusDown="@+id/et_email"
             android:padding="8dp"
             android:singleLine="true" />
+        <CheckBox
+            android:id="@+id/checkShowPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show password"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/forgot_password"
@@ -78,7 +85,7 @@
                 android:padding="3dp"
                 android:background="@android:color/white"
                 android:text="SIGN IN"
-                android:textColor="@color/background_color"
+                android:textColor="@color/blue_button_color"
                 android:textSize="15dp" />
 
 
@@ -91,8 +98,8 @@
             android:layout_height="35dp"
             android:padding="3dp"
             android:background="@android:color/white"
-            android:text="REGISTER AS NEW USER"
-            android:textColor="@color/background_color"
+            android:text="REGISTER AS NEW SHOP"
+            android:textColor="@color/blue_button_color"
             android:textSize="15dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"

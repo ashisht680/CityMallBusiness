@@ -14,10 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
-            android:background="@drawable/button_border_black_fill_white"
+            android:background="@drawable/button_border_red_fill_white"
             android:padding="5dp"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/toolbar_color"
             android:gravity="center"/>
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtSelectSubCat"
@@ -25,10 +25,10 @@
             android:layout_height="wrap_content"
             android:text="Subcategory"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_border_black_fill_white"
+            android:background="@drawable/button_border_red_fill_white"
             android:padding="5dp"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/toolbar_color"
             android:gravity="center"/>
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtSelectBrand"
@@ -36,10 +36,10 @@
             android:layout_height="wrap_content"
             android:text="Brands"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_border_black_fill_white"
+            android:background="@drawable/button_border_red_fill_white"
             android:padding="5dp"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/toolbar_color"
             android:gravity="center"/>
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_marginTop="20dp"
             android:padding="5dp"
             android:textSize="15sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/blue_button_color"
             android:gravity="center"/>
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/etBrand"
@@ -56,10 +56,10 @@
             android:layout_height="wrap_content"
             android:hint="type brand name"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_border_black_fill_white"
+            android:background="@drawable/button_border_red_fill_white"
             android:padding="5dp"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/toolbar_color"
             android:gravity="center"/>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnSubmit"

@@ -15,35 +15,36 @@ import java.util.ArrayList;
  * Created by Ashish on 26-09-2016.
  */
 public class ShopViewResponse extends ApiBaseData {
-   private String shopid;
-   private String banner;
-   private String storeName;
-   private String ownerName;
-   private String email;
-   private String mobile;
-   private String landline;
-   private String state;
-   private String city;
-   private String address;
-   private String profilepic;
-   private String mallId;
-   private String mallName;
-   private String description;
-   private String mallAddress;
-   private String mallLandmark;
-   private String mallLat;
-   private String mallLong;
-   private String country;
-   private String pincode;
-   private String rating;
-   private String openTime;
-   private String closeTime;
-   private int offerCount;
-   private String distance;
-   private String shopOpenTime;
-   private String shopCloseTime;
-   private String shopNum;
-   private String floor;
+    private String shopid;
+    private String banner;
+    private String storeName;
+    private String ownerName;
+    private String email;
+    private String mobile;
+    private String landline;
+    private String state;
+    private String city;
+    private String address;
+    private String profilepic;
+    private String mallId;
+    private String mallName;
+    private String description;
+    private String mallAddress;
+    private String mallLandmark;
+    private String mallLat;
+    private String mallLong;
+    private String country;
+    private String pincode;
+    private String rating;
+    private String openTime;
+    private String closeTime;
+    private int offerCount;
+    private String distance;
+    private String shopOpenTime;
+    private String shopCloseTime;
+    private String shopNum;
+    private String floor;
+    private String shopfavCount;
 
     private ArrayList<ShopCategoryDetails> shopCategoryDetailsArrayList;
 
@@ -288,6 +289,14 @@ public class ShopViewResponse extends ApiBaseData {
         this.shopNum = shopNum;
     }
 
+    public String getShopfavCount() {
+        return shopfavCount;
+    }
+
+    public void setShopfavCount(String shopfavCount) {
+        this.shopfavCount = shopfavCount;
+    }
+
     public void responseParseMethod(Object response) {
         try {
             JSONObject jsonObject = new JSONObject(response.toString());
@@ -353,7 +362,9 @@ public class ShopViewResponse extends ApiBaseData {
                 setShopNum(jsonObject.optString("ShopNo"));
             if (jsonObject.has("floorNo"))
                 setFloor(jsonObject.optString("floorNo"));
-            if (jsonObject.has("CategoryDetails"))
+            if (jsonObject.has("shopfavCount"))
+                setShopfavCount(jsonObject.optString("shopfavCount"));
+            if (jsonObject.has("CategoryDetails") && jsonObject.optJSONArray("CategoryDetails") != null)
                 setShopCategoryDetailsArrayList(getCategoryListMethod(jsonObject.optJSONArray("CategoryDetails")));
 
 

@@ -48,8 +48,13 @@
                     android:id="@+id/imgProfilePic"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/no_image_icon" />
+                <ImageView
+                    android:id="@+id/imgProfilePicNotFound"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@drawable/no_image_icon"
+                    android:visibility="visible"/>
 
                 <RelativeLayout
                     android:id="@+id/rlUpadteImg"
@@ -63,8 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@mipmap/ic_launcher" />
-                    <include layout="@layout/common_progressbar"/>
+                        android:src="@android:drawable/ic_menu_camera" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
@@ -123,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -137,7 +141,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Owner"
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -153,7 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img0"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:hint="Owner name"
                         android:inputType="text"
@@ -170,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -184,7 +188,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Email"
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -200,7 +204,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img1"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:hint="abcdefg@xyz.com"
                         android:inputType="textEmailAddress"
@@ -217,7 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -231,7 +235,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Mobile no."
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -247,7 +251,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img2"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:hint="mobile number"
                         android:inputType="phone"
@@ -263,7 +267,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -277,7 +281,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Landline no."
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -293,7 +297,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img3"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:hint="landline number"
                         android:singleLine="true"
@@ -307,7 +311,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -321,7 +325,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="State"
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -337,7 +341,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img4"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:clickable="true"
                         android:cursorVisible="false"
@@ -355,7 +359,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -369,7 +373,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="City"
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -385,7 +389,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img5"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:hint="city"
                         android:clickable="true"
@@ -403,7 +407,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -417,7 +421,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Mall"
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -433,7 +437,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img6"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:clickable="true"
                         android:cursorVisible="false"
@@ -451,7 +455,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -465,7 +469,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Store no."
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -481,7 +485,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img7"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:hint="store number"
                         android:singleLine="true"
@@ -495,7 +499,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/brown_color">
+                android:background="@color/blue_button_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -509,7 +513,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Floor no."
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -525,7 +529,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img8"
-                        android:background="@color/brown_color"
+                        android:background="@color/blue_button_color"
                         android:gravity="center|left"
                         android:hint="floor number"
                         android:singleLine="true"
@@ -552,7 +556,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Timing"
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -578,7 +582,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@color/brown_color"
+                    android:background="@color/blue_button_color"
                     android:gravity="center"
                     android:clickable="true"
                     android:cursorVisible="false"
@@ -596,7 +600,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:background="@color/brown_color"
+                    android:background="@color/blue_button_color"
                     android:gravity="center"
                     android:clickable="true"
                     android:cursorVisible="false"
@@ -609,7 +613,7 @@
                     android:textSize="15sp"
                     />
             </LinearLayout>
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
@@ -626,7 +630,7 @@
                         android:gravity="center|left"
                         android:paddingLeft="5dp"
                         android:text="Categories"
-                        android:textColor="@color/brown_color"
+                        android:textColor="@color/blue_button_color"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -661,7 +665,7 @@
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/white"
-                android:textSize="14dp" />
+                android:textSize="14dp" />-->
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txtUpdate"

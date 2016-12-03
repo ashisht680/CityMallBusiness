@@ -1,5 +1,6 @@
 package com.javinindia.citymallsbusiness.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -90,15 +91,15 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
     String brandId;
 
     private Uri mImageCaptureUri;
-    private ImageView mImageView;
+    private ImageView mImageView,imgOfferPicNotFound;
     private android.app.AlertDialog dialog;
     private static final int PICK_FROM_CAMERA = 1;
     private static final int CROP_FROM_CAMERA = 2;
     private static final int PICK_FROM_FILE = 3;
-    Bitmap photo;
+    Bitmap photo=null;
     int size = 0;
 
-    String offerId,brandName, brandPic, shopName, mallName, offerRating, offerPic, offerTitle, offerCategory, offerSubCategory, offerPercentType,
+    String offerId, brandName, brandPic, shopName, mallName, offerRating, offerPic, offerTitle, offerCategory, offerSubCategory, offerPercentType,
             offerPercentage, offerActualPrice, offerDiscountPr, offerStartDate, offerCloseDate, offerDescription, shopOpenTime, shopCloseTime;
 
     private OnCallBackUpdateOfferListener callbackUpdateOffer;
@@ -152,9 +153,13 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void setDateMethod() {
-      /*  AppCompatTextView txtChooseCategory, txtAddProductImages, btnStartTime, btnEndTime, txtChooseSubCategory, txtChooseBrand,
-                txtChoosePercent, txtAdditional, txtEnterPercentTitle, txtOr, txtEnterPriceTitle, txtTitle, txtTitleDisc;
-        AppCompatEditText etProductTitle, etProductDescription, etPercentage, etActualPrice, etDiscountPrice;*/
+        if (!TextUtils.isEmpty(offerPic)){
+            mImageView.setVisibility(View.VISIBLE);
+            Utility.imageLoadGlideLibraryPic(activity, imgOfferPicNotFound, mImageView, offerPic);
+        }else {
+            mImageView.setVisibility(View.GONE);
+        }
+
         if (!TextUtils.isEmpty(offerCategory))
             txtChooseCategory.setText(offerCategory);
         if (!TextUtils.isEmpty(offerSubCategory))
@@ -169,7 +174,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
             btnStartTime.setText(offerStartDate);
         if (!TextUtils.isEmpty(offerCloseDate))
             btnEndTime.setText(offerCloseDate);
-        if (!TextUtils.isEmpty(offerPercentType)){
+        if (!TextUtils.isEmpty(offerPercentType)) {
             txtChoosePercent.setText(offerPercentType);
 
             checkboxPrise.setChecked(false);
@@ -215,6 +220,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void initialize(View view) {
+        imgOfferPicNotFound = (ImageView)view.findViewById(R.id.imgOfferPicNotFound);
         mImageView = (ImageView) view.findViewById(R.id.ivImage);
         checkboxPercent = (CheckBox) view.findViewById(R.id.checkboxPercent);
         checkboxPrise = (CheckBox) view.findViewById(R.id.checkboxPrise);
@@ -394,8 +400,11 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                 }
                 break;
             case R.id.ivImage:
-                photo = null;
-                mImageView.setVisibility(View.GONE);
+               // photo = null;
+               // mImageView.setVisibility(View.GONE);
+                break;
+            case R.id.txtAddProductImages:
+                dialog.show();
                 break;
         }
 
@@ -499,7 +508,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("offerid",offerId);
+                params.put("offerid", offerId);
                 params.put("shopId", SharedPreferencesManager.getUserID(activity));
                 params.put("offerTitle", title);
                 params.put("offerDescription", desc);
@@ -515,14 +524,14 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                 params.put("discountedPrice", discountPrice);
                 params.put("tempId", SharedPreferencesManager.getUserID(activity).concat("@").concat(String.valueOf(tempId)));
                 //  params.put("banner","");
-                if (size != 0) {
+                if (photo != null) {
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     photo.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                     byte[] data = bos.toByteArray();
                     String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
                     params.put("bimg", encodedImage + "image/jpeg");
                 } else {
-                    params.put("bimg", "");
+                    params.put("bimg", offerPic);
                 }
 
 
@@ -922,11 +931,18 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                  */
                 if (extras != null) {
                     photo = extras.getParcelable("data");
-                    mImageView.setVisibility(View.VISIBLE);
-                    mImageView.setImageBitmap(photo);
+                    if (photo != null) {
+                        imgOfferPicNotFound.setImageBitmap(photo);
+                        mImageView.setImageBitmap(photo);
+
+                    }
+
+                } else {
+
                 }
 
                 File f = new File(mImageCaptureUri.getPath());
+
                 /**
                  * Delete the temporary image
                  */
@@ -940,12 +956,24 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void doCrop() {
         final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
+        /**
+         * Open image crop app by starting an intent
+         * �com.android.camera.action.CROP�.
+         */
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setType("image/*");
+
+        /**
+         * Check if there is image cropper app installed.
+         */
         List<ResolveInfo> list = activity.getPackageManager().queryIntentActivities(
                 intent, 0);
 
-        size = list.size();
+        int size = list.size();
+
+        /**
+         * If there is no image cropper app, display warning message
+         */
         if (size == 0) {
 
             Toast.makeText(activity, "Can not find image crop app",
@@ -953,71 +981,70 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
 
             return;
         } else {
+            /**
+             * Specify the image path, crop dimension and scale
+             */
             intent.setData(mImageCaptureUri);
 
-            intent.putExtra("outputX", 900);
-            intent.putExtra("outputY", 300);
-            intent.putExtra("aspectX", 3);
-            intent.putExtra("aspectY", 2);
-            intent.putExtra("scale", true);
+            intent.putExtra("outputX", 200);
+            intent.putExtra("outputY", 200);
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            //  intent.putExtra("scale", true);
             intent.putExtra("return-data", true);
+            /**
+             * There is posibility when more than one image cropper app exist,
+             * so we have to check for it first. If there is only one app, open
+             * then app.
+             */
+            for (ResolveInfo res : list) {
+                final CropOption co = new CropOption();
 
-            if (size == 1) {
-                Intent i = new Intent(intent);
-                ResolveInfo res = list.get(0);
+                co.title = activity.getPackageManager().getApplicationLabel(
+                        res.activityInfo.applicationInfo);
+                co.icon = activity.getPackageManager().getApplicationIcon(
+                        res.activityInfo.applicationInfo);
+                co.appIntent = new Intent(intent);
 
-                i.setComponent(new ComponentName(res.activityInfo.packageName,
-                        res.activityInfo.name));
+                co.appIntent
+                        .setComponent(new ComponentName(
+                                res.activityInfo.packageName,
+                                res.activityInfo.name));
 
-                startActivityForResult(i, CROP_FROM_CAMERA);
-            } else {
-                for (ResolveInfo res : list) {
-                    final CropOption co = new CropOption();
-
-                    co.title = activity.getPackageManager().getApplicationLabel(
-                            res.activityInfo.applicationInfo);
-                    co.icon = activity.getPackageManager().getApplicationIcon(
-                            res.activityInfo.applicationInfo);
-                    co.appIntent = new Intent(intent);
-
-                    co.appIntent
-                            .setComponent(new ComponentName(
-                                    res.activityInfo.packageName,
-                                    res.activityInfo.name));
-
-                    cropOptions.add(co);
-                }
-
-                CropOptionAdapter adapter = new CropOptionAdapter(
-                        activity, cropOptions);
-
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                builder.setTitle("Choose Crop App");
-                builder.setAdapter(adapter,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                startActivityForResult(
-                                        cropOptions.get(item).appIntent,
-                                        CROP_FROM_CAMERA);
-                            }
-                        });
-
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-
-                        if (mImageCaptureUri != null) {
-//                            activity.getContentResolver().delete(mImageCaptureUri, null,null);
-                            mImageCaptureUri = null;
-                        }
-                    }
-                });
-
-                android.app.AlertDialog alert = builder.create();
-
-                alert.show();
+                cropOptions.add(co);
+                break;
             }
+
+            CropOptionAdapter adapter = new CropOptionAdapter(
+                    activity, cropOptions);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setTitle("Choose Crop App");
+            builder.setAdapter(adapter,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            startActivityForResult(
+                                    cropOptions.get(item).appIntent,
+                                    CROP_FROM_CAMERA);
+                        }
+                    });
+
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                    if (mImageCaptureUri != null) {
+                        // getContentResolver().delete(mImageCaptureUri, null, null);
+                        mImageCaptureUri = null;
+                    }
+                }
+            });
+
+            AlertDialog alert = builder.create();
+
+            alert.show();
         }
+        //}
     }
 
     private void persentType() {

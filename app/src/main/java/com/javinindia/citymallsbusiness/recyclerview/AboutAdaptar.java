@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -28,6 +29,7 @@ import com.javinindia.citymallsbusiness.utility.Utility;
 import com.javinindia.citymallsbusiness.volleycustomrequest.VolleySingleTon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -40,11 +42,11 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
     MyClickListener myClickListener;
     ArrayList<CountryModel> countryModelArrayList;
     private String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sPic;
-    private String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance, sbanner;
+    private String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance, sbanner, shopfavCount, sFloor, sNo;
     private int offerCount;
     ArrayList arrayList;
 
-    public AboutAdaptar(Context Scontext, String storeName, String ownerName, String Email, String MobileNum, String Landline, String State, String City, String storeAddress, String mallName, String mallAddress, String Lat, String Long, String storePic, String storeCountry, String storePincode, String storeRating, String storeOpenTime, String storeCloseTime, String storeDistance, int storeOfferCount, String banner, ArrayList sPostUrl) {
+    public AboutAdaptar(Context Scontext, String floor, String shopNum, String storefavCount, String storeName, String ownerName, String Email, String MobileNum, String Landline, String State, String City, String storeAddress, String mallName, String mallAddress, String Lat, String Long, String storePic, String storeCountry, String storePincode, String storeRating, String storeOpenTime, String storeCloseTime, String storeDistance, int storeOfferCount, String banner, ArrayList sPostUrl) {
         this.context = Scontext;
         this.country = storeCountry;
         this.closeTime = storeCloseTime;
@@ -68,6 +70,9 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         this.sState = State;
         this.sbanner = banner;
         this.arrayList = sPostUrl;
+        this.shopfavCount = storefavCount;
+        this.sFloor = floor;
+        this.sNo = shopNum;
     }
 
 
@@ -84,14 +89,15 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         //***********************Recent list
         public AppCompatTextView txtShopName, txtSubCategoryItem, txtOfferTitle, txtOfferCategoryItem, txtTimingOffer,
                 txtViewItem, txtEditOfferItem, txtOfferTypeOrActualPrice, txtOfferPercentOrDiscountPrice;
-        public RelativeLayout rlMain;
-        public NetworkImageView imgShopLogoOffer;
+        public CardView rlMain;
+        public ImageView imgShopLogoOffer;
         LinearLayout llOffItem;
+        public ProgressBar progressBar;
 
         //********************** about header
-        ProgressBar progressBar;
+        ProgressBar progressBarHed;
         ImageView profileImageView, imgBannerAbout;
-        public AppCompatTextView txtShopNameHeader, txtTimingHeader, txtRatingAbout, txtLocationHeader, txtCategoryHeader, txtFaverateCountHeader;
+        public AppCompatTextView txtShopNameHeader, txtTimingHeader, txtRatingAbout, txtLocationHeader, txtCategoryHeader, txtFaverateCountHeader, txtOffersAbout;
         public AppCompatButton btnEditProfile, btnAllOffer, btnAddCategory;
         public RatingBar ratingBarAbout;
         RecyclerView catRecyclerView;
@@ -101,6 +107,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             super(itemLayoutView);
 
             if (ViewType == TYPE_ITEM) {
+                progressBar = (ProgressBar) itemLayoutView.findViewById(R.id.progress);
                 txtShopName = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtShopName);
                 txtShopName.setTypeface(FontAsapBoldSingleTonClass.getInstance(context).getTypeFace());
                 txtSubCategoryItem = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtSubCategoryItem);
@@ -120,13 +127,13 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 txtOfferTypeOrActualPrice.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 txtOfferPercentOrDiscountPrice = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtOfferPercentOrDiscountPrice);
                 txtOfferPercentOrDiscountPrice.setTypeface(FontAsapBoldSingleTonClass.getInstance(context).getTypeFace());
-                imgShopLogoOffer = (NetworkImageView) itemLayoutView.findViewById(R.id.imgShopLogoOffer);
-                rlMain = (RelativeLayout) itemLayoutView.findViewById(R.id.rlMain);
+                imgShopLogoOffer = (ImageView) itemLayoutView.findViewById(R.id.imgShopLogoOffer);
+                rlMain = (CardView) itemLayoutView.findViewById(R.id.rlMain);
                 holderId = 1;
             } else {
                 profileImageView = (ImageView) itemLayoutView.findViewById(R.id.imgShopLogoAbout);
                 imgBannerAbout = (ImageView) itemLayoutView.findViewById(R.id.imgBannerAbout);
-                progressBar = (ProgressBar) itemLayoutView.findViewById(R.id.progress);
+                progressBarHed = (ProgressBar) itemLayoutView.findViewById(R.id.progress);
                 txtShopNameHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtShopNameAbout);
                 txtShopNameHeader.setTypeface(FontAsapBoldSingleTonClass.getInstance(context).getTypeFace());
                 txtTimingHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtTimingAbout);
@@ -147,6 +154,8 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 catRecyclerView = (RecyclerView) itemLayoutView.findViewById(R.id.recyclerviewCategory);
                 btnAddCategory = (AppCompatButton) itemLayoutView.findViewById(R.id.btnAddCategory);
                 btnAddCategory.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
+                txtOffersAbout = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtOffersAbout);
+                txtOffersAbout.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 holderId = 0;
             }
         }
@@ -173,48 +182,59 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         VolleySingleTon volleySingleTon = VolleySingleTon.getInstance(context);
         if (viewHolder.holderId == 1) {
             final DetailsList requestDetail = (DetailsList) list.get(position - 1);
-            String brandName = requestDetail.getOfferBrandDetails().getBrandName().trim();
-            String subCategory = requestDetail.getOfferDetails().getOfferSubcategory().trim();
-            String offerTitle = requestDetail.getOfferDetails().getOfferTitle().trim();
-            String category = requestDetail.getOfferDetails().getOfferCategory().trim();
-            String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
-            String offerPercent = requestDetail.getOfferDetails().getOfferPercentage().trim();
-            String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
-            String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
-            String brandLogo = requestDetail.getOfferBrandDetails().getBrandLogo().trim();
-            String openTime = requestDetail.getOfferDetails().getOfferOpenDate().trim();
-            String closeTime = requestDetail.getOfferDetails().getOfferCloseDate().trim();
 
-            if (!TextUtils.isEmpty(brandName)) {
-                viewHolder.txtShopName.setText(brandName);
+            if (!TextUtils.isEmpty(requestDetail.getOfferBrandDetails().getBrandName().trim())) {
+                String brandName = requestDetail.getOfferBrandDetails().getBrandName().trim();
+                viewHolder.txtShopName.setText(Html.fromHtml(brandName));
             }
-            if (!TextUtils.isEmpty(subCategory)) {
-                viewHolder.txtSubCategoryItem.setText(subCategory);
+            if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferSubcategory().trim())) {
+                String subCategory = requestDetail.getOfferDetails().getOfferSubcategory().trim();
+                viewHolder.txtSubCategoryItem.setText(Html.fromHtml(subCategory));
             }
-            if (!TextUtils.isEmpty(offerTitle)) {
-                viewHolder.txtOfferTitle.setText(offerTitle);
+            if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferTitle().trim())) {
+                String offerTitle = requestDetail.getOfferDetails().getOfferTitle().trim();
+                viewHolder.txtOfferTitle.setText(Html.fromHtml(offerTitle));
             }
-            if (!TextUtils.isEmpty(category)) {
-                viewHolder.txtOfferCategoryItem.setText("on " + category);
+            if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferCategory().trim())) {
+                String category = requestDetail.getOfferDetails().getOfferCategory().trim();
+                viewHolder.txtOfferCategoryItem.setText(Html.fromHtml("on " + category));
             }
-            if (!TextUtils.isEmpty(openTime) && !TextUtils.isEmpty(closeTime)) {
+            if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferOpenDate().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferCloseDate().trim())) {
+                String openTime = requestDetail.getOfferDetails().getOfferOpenDate().trim();
+                String closeTime = requestDetail.getOfferDetails().getOfferCloseDate().trim();
                 viewHolder.txtTimingOffer.setText(openTime + " till " + closeTime);
+            } else {
+                viewHolder.txtTimingOffer.setText("Timing: Not found");
             }
-            if (!TextUtils.isEmpty(offerType) && !TextUtils.isEmpty(offerPercent)) {
+            if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
+                String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
+                String offerPercent = requestDetail.getOfferDetails().getOfferPercentage().trim();
                 viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#b94115"));
                 viewHolder.txtOfferTypeOrActualPrice.setText(offerType);
                 viewHolder.txtOfferTypeOrActualPrice.setPaintFlags(viewHolder.txtOfferTypeOrActualPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 viewHolder.txtOfferPercentOrDiscountPrice.setText(offerPercent + "% off");
             } else {
-                if (!TextUtils.isEmpty(offerActualPrice) && !TextUtils.isEmpty(offerDiscountPrice)) {
+                if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim())) {
+                    String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
+                    String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
                     viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#1da6b9"));
                     viewHolder.txtOfferTypeOrActualPrice.setText("Rs " + offerActualPrice + "/-");
                     viewHolder.txtOfferTypeOrActualPrice.setPaintFlags(viewHolder.txtOfferTypeOrActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     viewHolder.txtOfferPercentOrDiscountPrice.setText("Rs " + offerDiscountPrice + "/-");
                 }
             }
-            if (!TextUtils.isEmpty(brandLogo)) {
-                viewHolder.imgShopLogoOffer.setImageUrl(brandLogo, volleySingleTon.getImageLoader());
+            if (!TextUtils.isEmpty(requestDetail.getOfferBrandDetails().getBrandLogo().trim())) {
+                String brandLogo = requestDetail.getOfferBrandDetails().getBrandLogo().trim();
+                Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.imgShopLogoOffer, brandLogo);
+            } else {
+                viewHolder.imgShopLogoOffer.setImageResource(R.drawable.no_image_icon);
+            }
+
+            if (!TextUtils.isEmpty(requestDetail.getOfferViewCount().trim())) {
+                String offerViewCount = requestDetail.getOfferViewCount().trim();
+                viewHolder.txtViewItem.setText(offerViewCount + " view");
+            } else {
+                viewHolder.txtViewItem.setText("No views");
             }
 
             viewHolder.rlMain.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +251,13 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 }
             });
 
+            viewHolder.txtViewItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myClickListener.onViewClick(position, requestDetail);
+                }
+            });
+
 
         } else {
 
@@ -242,25 +269,53 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             }
             viewHolder.catRecyclerView.setAdapter(shopCategoryAdaptar);
             if (!TextUtils.isEmpty(sName)) {
-                viewHolder.txtShopNameHeader.setText(sName);
+                viewHolder.txtShopNameHeader.setText(Html.fromHtml(sName));
+            } else {
+                viewHolder.txtShopNameHeader.setText("Shop name: Not found");
             }
             if (!TextUtils.isEmpty(openTime)) {
-               // viewHolder.txtTimingHeader.setText("Timing:"+openTime + " to " + closeTime);
-                 viewHolder.txtTimingHeader.setText((Html.fromHtml("<font color=#7b7b7b>" + "Timing:" + "</font>" + " " + "<font color=#ffffff>" + openTime + " - " + closeTime + "</font>")));
+                viewHolder.txtTimingHeader.setText((Html.fromHtml("<font color=#ffffff>" + "Timing:" + "</font>" + " " + "<font color=#ffffff>" + openTime + " - " + closeTime + "</font>")));
+            } else {
+                viewHolder.txtTimingHeader.setText("Timing: Not found");
+            }
+            final ArrayList<String> data = new ArrayList<>();
+            if (!TextUtils.isEmpty(sNo)) {
+                data.add(sNo);
+            }
+            if (!TextUtils.isEmpty(sFloor)) {
+                data.add(sFloor + " floor");
             }
             if (!TextUtils.isEmpty(sAddress)) {
-                viewHolder.txtLocationHeader.setText(sAddress + "," + sCity + "," + sState);
+                data.add(sAddress);
+            }
+            if (!TextUtils.isEmpty(sCity)) {
+                data.add(sCity);
+            }
+            if (!TextUtils.isEmpty(sState)) {
+                data.add(sState);
             }
 
-            if (!TextUtils.isEmpty(sPic))
-                Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.profileImageView, sPic);
-            if (!TextUtils.isEmpty(sbanner))
-                Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.imgBannerAbout, sbanner);
+            if (data.size() > 0) {
+                String str = Arrays.toString(data.toArray());
+                String test = str.replaceAll("[\\[\\](){}]", "");
+                viewHolder.txtLocationHeader.setText(Html.fromHtml(test));
+            } else {
+                viewHolder.txtLocationHeader.setText("Address: Not found");
+            }
 
-            if (!TextUtils.isEmpty(rating) && !rating.equals("0"))
+            if (!TextUtils.isEmpty(sPic)) {
+                Utility.imageLoadGlideLibrary(context, viewHolder.progressBarHed, viewHolder.profileImageView, sPic);
+            } else {
+                viewHolder.profileImageView.setImageResource(R.drawable.no_image_icon);
+            }
+
+            if (!TextUtils.isEmpty(rating) && !rating.equals("0")) {
                 viewHolder.ratingBarAbout.setRating(Float.valueOf(rating));
-                viewHolder.txtRatingAbout.setText("Rating:"+rating+"/5");
-
+                viewHolder.txtRatingAbout.setText("Rating: " + rating + "/5");
+            } else {
+                viewHolder.ratingBarAbout.setRating(Float.valueOf("0"));
+                viewHolder.txtRatingAbout.setText("Rating: 0/5");
+            }
             viewHolder.btnEditProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -282,6 +337,22 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 }
             });
 
+            if (!TextUtils.isEmpty(shopfavCount)) {
+                viewHolder.txtFaverateCountHeader.setText(shopfavCount);
+            } else {
+                viewHolder.txtFaverateCountHeader.setText("0");
+            }
+
+            if (offerCount != 0) {
+                if (offerCount == 1) {
+                    viewHolder.txtOffersAbout.setText(offerCount + " Offer");
+                } else {
+                    viewHolder.txtOffersAbout.setText(offerCount + " Offers");
+                }
+
+            } else {
+                viewHolder.txtOffersAbout.setText("No offers");
+            }
 
         }
     }
@@ -312,6 +383,8 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         void onOfferClick(int position, DetailsList detailsList);
 
         void onOfferEditClick(int position, DetailsList detailsList);
+
+        void onViewClick(int position, DetailsList detailsList);
 
     }
 

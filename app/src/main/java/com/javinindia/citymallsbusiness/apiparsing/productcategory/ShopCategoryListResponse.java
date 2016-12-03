@@ -30,10 +30,8 @@ public class ShopCategoryListResponse extends ApiBaseData {
             JSONObject jsonObject = new JSONObject(response.toString());
             setMsg(jsonObject.optString("msg"));
             setStatus(jsonObject.optString("status"));
-            if (jsonObject.optString("status").equals("true") && jsonObject.has("shopCategoryList"))
+            if (jsonObject.optString("status").equals("true") && jsonObject.has("shopCategoryList") && jsonObject.optJSONArray("shopCategoryList")!=null)
                 setShopCategoryListArrayList(getshopCategoryDetailMethod(jsonObject.optJSONArray("shopCategoryList")));
-
-            Log.d("Response", this.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -51,7 +49,7 @@ public class ShopCategoryListResponse extends ApiBaseData {
                 categoryList.setShopCatId(jsonObject.optString("shopCatId"));
             if (jsonObject.has("shopCategory"))
                 categoryList.setShopCategory(jsonObject.optString("shopCategory"));
-            if (jsonObject.has("shopSubCatDetail"))
+            if (jsonObject.has("shopSubCatDetail") && jsonObject.optJSONArray("shopSubCatDetail")!=null)
                 categoryList.setSubCatDetailArrayList(getshopSubCatDetailMethod(jsonObject.optJSONArray("shopSubCatDetail")));
 
             wishDetailsArrayList.add(categoryList);

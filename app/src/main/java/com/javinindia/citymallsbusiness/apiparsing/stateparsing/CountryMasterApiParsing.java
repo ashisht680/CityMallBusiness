@@ -28,10 +28,8 @@ public class CountryMasterApiParsing extends ApiBaseData {
             JSONObject jsonObject = new JSONObject(response.toString());
             setMsg(jsonObject.optString("msg"));
             setStatus(jsonObject.optString("status"));
-            if (jsonObject.optString("status").equals("true") &&  jsonObject.has("countryDetail"))
+            if (jsonObject.optString("status").equals("true") && jsonObject.has("countryDetail") && jsonObject.optJSONObject("countryDetail") != null)
                 setCountryDetails(getCountryDetailsMethod(jsonObject.optJSONObject("countryDetail")));
-
-            Log.d("Response", this.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -41,8 +39,8 @@ public class CountryMasterApiParsing extends ApiBaseData {
     private CountryDetails getCountryDetailsMethod(JSONObject countryDetailJsonObject) {
         CountryDetails countryDetails = new CountryDetails();
         if (countryDetailJsonObject.has("country"))
-        countryDetails.setCountry(countryDetailJsonObject.optString("country"));
-        if (countryDetailJsonObject.has("stateDetail"))
+            countryDetails.setCountry(countryDetailJsonObject.optString("country"));
+        if (countryDetailJsonObject.has("stateDetail") && countryDetailJsonObject.optJSONArray("stateDetail") != null)
             countryDetails.setStateDetailsArrayList(getStateArrayListMethod(countryDetailJsonObject.optJSONArray("stateDetail")));
 
         return countryDetails;
@@ -51,12 +49,12 @@ public class CountryMasterApiParsing extends ApiBaseData {
     private ArrayList<StateDetails> getStateArrayListMethod(JSONArray jsonArray) {
         ArrayList<StateDetails> stateDetailsArrayList = new ArrayList<>();
 
-        for (int i = 0; i < jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             StateDetails stateDetails = new StateDetails();
             JSONObject jsonObject = jsonArray.optJSONObject(i);
             if (jsonObject.has("state"))
-            stateDetails.setState(jsonObject.optString("state"));
-            if (jsonObject.has("cityDetail"))
+                stateDetails.setState(jsonObject.optString("state"));
+            if (jsonObject.has("cityDetail") && jsonObject.optJSONArray("cityDetail")!=null)
                 stateDetails.setCityDetailsArrayList(getCityArrayListMethod(jsonObject.optJSONArray("cityDetail")));
 
             stateDetailsArrayList.add(stateDetails);
@@ -66,7 +64,7 @@ public class CountryMasterApiParsing extends ApiBaseData {
 
     private ArrayList<CityDetails> getCityArrayListMethod(JSONArray jsonArray) {
         ArrayList<CityDetails> cityDetailsArrayList = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             CityDetails cityDetails = new CityDetails();
             JSONObject jsonObject = jsonArray.optJSONObject(i);
             if (jsonObject.has("id"))

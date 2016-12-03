@@ -29,7 +29,8 @@ public class OfferCategoryresponse extends ApiBaseData {
             JSONObject jsonObject = new JSONObject(response);
             setStatus(jsonObject.optString("status"));
             setMsg(jsonObject.optString("msg"));
-            setSetShopCategoryDetailsArrayList(offerCategoryList(jsonObject.optJSONArray("offerCategoryDetail")));
+            if (jsonObject.has("offerCategoryDetail") && jsonObject.optJSONArray("offerCategoryDetail") != null)
+                setSetShopCategoryDetailsArrayList(offerCategoryList(jsonObject.optJSONArray("offerCategoryDetail")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -40,8 +41,10 @@ public class OfferCategoryresponse extends ApiBaseData {
         for (int i = 0; i < offerCategoryDetail.length(); i++) {
             OfferCategoryDetail detail = new OfferCategoryDetail();
             JSONObject jsonObject = offerCategoryDetail.optJSONObject(i);
-            detail.setId(jsonObject.optString("id"));
-            detail.setOfferCategory(jsonObject.optString("offerCategory"));
+            if (jsonObject.has("id"))
+                detail.setId(jsonObject.optString("id"));
+            if (jsonObject.has("offerCategory"))
+                detail.setOfferCategory(jsonObject.optString("offerCategory"));
             offerCategoryDetails.add(detail);
         }
         return offerCategoryDetails;

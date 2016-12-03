@@ -13,7 +13,7 @@
         android:padding="5dp"
         android:gravity="center_horizontal"
         android:textSize="15sp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/toolbar_color"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="Shop Categories"/>
@@ -50,7 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         app:backgroundTint="@color/toolbar_color"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_add_white"
         android:layout_margin="8dp" />
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/txtNoData"

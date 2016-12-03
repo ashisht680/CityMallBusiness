@@ -1,5 +1,6 @@
 package com.javinindia.citymallsbusiness.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,9 +25,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
+import com.javinindia.citymallsbusiness.apiparsing.shoperprofileparsing.ShopViewResponse;
+import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.fragments.BaseFragment;
 import com.javinindia.citymallsbusiness.fragments.EditProfileFragment;
+import com.javinindia.citymallsbusiness.fragments.ListShopProductCategoryFragment;
 import com.javinindia.citymallsbusiness.fragments.LocationSearchFragment;
 import com.javinindia.citymallsbusiness.fragments.LoginFragment;
 import com.javinindia.citymallsbusiness.fragments.NavigationAboutFragment;
@@ -32,24 +45,22 @@ import com.javinindia.citymallsbusiness.fragments.OffersFragment;
 import com.javinindia.citymallsbusiness.fragments.VisitFragment;
 import com.javinindia.citymallsbusiness.picasso.CircleTransform;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
+import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * Created by Ashish on 12-09-2016.
  */
-public class NavigationActivity extends BaseActivity implements LocationSearchFragment.OnCallBackListener {
+public class NavigationActivity extends BaseActivity implements LocationSearchFragment.OnCallBackListener,ListShopProductCategoryFragment.OnCallBackCategoryListListener {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     public  String AVATAR_URL;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
-    TextView txtLocation;
-
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
-    protected Context context;
-    double lat = 0, log = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,30 +69,25 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
 
         initToolbar();
         setupDrawerLayout();
-       if(TextUtils.isEmpty(SharedPreferencesManager.getProfileImage(getApplicationContext()))){
-           AVATAR_URL = "http://lorempixel.com/200/200/people/1/";
-       }else {
-           AVATAR_URL = SharedPreferencesManager.getProfileImage(getApplicationContext());
-       }
         final ImageView avatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
-        Picasso.with(this).load(AVATAR_URL).transform(new CircleTransform()).into(avatar);
-
-        String username = SharedPreferencesManager.getUsername(getApplicationContext());
-        String loc = SharedPreferencesManager.getLocation(getApplicationContext());
-//        Log.e("username", username);
+        final TextView txtShopName = (TextView)navigationView.getHeaderView(0).findViewById(R.id.txtShopName);
+        final TextView txtOwnerName = (TextView)navigationView.getHeaderView(0).findViewById(R.id.txtOwnerName);
+        if(!TextUtils.isEmpty(SharedPreferencesManager.getProfileImage(getApplicationContext()))){
+            Picasso.with(NavigationActivity.this).load(SharedPreferencesManager.getProfileImage(getApplicationContext())).transform(new CircleTransform()).into(avatar);
+        }else {
+            AVATAR_URL = "http://lorempixel.com/200/200/people/1/";
+            Picasso.with(NavigationActivity.this).load(R.drawable.no_image_icon).transform(new CircleTransform()).into(avatar);
+        }
+        if(!TextUtils.isEmpty(SharedPreferencesManager.getUsername(getApplicationContext()))){
+            txtShopName.setText(SharedPreferencesManager.getUsername(getApplicationContext()));
+        }
+        if (!TextUtils.isEmpty(SharedPreferencesManager.getOwnerName(getApplicationContext()))){
+            txtOwnerName.setText(SharedPreferencesManager.getOwnerName(getApplicationContext()));
+        }
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
         mFragmentTransaction.replace(R.id.navigationContainer, new NavigationAboutFragment()).commit();
-       /* if (TextUtils.isEmpty(username)) {
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
-            mFragmentTransaction.replace(R.id.navigationContainer, new LoginFragment()).commit();
-        } else {
-            Log.e("username", username);
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
-            mFragmentTransaction.replace(R.id.navigationContainer, new OffersFragment()).commit();
-        }*/
+
     }
 
 
@@ -119,15 +125,14 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
 
     private void displayView(CharSequence title) {
         if (title.equals("Home")) {
-            Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-            /*BaseFragment fragment = new BrandsFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
+           // Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+            Intent refresh = new Intent(this, NavigationActivity.class);
+            startActivity(refresh);
+            finish();
             drawerLayout.closeDrawers();
-        } else if (title.equals("Profile")) {
-            Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-            BaseFragment fragment = new EditProfileFragment();
+        } else if (title.equals("Category List")) {
+          //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+            ListShopProductCategoryFragment fragment = new ListShopProductCategoryFragment();
             mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
                     .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
@@ -153,10 +158,15 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
                     .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();*/
             drawerLayout.closeDrawers();
         } else if (title.equals("Logout")) {
-            Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
             dialogBox();
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void dialogBox() {
@@ -177,6 +187,7 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
                         SharedPreferencesManager.setLatitude(getApplicationContext(),null);
                         SharedPreferencesManager.setLongitude(getApplicationContext(),null);
                         SharedPreferencesManager.setProfileImage(getApplicationContext(),null);
+                        SharedPreferencesManager.setOwnerName(getApplicationContext(),null);
                         Intent refresh = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(refresh);//Start the same Activity
                         finish();
@@ -237,4 +248,10 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
     }
 
 
+    @Override
+    public void onCallBackCatList() {
+        Intent refresh = new Intent(this, NavigationActivity.class);
+        startActivity(refresh);
+        finish();
+    }
 }

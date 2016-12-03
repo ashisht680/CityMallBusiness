@@ -3,6 +3,7 @@ package com.javinindia.citymallsbusiness.recyclerview;
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,29 +53,32 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         final ShopCategoryList shopCategoryDetails = (ShopCategoryList) list.get(position);
-        String catListId = shopCategoryDetails.getId();
-        String shopCatId = shopCategoryDetails.getShopCatId();
-        String shopCategory = shopCategoryDetails.getShopCategory().trim();
-        List listSub = shopCategoryDetails.getSubCatDetailArrayList();
-        ArrayList<String> arrayList = new ArrayList<>();
 
-        if (!TextUtils.isEmpty(shopCategory))
-            viewHolder.txtCategory.setText(shopCategory);
 
-        for(int i =0;i<listSub.size();i++){
-           arrayList.add(shopCategoryDetails.getSubCatDetailArrayList().get(i).getShoSubpCategory().trim());
+        if (!TextUtils.isEmpty(shopCategoryDetails.getShopCategory().trim())) {
+            String shopCategory = shopCategoryDetails.getShopCategory().trim();
+            viewHolder.txtCategory.setText(Html.fromHtml(shopCategory));
         }
 
-        if(arrayList.size()>0){
-           String[] subBategoryArray = new String[arrayList.size()];
-            arrayList.toArray(subBategoryArray);
+        if (shopCategoryDetails.getSubCatDetailArrayList().size() > 0) {
+            List listSub = shopCategoryDetails.getSubCatDetailArrayList();
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (int i = 0; i < listSub.size(); i++) {
+                arrayList.add(shopCategoryDetails.getSubCatDetailArrayList().get(i).getShoSubpCategory().trim());
+            }
 
-            String test = Arrays.toString(subBategoryArray);
-            String test1 = test.replaceAll("[\\[\\](){}]", "");
-            if (!TextUtils.isEmpty(test)) {
-                viewHolder.txtSubCat.setText(test1);
+            if (arrayList.size() > 0) {
+                String[] subBategoryArray = new String[arrayList.size()];
+                arrayList.toArray(subBategoryArray);
+
+                String test = Arrays.toString(subBategoryArray);
+                String test1 = test.replaceAll("[\\[\\](){}]", "");
+                if (!TextUtils.isEmpty(test)) {
+                    viewHolder.txtSubCat.setText(Html.fromHtml(test1));
+                }
             }
         }
+
 
         viewHolder.llMain.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -83,8 +87,6 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
                 return true;
             }
         });
-
-
 
 
     }
@@ -105,7 +107,7 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
             txtCategory.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
             txtSubCat = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtSubCat);
             txtSubCat.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
-            llMain = (LinearLayout)itemLayoutView.findViewById(R.id.llMain);
+            llMain = (LinearLayout) itemLayoutView.findViewById(R.id.llMain);
         }
     }
 

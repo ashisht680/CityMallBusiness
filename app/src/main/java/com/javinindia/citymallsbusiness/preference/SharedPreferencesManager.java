@@ -118,5 +118,15 @@ public class SharedPreferencesManager {
         editor.commit();
     }
 
+    public static String getOwnerName(Context context) {
+        return getSharedPreferences(context).getString("OwnerName", null);
+    }
+
+    public static void setOwnerName(Context context, String longitude) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString("OwnerName", longitude);
+        editor.commit();
+    }
+
 
 }

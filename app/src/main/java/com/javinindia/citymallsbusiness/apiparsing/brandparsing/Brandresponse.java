@@ -29,7 +29,8 @@ public class Brandresponse extends ApiBaseData {
             JSONObject jsonObject = new JSONObject(response);
             setStatus(jsonObject.optString("status"));
             setMsg(jsonObject.optString("msg"));
-            setBrandDetailArrayList(brandList(jsonObject.optJSONArray("brandDetail")));
+            if (jsonObject.has("brandDetail") && jsonObject.optJSONArray("brandDetail") != null)
+                setBrandDetailArrayList(brandList(jsonObject.optJSONArray("brandDetail")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -40,17 +41,17 @@ public class Brandresponse extends ApiBaseData {
         for (int i = 0; i < brandDetail.length(); i++) {
             BrandDetail detail = new BrandDetail();
             JSONObject jsonObject = brandDetail.optJSONObject(i);
-            detail.setId(jsonObject.optString("id"));
-            detail.setOfferCatId(jsonObject.optString("offerCatId"));
-            detail.setOfferSubCatId(jsonObject.optString("offerSubCatId"));
-            detail.setName(jsonObject.optString("name"));
-            detail.setBrandLogo(jsonObject.optString("brandLogo"));
+            if (jsonObject.has("id"))
+                detail.setId(jsonObject.optString("id"));
+            if (jsonObject.has("offerCatId"))
+                detail.setOfferCatId(jsonObject.optString("offerCatId"));
+            if (jsonObject.has("offerSubCatId"))
+                detail.setOfferSubCatId(jsonObject.optString("offerSubCatId"));
+            if (jsonObject.has("name"))
+                detail.setName(jsonObject.optString("name"));
+            if (jsonObject.has("brandLogo"))
+                detail.setBrandLogo(jsonObject.optString("brandLogo"));
 
-          /*  "id":"1",
-                    "offerCatId":"1",
-                    "offerSubCatId":"1",
-                    "name":"Precor",
-                    "brandLogo":*/
             brandDetails.add(detail);
         }
         return brandDetails;

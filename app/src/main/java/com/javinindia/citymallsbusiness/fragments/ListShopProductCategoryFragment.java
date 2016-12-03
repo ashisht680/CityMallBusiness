@@ -259,7 +259,7 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
         if (list.size() > 0) {
         } else {
             sendRequestOnWowFeed();
-            onCallBackCategoryList.onCallBackCatList();
+//            onCallBackCategoryList.onCallBackCatList();
         }
     }
 

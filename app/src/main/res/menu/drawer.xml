@@ -29,7 +29,7 @@
             android:id="@+id/drawer_profile"
             android:checkable="false"
             android:icon="@mipmap/ic_launcher"
-            android:title="Profile"/>
+            android:title="Category List"/>
 
         <item
             android:id="@+id/drawer_downloaded"

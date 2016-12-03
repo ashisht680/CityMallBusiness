@@ -28,7 +28,17 @@ public class LoginSignupResponseParsing extends ApiBaseData {
     String mallLandmark;
     String mallLat;
     String mallLong;
+    String banner;
    // LoginMallDeatils mallDetail;
+
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
 
     public String getShopid() {
         return shopid;
@@ -197,8 +207,8 @@ public class LoginSignupResponseParsing extends ApiBaseData {
                 setCity(jsonObject.optString("city"));
             if (jsonObject.has("address"))
                 setAddress(jsonObject.optString("address"));
-            if (jsonObject.has("profilepic"))
-                setProfilepic(jsonObject.optString("profilepic"));
+            if (jsonObject.has("profilePic"))
+                setProfilepic(jsonObject.optString("profilePic"));
             if (jsonObject.has("mallid"))
                 setMallId(jsonObject.optString("mallid"));
             if (jsonObject.has("description"))
@@ -211,9 +221,8 @@ public class LoginSignupResponseParsing extends ApiBaseData {
                 setMallLat(jsonObject.optString("mallLat"));
             if (jsonObject.has("mallLong"))
                 setMallLong(jsonObject.optString("mallLong"));
-
-
-            Log.d("Response", this.toString());
+            if (jsonObject.has("banner"))
+                setBanner(jsonObject.optString("banner"));
 
         } catch (JSONException e) {
             e.printStackTrace();

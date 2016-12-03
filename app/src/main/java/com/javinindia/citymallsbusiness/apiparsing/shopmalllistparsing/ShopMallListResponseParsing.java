@@ -28,7 +28,7 @@ public class ShopMallListResponseParsing  extends ApiBaseData {
             JSONObject jsonObject = new JSONObject(response.toString());
             setStatus(jsonObject.optString("status"));
             setMsg(jsonObject.optString("msg"));
-            if (jsonObject.has("mallDetails"))
+            if (jsonObject.has("mallDetails") && jsonObject.optJSONArray("mallDetails")!=null)
                 setMallDetailsArrayList(getMallListMethod(jsonObject.optJSONArray("mallDetails")));
             Log.d("Response", this.toString());
 

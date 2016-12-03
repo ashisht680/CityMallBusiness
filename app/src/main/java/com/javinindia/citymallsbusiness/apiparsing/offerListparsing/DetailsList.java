@@ -4,10 +4,28 @@ package com.javinindia.citymallsbusiness.apiparsing.offerListparsing;
  * Created by Ashish on 22-10-2016.
  */
 public class DetailsList {
+    private String favCount;
+    private String offerViewCount;
     private OfferDetails offerDetails;
     private OfferMallDetails offerMallDetails;
     private OfferShopDetails offerShopDetails;
     private OfferBrandDetails offerBrandDetails;
+
+    public String getFavCount() {
+        return favCount;
+    }
+
+    public void setFavCount(String favCount) {
+        this.favCount = favCount;
+    }
+
+    public String getOfferViewCount() {
+        return offerViewCount;
+    }
+
+    public void setOfferViewCount(String offerViewCount) {
+        this.offerViewCount = offerViewCount;
+    }
 
     public OfferShopDetails getOfferShopDetails() {
         return offerShopDetails;

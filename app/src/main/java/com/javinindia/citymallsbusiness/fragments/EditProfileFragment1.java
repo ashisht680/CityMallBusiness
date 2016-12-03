@@ -1,5 +1,7 @@
 package com.javinindia.citymallsbusiness.fragments;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
@@ -7,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -14,11 +17,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -48,6 +57,7 @@ import com.javinindia.citymallsbusiness.apiparsing.stateparsing.CountryMasterApi
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
+import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
 import com.javinindia.citymallsbusiness.recyclerview.ShopCategoryAdaptar;
 import com.javinindia.citymallsbusiness.utility.Utility;
 
@@ -66,21 +76,21 @@ import java.util.Map;
 /**
  * Created by Ashish on 12-10-2016.
  */
-public class EditProfileFragment1 extends BaseFragment implements View.OnClickListener,ListShopProductCategoryFragment.OnCallBackCategoryListListener {
+public class EditProfileFragment1 extends BaseFragment implements View.OnClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener {
     private RequestQueue requestQueue;
 
-    ProgressBar progressBar;
-    ImageView imgProfilePic;
-    AppCompatEditText etStoreName,etOwner,etEmailAddress,etMobile,etLandLine,etMall,etStoreNum,
-            etFloor,etStartTime,etEndTime,etState,etCity;
+    ImageView imgProfilePic,imgProfilePicNotFound;
+    AppCompatEditText etStoreName, etOwner, etEmailAddress, etMobile, etLandLine, etMall, etStoreNum,
+            etFloor, etStartTime, etEndTime, etState, etCity;
     RelativeLayout rlUpadteImg;
-    AppCompatTextView txtUpdate,txtOwnerHd,txtEmailHd,txtMobileHd,txtLandLineHd,
-            txtMallHd,txtStoreNumHd,txtFloorHd,txtTimingAbout,txtStateHd,txtCityHd,txtAddNewCategory;
+    AppCompatTextView txtUpdate, txtOwnerHd, txtEmailHd, txtMobileHd, txtLandLineHd,
+            txtMallHd, txtStoreNumHd, txtFloorHd, txtTimingAbout, txtStateHd, txtCityHd;
+    // AppCompatTextView txtAddNewCategory;
 
     Calendar calendar;
     TimePickerDialog timepickerdialog;
     private int CalendarHour, CalendarMinute;
-    String format,mallId;
+    String format, mallId;
 
     public ArrayList<String> stateList = new ArrayList<>();
     String stateArray[] = null;
@@ -96,10 +106,12 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
     private static final int PICK_FROM_CAMERA = 1;
     private static final int CROP_FROM_CAMERA = 2;
     private static final int PICK_FROM_FILE = 3;
-    Bitmap photo;
-    String  sPic;
+    Bitmap photo=null;
+    String sPic;
+    int size = 0;
+    public static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
 
-    public RecyclerView gridTags;
+    //  public RecyclerView gridTags;
     private ShopCategoryAdaptar adaptar;
 
     private OnCallBackEditProfileListener onCallBackEditProfile;
@@ -107,6 +119,11 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // takePictureButton.setEnabled(false);
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+        }
     }
 
     public interface OnCallBackEditProfileListener {
@@ -135,61 +152,53 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
     }
 
     private void initialize(View view) {
-        gridTags=(RecyclerView)view.findViewById(R.id.grid_tags);
-        GridLayoutManager layoutMangerDestination = new GridLayoutManager(activity,2, GridLayoutManager.VERTICAL, false);
-        gridTags.setLayoutManager(layoutMangerDestination);
-        adaptar = new ShopCategoryAdaptar(activity);
-      //  adaptar.setMyClickListener(EditProfileFragment1.this);
-        gridTags.setAdapter(adaptar);
-        txtAddNewCategory = (AppCompatTextView)view.findViewById(R.id.txtAddNewCategory);
-        txtAddNewCategory.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
 
-        progressBar = (ProgressBar) view.findViewById(R.id.progress);
-        imgProfilePic = (ImageView)view.findViewById(R.id.imgProfilePic);
-        rlUpadteImg = (RelativeLayout)view.findViewById(R.id.rlUpadteImg);
-        etStoreName = (AppCompatEditText)view.findViewById(R.id.etStoreName);
+        imgProfilePicNotFound = (ImageView) view.findViewById(R.id.imgProfilePicNotFound);
+        imgProfilePic = (ImageView) view.findViewById(R.id.imgProfilePic);
+        rlUpadteImg = (RelativeLayout) view.findViewById(R.id.rlUpadteImg);
+        etStoreName = (AppCompatEditText) view.findViewById(R.id.etStoreName);
         etStoreName.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtEmailHd = (AppCompatTextView)view.findViewById(R.id.txtEmailHd);
+        txtEmailHd = (AppCompatTextView) view.findViewById(R.id.txtEmailHd);
         txtEmailHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etEmailAddress = (AppCompatEditText)view.findViewById(R.id.etEmailAddress);
+        etEmailAddress = (AppCompatEditText) view.findViewById(R.id.etEmailAddress);
         etEmailAddress.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtMobileHd = (AppCompatTextView)view.findViewById(R.id.txtMobileHd);
+        txtMobileHd = (AppCompatTextView) view.findViewById(R.id.txtMobileHd);
         txtMobileHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etMobile = (AppCompatEditText)view.findViewById(R.id.etMobile);
+        etMobile = (AppCompatEditText) view.findViewById(R.id.etMobile);
         etMobile.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtOwnerHd = (AppCompatTextView)view.findViewById(R.id.txtOwnerHd);
+        txtOwnerHd = (AppCompatTextView) view.findViewById(R.id.txtOwnerHd);
         txtOwnerHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etOwner = (AppCompatEditText)view.findViewById(R.id.etOwner);
+        etOwner = (AppCompatEditText) view.findViewById(R.id.etOwner);
         etOwner.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtLandLineHd = (AppCompatTextView)view.findViewById(R.id.txtLandLineHd);
+        txtLandLineHd = (AppCompatTextView) view.findViewById(R.id.txtLandLineHd);
         txtLandLineHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etLandLine = (AppCompatEditText)view.findViewById(R.id.etLandLine);
+        etLandLine = (AppCompatEditText) view.findViewById(R.id.etLandLine);
         etLandLine.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtStateHd = (AppCompatTextView)view.findViewById(R.id.txtStateHd);
+        txtStateHd = (AppCompatTextView) view.findViewById(R.id.txtStateHd);
         txtStateHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etState = (AppCompatEditText)view.findViewById(R.id.etState);
+        etState = (AppCompatEditText) view.findViewById(R.id.etState);
         etState.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtCityHd = (AppCompatTextView)view.findViewById(R.id.txtCityHd);
+        txtCityHd = (AppCompatTextView) view.findViewById(R.id.txtCityHd);
         txtCityHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etCity = (AppCompatEditText)view.findViewById(R.id.etCity);
+        etCity = (AppCompatEditText) view.findViewById(R.id.etCity);
         etCity.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtMallHd = (AppCompatTextView)view.findViewById(R.id.txtStoreNumHd);
+        txtMallHd = (AppCompatTextView) view.findViewById(R.id.txtStoreNumHd);
         txtMallHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etMall = (AppCompatEditText)view.findViewById(R.id.etMall);
+        etMall = (AppCompatEditText) view.findViewById(R.id.etMall);
         etMall.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtStoreNumHd = (AppCompatTextView)view.findViewById(R.id.txtStoreNumHd);
+        txtStoreNumHd = (AppCompatTextView) view.findViewById(R.id.txtStoreNumHd);
         txtStoreNumHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etStoreNum = (AppCompatEditText)view.findViewById(R.id.etStoreNum);
+        etStoreNum = (AppCompatEditText) view.findViewById(R.id.etStoreNum);
         etStoreNum.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtFloorHd = (AppCompatTextView)view.findViewById(R.id.txtFloorHd);
+        txtFloorHd = (AppCompatTextView) view.findViewById(R.id.txtFloorHd);
         txtFloorHd.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etFloor = (AppCompatEditText)view.findViewById(R.id.etFloor);
+        etFloor = (AppCompatEditText) view.findViewById(R.id.etFloor);
         etFloor.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtTimingAbout = (AppCompatTextView)view.findViewById(R.id.txtTimingAbout);
+        txtTimingAbout = (AppCompatTextView) view.findViewById(R.id.txtTimingAbout);
         txtTimingAbout.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etStartTime = (AppCompatEditText)view.findViewById(R.id.etStartTime);
+        etStartTime = (AppCompatEditText) view.findViewById(R.id.etStartTime);
         etStartTime.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etEndTime = (AppCompatEditText)view.findViewById(R.id.etEndTime);
+        etEndTime = (AppCompatEditText) view.findViewById(R.id.etEndTime);
         etEndTime.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtUpdate = (AppCompatTextView) view.findViewById(R.id.txtUpdate);
         txtUpdate.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
@@ -201,8 +210,9 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
         etEndTime.setOnClickListener(this);
         txtUpdate.setOnClickListener(this);
         rlUpadteImg.setOnClickListener(this);
-        txtAddNewCategory.setOnClickListener(this);
+        //  txtAddNewCategory.setOnClickListener(this);
     }
+
     private void sendDataOnRegistrationApi() {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SHOP_PROFILE_URL,
@@ -210,9 +220,9 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     @Override
                     public void onResponse(String response) {
                         Log.e("response", response);
-                        String status = null, sID = null, msg = null ,banner;
-                        String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong,sStoreNum,sFloorNum;
-                        String shopCategory, shopSubCategory, country, pincode, rating, mallOpenTime, mallCloseTime, distance, dicription,shopOpenTime,shopCloseTime;
+                        String status = null, sID = null, msg = null, banner;
+                        String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sStoreNum, sFloorNum;
+                        String shopCategory, shopSubCategory, country, pincode, rating, mallOpenTime, mallCloseTime, distance, dicription, shopOpenTime, shopCloseTime;
                         int offerCount;
                         loading.dismiss();
                         ShopViewResponse shopViewResponse = new ShopViewResponse();
@@ -248,39 +258,38 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                             sStoreNum = shopViewResponse.getShopNum().trim();
                             sFloorNum = shopViewResponse.getFloor().trim();
                             if (!TextUtils.isEmpty(sName)) {
-                                etStoreName.setText(sName);
+                                etStoreName.setText(Html.fromHtml(sName));
                             }
                             if (!TextUtils.isEmpty(oName)) {
-                                etOwner.setText(oName);
-                            } if (!TextUtils.isEmpty(sEmail)) {
-                                etEmailAddress.setText(sEmail);
-                            } if (!TextUtils.isEmpty(sMobileNum)) {
-                                etMobile.setText(sMobileNum);
-                            } if (!TextUtils.isEmpty(sLandline)) {
-                                etLandLine.setText(sLandline);
-                            } if (!TextUtils.isEmpty(mName)) {
-                                etMall.setText(mName);
-                            } if (!TextUtils.isEmpty(sStoreNum)) {
-                                etStoreNum.setText(sStoreNum);
-                            } if (!TextUtils.isEmpty(sFloorNum)) {
-                                etFloor.setText(sFloorNum);
+                                etOwner.setText(Html.fromHtml(oName));
+                            }
+                            if (!TextUtils.isEmpty(sEmail)) {
+                                etEmailAddress.setText(Html.fromHtml(sEmail));
+                            }
+                            if (!TextUtils.isEmpty(sMobileNum)) {
+                                etMobile.setText(Html.fromHtml(sMobileNum));
+                            }
+                            if (!TextUtils.isEmpty(sLandline)) {
+                                etLandLine.setText(Html.fromHtml(sLandline));
+                            }
+                            if (!TextUtils.isEmpty(mName)) {
+                                etMall.setText(Html.fromHtml(mName));
+                            }
+                            if (!TextUtils.isEmpty(sStoreNum)) {
+                                etStoreNum.setText(Html.fromHtml(sStoreNum));
+                            }
+                            if (!TextUtils.isEmpty(sFloorNum)) {
+                                etFloor.setText(Html.fromHtml(sFloorNum));
                             }
                             if (!TextUtils.isEmpty(shopOpenTime)) {
-                                etStartTime.setText(shopOpenTime);
+                                etStartTime.setText(Html.fromHtml(shopOpenTime));
                             }
                             if (!TextUtils.isEmpty(shopCloseTime)) {
-                                etEndTime.setText(shopCloseTime);
+                                etEndTime.setText(Html.fromHtml(shopCloseTime));
                             }
                             if (!TextUtils.isEmpty(sPic))
-                                Utility.imageLoadGlideLibrary(activity,progressBar, imgProfilePic, sPic);
+                                Utility.imageLoadGlideLibraryPic(activity, imgProfilePicNotFound, imgProfilePic, sPic);
 
-                            ArrayList arrayList = shopViewResponse.getShopCategoryDetailsArrayList();
-                            if(arrayList != null && arrayList.size() > 0){
-                                adaptar.setData(arrayList);
-                            }
-                            gridTags.setAdapter(adaptar);
-                           // adaptar.setMyClickListener(NavigationTagsFragment.this);
-                            adaptar.notifyDataSetChanged();
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod(msg);
@@ -360,44 +369,43 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     Toast.makeText(activity, "Select City first", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case R.id.txtAddNewCategory:
+          /*  case R.id.txtAddNewCategory:
                 ListShopProductCategoryFragment categoryFragment = new ListShopProductCategoryFragment();
                 categoryFragment.setMyCallBackCategoryListener(this);
                 callFragmentMethod(categoryFragment, this.getClass().getSimpleName(),R.id.navigationContainer);
-                break;
+                break;*/
         }
     }
 
     private void methodUpdateView() {
-       if (etStoreName.getText().equals("")) {
+        String open = etStartTime.getText().toString().trim();
+        String close = etEndTime.getText().toString().trim();
+        String store = etStoreName.getText().toString().trim();
+        String owner = etOwner.getText().toString().trim();
+        String email = etEmailAddress.getText().toString().trim();
+        String mobile = etMobile.getText().toString().trim();
+        String landLine = etLandLine.getText().toString().trim();
+        String mall = etMall.getText().toString().trim();
+        String storeNo = etStoreNum.getText().toString().trim();
+        String floor = etFloor.getText().toString().trim();
+        if (TextUtils.isEmpty(store)) {
             Toast.makeText(activity, "Please write Store name", Toast.LENGTH_LONG).show();
-        } else if (etOwner.getText().equals("")) {
+        } else if (TextUtils.isEmpty(owner)) {
             Toast.makeText(activity, "Please write Owner name", Toast.LENGTH_LONG).show();
-        }
-        else if (etEmailAddress.getText().equals("")) {
+        } else if (TextUtils.isEmpty(email)) {
             Toast.makeText(activity, "Please write email", Toast.LENGTH_LONG).show();
-        } else if (etMobile.getText().equals("")) {
+        } else if (TextUtils.isEmpty(mobile)) {
             Toast.makeText(activity, "Please write Mobile number", Toast.LENGTH_LONG).show();
-        } else if (etMall.getText().equals("")) {
+        } else if (TextUtils.isEmpty(mall)) {
             Toast.makeText(activity, "Please write Mall", Toast.LENGTH_LONG).show();
-        }else if (etFloor.getText().equals("")) {
+        } else if (TextUtils.isEmpty(floor)) {
             Toast.makeText(activity, "Please write Floor number", Toast.LENGTH_LONG).show();
-        }  if (etStartTime.getText().equals("")) {
+        } else if (TextUtils.isEmpty(open)) {
             Toast.makeText(activity, "Please select Opening timing", Toast.LENGTH_LONG).show();
-        } else if (etEndTime.getText().equals("")) {
+        } else if (TextUtils.isEmpty(close)) {
             Toast.makeText(activity, "Please select Closing timing", Toast.LENGTH_LONG).show();
-        }else {
-            String open = etStartTime.getText().toString().trim();
-            String close = etEndTime.getText().toString().trim();
-            String store = etStoreName.getText().toString().trim();
-            String owner = etOwner.getText().toString().trim();
-            String email = etEmailAddress.getText().toString().trim();
-            String mobile = etMobile.getText().toString().trim();
-            String landLine = etLandLine.getText().toString().trim();
-            String mall = etMall.getText().toString().trim();
-            String storeNo = etStoreNum.getText().toString().trim();
-            String floor = etFloor.getText().toString().trim();
-            methodSubbmit(store,owner,email,mobile,landLine,mall,storeNo,floor,open,close);
+        } else {
+            methodSubbmit(store, owner, email, mobile, landLine, mall, storeNo, floor, open, close);
         }
     }
 
@@ -407,24 +415,42 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("response up", response);
+                        Log.e("response edit", response);
+                        String status = null, sID = null, msg = null, sPic = null, banner;
+                        String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
+                        String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance;
+                        int offerCount;
                         loading.dismiss();
-                        JSONObject jsonObject = null;
-                        String status = null, msg = null;
-                        try {
-                            jsonObject = new JSONObject(response);
-                            if (jsonObject.has("status"))
-                                status = jsonObject.optString("status");
-                            if (jsonObject.has("msg"))
-                                msg = jsonObject.optString("msg");
+                        ShopViewResponse shopViewResponse = new ShopViewResponse();
+                        shopViewResponse.responseParseMethod(response);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        if (status.equals("true") && !TextUtils.isEmpty(status)) {
+                        if (shopViewResponse.getStatus().equals("true")) {
+                            status = shopViewResponse.getStatus().trim();
+                            sID = shopViewResponse.getShopid().trim();
+                            sPic = shopViewResponse.getProfilepic().trim();
+                            sName = shopViewResponse.getStoreName().trim();
+                            oName = shopViewResponse.getOwnerName().trim();
+                            sEmail = shopViewResponse.getEmail().trim();
+                            sMobileNum = shopViewResponse.getMobile().trim();
+                            sLandline = shopViewResponse.getLandline().trim();
+                            sState = shopViewResponse.getState().trim();
+                            sCity = shopViewResponse.getCity().trim();
+                            sAddress = shopViewResponse.getAddress().trim();
+                            mName = shopViewResponse.getMallName().trim();
+                            mAddress = shopViewResponse.getMallAddress();
+                            mLat = shopViewResponse.getMallLat();
+                            mLong = shopViewResponse.getMallLong();
+                            country = shopViewResponse.getCountry().trim();
+                            pincode = shopViewResponse.getPincode().trim();
+                            rating = shopViewResponse.getRating().trim();
+                            openTime = shopViewResponse.getShopOpenTime().trim();
+                            closeTime = shopViewResponse.getShopCloseTime().trim();
+                            distance = shopViewResponse.getDistance().trim();
+                            offerCount = shopViewResponse.getOfferCount();
+                            banner = shopViewResponse.getBanner().trim();
+                            saveDataOnPreference(sEmail, sName, mLat, mLong, sID, sPic, oName);
                             onCallBackEditProfile.OnCallBackEditProfile();
-                             activity.onBackPressed();
+                           // activity.onBackPressed();
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod(msg);
@@ -443,26 +469,26 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("shopId", SharedPreferencesManager.getUserID(activity));
-               // params.put("description", disc);
+                // params.put("description", disc);
                 params.put("shopOpenTime", open);
                 params.put("shopClosetime", close);
                 params.put("shopName", store);
                 params.put("ownerName", owner);
                 params.put("shopMobile", mobile);
-               // params.put("address", close);
+                // params.put("address", close);
                 params.put("shopNo", storeNo);
                 params.put("floorNo", floor);
-              //  params.put("shopProfilePic", close);
+                //  params.put("shopProfilePic", close);
                 params.put("landline", landLine);
                 params.put("mall", mallId);
                 params.put("email", email);
-                if(!TextUtils.isEmpty(photo.toString())){
+                if (photo != null) {
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     photo.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                     byte[] data = bos.toByteArray();
                     String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
                     params.put("shopProfilePic", encodedImage + "image/jpeg");
-                }else {
+                } else {
                     params.put("shopProfilePic", sPic);
                 }
                 return params;
@@ -473,6 +499,16 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
         volleyDefaultTimeIncreaseMethod(stringRequest);
         requestQueue = Volley.newRequestQueue(activity);
         requestQueue.add(stringRequest);
+    }
+
+    private void saveDataOnPreference(String sEmail, String sName, String mLat, String mLong, String sID, String profilepic, String oName) {
+        SharedPreferencesManager.setUserID(activity, sID);
+        SharedPreferencesManager.setEmail(activity, sEmail);
+        SharedPreferencesManager.setUsername(activity, sName);
+        SharedPreferencesManager.setLatitude(activity, mLat);
+        SharedPreferencesManager.setLongitude(activity, mLong);
+        SharedPreferencesManager.setProfileImage(activity, profilepic);
+        SharedPreferencesManager.setOwnerName(activity, oName);
     }
 
 
@@ -703,7 +739,7 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                                             int index = Arrays.asList(mallArray).indexOf(mallArray[item]);
                                             ;
                                             mallId = shopMallListResponseParsing.getMallDetailsArrayList().get(index).getId();
-                                         //   et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
+                                            //   et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
                                             Log.e("mallId", mallId + "\t" + index);
                                             dialog.dismiss();
                                         }
@@ -738,6 +774,12 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
         volleyDefaultTimeIncreaseMethod(stringRequest);
         requestQueue = Volley.newRequestQueue(activity);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onCallBackCatList() {
+        sendDataOnRegistrationApi();
+        onCallBackEditProfile.OnCallBackEditProfile();
     }
 
     private void captureImageInitialization() {
@@ -781,12 +823,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
         });
 
         dialog = builder.create();
-    }
-
-    @Override
-    public void onCallBackCatList() {
-        sendDataOnRegistrationApi();
-        onCallBackEditProfile.OnCallBackEditProfile();
     }
 
     public class CropOptionAdapter extends ArrayAdapter<CropOption> {
@@ -859,11 +895,18 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                  */
                 if (extras != null) {
                     photo = extras.getParcelable("data");
-                    imgProfilePic.setVisibility(View.VISIBLE);
-                    imgProfilePic.setImageBitmap(photo);
+                    if (photo != null) {
+                     //   mImageView.setVisibility(View.VISIBLE);
+                        imgProfilePicNotFound.setImageBitmap(photo);
+                        imgProfilePic.setImageBitmap(photo);
+                    }
+
+                } else {
+
                 }
 
                 File f = new File(mImageCaptureUri.getPath());
+
                 /**
                  * Delete the temporary image
                  */
@@ -877,12 +920,24 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
 
     private void doCrop() {
         final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
+        /**
+         * Open image crop app by starting an intent
+         * �com.android.camera.action.CROP�.
+         */
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setType("image/*");
+
+        /**
+         * Check if there is image cropper app installed.
+         */
         List<ResolveInfo> list = activity.getPackageManager().queryIntentActivities(
                 intent, 0);
 
         int size = list.size();
+
+        /**
+         * If there is no image cropper app, display warning message
+         */
         if (size == 0) {
 
             Toast.makeText(activity, "Can not find image crop app",
@@ -890,69 +945,86 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
 
             return;
         } else {
+            /**
+             * Specify the image path, crop dimension and scale
+             */
             intent.setData(mImageCaptureUri);
 
-            intent.putExtra("outputX", 900);
-            intent.putExtra("outputY", 300);
-            intent.putExtra("aspectX", 3);
-            intent.putExtra("aspectY", 2);
-            intent.putExtra("scale", true);
+            intent.putExtra("outputX", 200);
+            intent.putExtra("outputY", 200);
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            //  intent.putExtra("scale", true);
             intent.putExtra("return-data", true);
+            /**
+             * There is posibility when more than one image cropper app exist,
+             * so we have to check for it first. If there is only one app, open
+             * then app.
+             */
+            for (ResolveInfo res : list) {
+                final CropOption co = new CropOption();
 
-            if (size == 1) {
-                Intent i = new Intent(intent);
-                ResolveInfo res = list.get(0);
+                co.title = activity.getPackageManager().getApplicationLabel(
+                        res.activityInfo.applicationInfo);
+                co.icon = activity.getPackageManager().getApplicationIcon(
+                        res.activityInfo.applicationInfo);
+                co.appIntent = new Intent(intent);
 
-                i.setComponent(new ComponentName(res.activityInfo.packageName,
-                        res.activityInfo.name));
+                co.appIntent
+                        .setComponent(new ComponentName(
+                                res.activityInfo.packageName,
+                                res.activityInfo.name));
 
-                startActivityForResult(i, CROP_FROM_CAMERA);
-            } else {
-                for (ResolveInfo res : list) {
-                    final CropOption co = new CropOption();
+                cropOptions.add(co);
+                break;
+            }
 
-                    co.title = activity.getPackageManager().getApplicationLabel(
-                            res.activityInfo.applicationInfo);
-                    co.icon = activity.getPackageManager().getApplicationIcon(
-                            res.activityInfo.applicationInfo);
-                    co.appIntent = new Intent(intent);
+            CropOptionAdapter adapter = new CropOptionAdapter(
+                    activity, cropOptions);
 
-                    co.appIntent
-                            .setComponent(new ComponentName(
-                                    res.activityInfo.packageName,
-                                    res.activityInfo.name));
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setTitle("Choose Crop App");
+            builder.setAdapter(adapter,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            startActivityForResult(
+                                    cropOptions.get(item).appIntent,
+                                    CROP_FROM_CAMERA);
+                        }
+                    });
 
-                    cropOptions.add(co);
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                    if (mImageCaptureUri != null) {
+                        // getContentResolver().delete(mImageCaptureUri, null, null);
+                        mImageCaptureUri = null;
+                    }
+                }
+            });
+
+            AlertDialog alert = builder.create();
+
+            alert.show();
+        }
+        //}
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    return;
+
+
                 }
 
-                CropOptionAdapter adapter = new CropOptionAdapter(
-                        activity, cropOptions);
 
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                builder.setTitle("Choose Crop App");
-                builder.setAdapter(adapter,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                startActivityForResult(
-                                        cropOptions.get(item).appIntent,
-                                        CROP_FROM_CAMERA);
-                            }
-                        });
-
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-
-                        if (mImageCaptureUri != null) {
-//                            activity.getContentResolver().delete(mImageCaptureUri, null,null);
-                            mImageCaptureUri = null;
-                        }
-                    }
-                });
-
-                android.app.AlertDialog alert = builder.create();
-
-                alert.show();
             }
         }
     }

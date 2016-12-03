@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -45,8 +46,8 @@ import java.util.Map;
  */
 public class SignUpAddressFragment extends BaseFragment implements View.OnClickListener {
 
-    private AppCompatEditText et_State, et_City, et_PinCode, et_Mall,etStoreNum,etFloor;
-    RadioButton radioButton;
+    private AppCompatEditText et_State, et_City, et_PinCode, et_Mall, etStoreNum, etFloor;
+    CheckBox radioButton;
     TextView txtTermCondition;
     private RequestQueue requestQueue;
     private BaseFragment fragment;
@@ -61,7 +62,7 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   activity.getSupportActionBar().hide();
+        //   activity.getSupportActionBar().hide();
         storeName = getArguments().getString("storeName");
         owner = getArguments().getString("owner");
         email = getArguments().getString("email");
@@ -99,23 +100,24 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
         et_City.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_PinCode = (AppCompatEditText) view.findViewById(R.id.et_PinCode);
         et_PinCode.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-     //   et_Address = (AppCompatEditText) view.findViewById(R.id.et_Address);
-     //   et_Address.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
+        //   et_Address = (AppCompatEditText) view.findViewById(R.id.et_Address);
+        //   et_Address.setTypeface(FontRalewayRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_Mall = (AppCompatEditText) view.findViewById(R.id.et_Mall);
         et_Mall.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etStoreNum = (AppCompatEditText)view.findViewById(R.id.etStoreNum);
+        etStoreNum = (AppCompatEditText) view.findViewById(R.id.etStoreNum);
         etStoreNum.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etFloor = (AppCompatEditText)view.findViewById(R.id.etFloor);
+        etFloor = (AppCompatEditText) view.findViewById(R.id.etFloor);
         etFloor.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        radioButton = (RadioButton) view.findViewById(R.id.radioButton);
+        radioButton = (CheckBox) view.findViewById(R.id.radioButton);
         txtTermCondition = (TextView) view.findViewById(R.id.txtTermCondition);
         txtTermCondition.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtTermCondition.setText(Html.fromHtml("<font color=#000000>" + "I Accept the" + "</font>" + "\t" + "<font color=#0d7bbf>" + "Terms and conditions" + "</font>"));
+        txtTermCondition.setText(Html.fromHtml("<font color=#000000>" + "I accept the" + "</font>" + "\t" + "<font color=#0d7bbf>" + "terms and conditions." + "</font>"));
         txtTermCondition.setOnClickListener(this);
 
         et_State.setOnClickListener(this);
         et_City.setOnClickListener(this);
         et_Mall.setOnClickListener(this);
+        radioButton.setOnClickListener(this);
         btn_regester.setOnClickListener(this);
 
     }
@@ -174,6 +176,13 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                     Toast.makeText(activity, "Select City first", Toast.LENGTH_LONG).show();
                 }
                 break;
+          /*  case R.id.radioButton:
+                if (radioButton.isChecked()) {
+                    radioButton.setChecked(false);
+                }else {
+                    radioButton.setChecked(false);
+                }
+                break;*/
         }
     }
 
@@ -195,39 +204,43 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                         hideLoader();
                         final ShopMallListResponseParsing shopMallListResponseParsing = new ShopMallListResponseParsing();
                         shopMallListResponseParsing.responseParseMethod(response);
-                        if (shopMallListResponseParsing.getMallDetailsArrayList().size() > 0) {
-                            for (int i = 0; i < shopMallListResponseParsing.getMallDetailsArrayList().size(); i++) {
-                                mallList.add(shopMallListResponseParsing.getMallDetailsArrayList().get(i).getMallName());
-                            }
-                            if (mallList.size() > 0) {
-                                mallArray = new String[mallList.size()];
-                                mallList.toArray(mallArray);
-
-                                if (mallList != null && mallList.size() > 0) {
-                                    final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                    builder.setTitle("Select Mall");
-                                    builder.setNegativeButton(android.R.string.cancel, null);
-                                    builder.setItems(mallArray, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int item) {
-                                            // Do something with the selection
-                                            et_Mall.setText(mallArray[item]);
-
-                                            // Log.e("mall", shopMallListResponseParsing.getMallDetailsArrayList().get(1).getId());
-                                            int index = Arrays.asList(mallArray).indexOf(mallArray[item]);
-                                            ;
-                                            mallId = shopMallListResponseParsing.getMallDetailsArrayList().get(index).getId();
-                                            et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                            Log.e("mallId", mallId + "\t" + index);
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    builder.create();
-                                    builder.show();
+                        if (shopMallListResponseParsing.getStatus().equals("true")) {
+                            if (shopMallListResponseParsing.getMallDetailsArrayList().size() > 0) {
+                                for (int i = 0; i < shopMallListResponseParsing.getMallDetailsArrayList().size(); i++) {
+                                    mallList.add(shopMallListResponseParsing.getMallDetailsArrayList().get(i).getMallName());
                                 }
+                                if (mallList.size() > 0) {
+                                    mallArray = new String[mallList.size()];
+                                    mallList.toArray(mallArray);
+
+                                    if (mallList != null && mallList.size() > 0) {
+                                        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                                        builder.setTitle("Select Mall");
+                                        builder.setNegativeButton(android.R.string.cancel, null);
+                                        builder.setItems(mallArray, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                // Do something with the selection
+                                                et_Mall.setText(mallArray[item]);
+
+                                                // Log.e("mall", shopMallListResponseParsing.getMallDetailsArrayList().get(1).getId());
+                                                int index = Arrays.asList(mallArray).indexOf(mallArray[item]);
+                                                ;
+                                                mallId = shopMallListResponseParsing.getMallDetailsArrayList().get(index).getId();
+                                                et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
+                                                Log.e("mallId", mallId + "\t" + index);
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.create();
+                                        builder.show();
+                                    }
+                                }
+                            } else {
+                                showDialogMethod("Mall not found");
                             }
+                        } else {
+                            showDialogMethod("Mall not found");
                         }
-
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -241,8 +254,8 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("state", "Delhi");
-                params.put("city", "New Delhi");
+                params.put("state", et_State.getText().toString().trim());
+                params.put("city", et_City.getText().toString().trim());
                 return params;
             }
 
@@ -281,12 +294,13 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
 
                             if (cityList != null && cityList.size() > 0) {
                                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                builder.setTitle("Select City");
+                                //  builder.setTitle("Select City");
                                 builder.setNegativeButton(android.R.string.cancel, null);
                                 builder.setItems(cityArray, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int item) {
                                         // Do something with the selection
                                         et_City.setText(cityArray[item]);
+                                        et_Mall.setText("");
                                     }
                                 });
                                 builder.create();
@@ -346,12 +360,14 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
 
                                 if (stateList != null && stateList.size() > 0) {
                                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                    builder.setTitle("Select State");
+                                    //  builder.setTitle("Select State");
                                     builder.setNegativeButton(android.R.string.cancel, null);
                                     builder.setItems(stateArray, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int item) {
                                             // Do something with the selection
                                             et_State.setText(stateArray[item]);
+                                            et_City.setText("");
+                                            et_Mall.setText("");
                                         }
                                     });
                                     builder.create();
@@ -393,53 +409,54 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
         String mallname = et_Mall.getText().toString().trim();
         String floor = etFloor.getText().toString().trim();
 
-        if (registerValidation(state, city, pinCode, storeNum, mallname,floor)) {
-            sendDataOnRegistrationApi(state, city, pinCode, storeNum, mallId, storeName, owner, email, mobileNum, landline, password,floor);
+        if (registerValidation(state, city, pinCode, storeNum, mallname, floor)) {
+            sendDataOnRegistrationApi(state, city, pinCode, storeNum, mallId, storeName, owner, email, mobileNum, landline, password, floor);
         }
 
     }
 
-    private void sendDataOnRegistrationApi(final String statehit, final String cityhit, final String pinCodehit, final String storeNumshit, final String mallhit, final String storeNamehit, final String ownerhit, final String emailhit, final String mobileNumhit, final String landlinehit, final String passwordhit,final String floorhit) {
+    private void sendDataOnRegistrationApi(final String statehit, final String cityhit, final String pinCodehit, final String storeNumshit, final String mallhit, final String storeNamehit, final String ownerhit, final String emailhit, final String mobileNumhit, final String landlinehit, final String passwordhit, final String floorhit) {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SIGN_UP_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e("response",response);
-                        String status = null, sID = null, msg = null,sPic = null;
+                        Log.e("response", response);
+                        String status = null, sID = null, msg = null, sPic = null;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         loading.dismiss();
                         LoginSignupResponseParsing loginSignupResponseParsing = new LoginSignupResponseParsing();
                         loginSignupResponseParsing.responseParseMethod(response);
 
+                        status = loginSignupResponseParsing.getStatus().trim();
+                        msg = loginSignupResponseParsing.getMsg();
 
                         if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
-                            status = loginSignupResponseParsing.getStatus().trim();
-                            sID = loginSignupResponseParsing.getShopid().trim();
-                            sPic = loginSignupResponseParsing.getProfilepic().trim();
-                            sName = loginSignupResponseParsing.getStoreName().trim();
-                            oName = loginSignupResponseParsing.getOwnerName().trim();
-                            sEmail = loginSignupResponseParsing.getEmail().trim();
-                            sMobileNum = loginSignupResponseParsing.getMobile().trim();
-                            sLandline = loginSignupResponseParsing.getLandline().trim();
-                            sState = loginSignupResponseParsing.getState().trim();
-                            sCity = loginSignupResponseParsing.getCity().trim();
-                         //   sAddress = loginSignupResponseParsing.getAddress().trim();
-                            mName = loginSignupResponseParsing.getMallName().trim();
+                            sID = loginSignupResponseParsing.getShopid();
+                            sPic = loginSignupResponseParsing.getProfilepic();
+                            sName = loginSignupResponseParsing.getStoreName();
+                            oName = loginSignupResponseParsing.getOwnerName();
+                            sEmail = loginSignupResponseParsing.getEmail();
+                            sMobileNum = loginSignupResponseParsing.getMobile();
+                            sLandline = loginSignupResponseParsing.getLandline();
+                            sState = loginSignupResponseParsing.getState();
+                            sCity = loginSignupResponseParsing.getCity();
+                            //   sAddress = loginSignupResponseParsing.getAddress();
+                            mName = loginSignupResponseParsing.getMallName();
                             mAddress = loginSignupResponseParsing.getMallAddress();
                             mLat = loginSignupResponseParsing.getMallLat();
                             mLong = loginSignupResponseParsing.getMallLong();
-                            Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t"  + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
-                            saveDataOnPreference(sEmail, sName, mLat,mLong, sID,sPic);
+                            Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
+                            saveDataOnPreference(sEmail, sName, mLat, mLong, sID, sPic,oName);
                             Intent refresh = new Intent(activity, NavigationActivity.class);
                             startActivity(refresh);//Start the same Activity
                             activity.finish();
-                          /*  fragment = new OffersFragment();
+                           /* fragment = new OffersFragment();
                             callFragmentMethodDead(fragment, this.getClass().getSimpleName());*/
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
-                                showDialogMethod(msg);
+                                showDialogMethod("Sorry, this email account already exists. Please enter a different email id.");
                             }
                         }
                     }
@@ -453,7 +470,7 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                 }) {
             @Override
             protected Map<String, String> getParams() {
-              //  String completeAddress = addresshit + ",\t" + pinCodehit;
+                //  String completeAddress = addresshit + ",\t" + pinCodehit;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("storeName", storeNamehit);
                 params.put("ownerName", ownerhit);
@@ -464,9 +481,9 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                 params.put("state", statehit);
                 params.put("city", cityhit);
                 params.put("mall", mallId);
-                params.put("shopNo",storeNumshit);
-                params.put("floor",floorhit);
-               // params.put("address", completeAddress);
+                params.put("shopNo", storeNumshit);
+                params.put("floor", floorhit);
+                // params.put("address", completeAddress);
                 return params;
             }
 
@@ -477,34 +494,36 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
         requestQueue.add(stringRequest);
     }
 
-    private boolean registerValidation(String state, String city, String pinCode, String storeNum, String mallname,String floor) {
+    private boolean registerValidation(String state, String city, String pinCode, String storeNum, String mallname, String floor) {
         if (TextUtils.isEmpty(state)) {
-            Toast.makeText(activity, "Please enter your state", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "You are not entered state", Toast.LENGTH_LONG).show();
             return false;
         } else if (TextUtils.isEmpty(city)) {
-            Toast.makeText(activity, "Please enter your city", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "You are not entered city", Toast.LENGTH_LONG).show();
             return false;
-        }  else if (TextUtils.isEmpty(mallname)) {
-            Toast.makeText(activity, "Please enter mall", Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(mallname)) {
+            Toast.makeText(activity, "You are not entered mall", Toast.LENGTH_LONG).show();
             return false;
         } else if (TextUtils.isEmpty(floor)) {
-            etFloor.setError("Please enter floor number");
+            etFloor.setError("You are not entered floor number");
             etFloor.requestFocus();
             return false;
         } else if (!radioButton.isChecked()) {
-            Toast.makeText(activity, "Accept Terms and conditions first", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "You have not accepted the terms and conditions.", Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
         }
     }
-    private void saveDataOnPreference(String sEmail, String sName, String mLat, String mLong, String sID,String profilepic) {
-        SharedPreferencesManager.setUserID(activity,sID);
-        SharedPreferencesManager.setEmail(activity,sEmail);
-        SharedPreferencesManager.setUsername(activity,sName);
-        SharedPreferencesManager.setLatitude(activity,mLat);
-        SharedPreferencesManager.setLongitude(activity,mLong);
-        SharedPreferencesManager.setProfileImage(activity,profilepic);
+
+    private void saveDataOnPreference(String sEmail, String sName, String mLat, String mLong, String sID, String profilepic,String owName) {
+        SharedPreferencesManager.setUserID(activity, sID);
+        SharedPreferencesManager.setEmail(activity, sEmail);
+        SharedPreferencesManager.setUsername(activity, sName);
+        SharedPreferencesManager.setLatitude(activity, mLat);
+        SharedPreferencesManager.setLongitude(activity, mLong);
+        SharedPreferencesManager.setProfileImage(activity, profilepic);
+        SharedPreferencesManager.setOwnerName(activity,owName);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.javinindia.citymallsbusiness.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -23,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
+import com.javinindia.citymallsbusiness.activity.NavigationActivity;
 import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
 import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
@@ -42,7 +44,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 09-09-2016.
  */
-public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener,ListShopProductCategoryFragment.OnCallBackCategoryListListener,AddNewOfferFragment.OnCallBackAddOfferListener,EditProfileFragment1.OnCallBackEditProfileListener,UpdateOfferFragment.OnCallBackUpdateOfferListener,AllOffersFragment.OnCallBackRefreshListener {
+public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment1.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener, AddSubCatFragment.OnCallBackCAtegoryListener {
     private RecyclerView recyclerview;
     private List<CountryModel> mCountryModel;
     private AboutAdaptar adapter;
@@ -80,43 +82,49 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                         Log.e("response", response);
                         String status = null, sID = null, msg = null, sPic = null, banner;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
-                        String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance;
+                        String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance, shopfavCount, sFloor, sNo;
                         int offerCount;
                         loading.dismiss();
                         ShopViewResponse shopViewResponse = new ShopViewResponse();
                         shopViewResponse.responseParseMethod(response);
 
-                        sID = shopViewResponse.getShopid().trim();
-                        sPic = shopViewResponse.getProfilepic().trim();
                         status = shopViewResponse.getStatus().trim();
-                        sName = shopViewResponse.getStoreName().trim();
-                        oName = shopViewResponse.getOwnerName().trim();
-                        sEmail = shopViewResponse.getEmail().trim();
-                        sMobileNum = shopViewResponse.getMobile().trim();
-                        sLandline = shopViewResponse.getLandline().trim();
-                        sState = shopViewResponse.getState().trim();
-                        sCity = shopViewResponse.getCity().trim();
-                        sAddress = shopViewResponse.getAddress().trim();
-                        mName = shopViewResponse.getMallName().trim();
-                        mAddress = shopViewResponse.getMallAddress();
-                        mLat = shopViewResponse.getMallLat();
-                        mLong = shopViewResponse.getMallLong();
-                        country = shopViewResponse.getCountry().trim();
-                        pincode = shopViewResponse.getPincode().trim();
-                        rating = shopViewResponse.getRating().trim();
-                        openTime = shopViewResponse.getShopOpenTime().trim();
-                        closeTime = shopViewResponse.getShopCloseTime().trim();
-                        distance = shopViewResponse.getDistance().trim();
-                        offerCount = shopViewResponse.getOfferCount();
-                        banner = shopViewResponse.getBanner().trim();
-                        catArray = shopViewResponse.getShopCategoryDetailsArrayList();
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
-                        recyclerview.setLayoutManager(layoutManager);
-                        adapter = new AboutAdaptar(activity, sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sPic,country, pincode, rating, openTime, closeTime, distance, offerCount, banner,catArray);
-                        recyclerview.setAdapter(adapter);
-                        adapter.setMyClickListener(NavigationAboutFragment.this);
-                        recyclerview.setItemAnimator(new DefaultItemAnimator());
-                        if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
+
+                        if (status.equalsIgnoreCase("true")) {
+                            sID = shopViewResponse.getShopid().trim();
+                            sPic = shopViewResponse.getProfilepic().trim();
+                            sName = shopViewResponse.getStoreName().trim();
+                            oName = shopViewResponse.getOwnerName().trim();
+                            sEmail = shopViewResponse.getEmail().trim();
+                            sMobileNum = shopViewResponse.getMobile().trim();
+                            sLandline = shopViewResponse.getLandline().trim();
+                            sState = shopViewResponse.getState().trim();
+                            sCity = shopViewResponse.getCity().trim();
+                            sAddress = shopViewResponse.getAddress().trim();
+                            mName = shopViewResponse.getMallName().trim();
+                            mAddress = shopViewResponse.getMallAddress();
+                            mLat = shopViewResponse.getMallLat();
+                            mLong = shopViewResponse.getMallLong();
+                            country = shopViewResponse.getCountry().trim();
+                            pincode = shopViewResponse.getPincode().trim();
+                            rating = shopViewResponse.getRating().trim();
+                            openTime = shopViewResponse.getShopOpenTime().trim();
+                            closeTime = shopViewResponse.getShopCloseTime().trim();
+                            distance = shopViewResponse.getDistance().trim();
+                            offerCount = shopViewResponse.getOfferCount();
+                            shopfavCount = shopViewResponse.getShopfavCount().trim();
+                            banner = shopViewResponse.getBanner().trim();
+                            sFloor = shopViewResponse.getFloor().trim();
+                            sNo = shopViewResponse.getShopNum().trim();
+                            saveDataOnPreference(sEmail, sName, mLat, mLong, sID, sPic, oName);
+                            catArray = shopViewResponse.getShopCategoryDetailsArrayList();
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+                            recyclerview.setLayoutManager(layoutManager);
+                            adapter = new AboutAdaptar(activity, sFloor, sNo, shopfavCount, sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sPic, country, pincode, rating, openTime, closeTime, distance, offerCount, banner, catArray);
+                            recyclerview.setAdapter(adapter);
+                            adapter.setMyClickListener(NavigationAboutFragment.this);
+                            recyclerview.setItemAnimator(new DefaultItemAnimator());
+
                             offerRequestApi();
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
@@ -129,14 +137,13 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loading.dismiss();
-                        volleyErrorHandle(error);
+                        noInternetToast(error);
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", SharedPreferencesManager.getUserID(activity));
-
                 return params;
             }
 
@@ -147,6 +154,16 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         requestQueue.add(stringRequest);
     }
 
+    private void saveDataOnPreference(String sEmail, String sName, String mLat, String mLong, String sID, String profilepic, String oName) {
+        SharedPreferencesManager.setUserID(activity, sID);
+        SharedPreferencesManager.setEmail(activity, sEmail);
+        SharedPreferencesManager.setUsername(activity, sName);
+        SharedPreferencesManager.setLatitude(activity, mLat);
+        SharedPreferencesManager.setLongitude(activity, mLong);
+        SharedPreferencesManager.setProfileImage(activity, profilepic);
+        SharedPreferencesManager.setOwnerName(activity, oName);
+    }
+
     private void offerRequestApi() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.OFFER_LIST_URL,
                 new Response.Listener<String>() {
@@ -155,19 +172,26 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                         OfferListResponseparsing responseparsing = new OfferListResponseparsing();
                         responseparsing.responseParseMethod(response);
                         Log.e("request", response);
-                        ArrayList arrayList = responseparsing.getDetailsListArrayList();
                         String status = responseparsing.getStatus().trim();
-                        if(status.equals("true")){
-                            if(arrayList.size()>0){
-                                if (adapter.getData() != null && adapter.getData().size() > 0) {
-                                    adapter.getData().addAll(arrayList);
-                                    adapter.notifyDataSetChanged();
-                                } else {
-                                    adapter.setData(arrayList);
-                                    adapter.notifyDataSetChanged();
+                        if (status.equals("true")) {
+                            if (responseparsing.getDetailsListArrayList().size() > 0) {
+                                ArrayList arrayList = responseparsing.getDetailsListArrayList();
+                                if (arrayList.size() > 0) {
+                                    if (adapter.getData() != null && adapter.getData().size() > 0) {
+                                        adapter.getData().addAll(arrayList);
+                                        adapter.notifyDataSetChanged();
+                                    } else {
+                                        adapter.setData(arrayList);
+                                        adapter.notifyDataSetChanged();
 
+                                    }
                                 }
+                            } else {
+                                Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
                             }
+
+                        } else {
+                            Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -175,7 +199,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        volleyErrorHandle(error);
+                        noInternetToast(error);
                     }
                 }) {
             @Override
@@ -244,9 +268,9 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onAddCategory(int position) {
-        ListShopProductCategoryFragment categoryFragment = new ListShopProductCategoryFragment();
+        AddSubCatFragment categoryFragment = new AddSubCatFragment();
         categoryFragment.setMyCallBackCategoryListener(this);
-        callFragmentMethod(categoryFragment, this.getClass().getSimpleName(),R.id.navigationContainer);
+        callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.navigationContainer);
     }
 
     @Override
@@ -269,28 +293,30 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         String offerDescription = detailsList.getOfferDetails().getOfferDescription().trim();
         String shopOpenTime = detailsList.getOfferShopDetails().getShopOpenTime().trim();
         String shopCloseTime = detailsList.getOfferShopDetails().getShopCloseTime().trim();
+        String favCount = detailsList.getFavCount().trim();
         OfferPostFragment fragment1 = new OfferPostFragment();
 
         Bundle bundle = new Bundle();
         //    bundle.putSerializable("images", postImage);
+        bundle.putString("favCount", favCount);
         bundle.putString("brandName", brandName);
-        bundle.putString("brandPic",brandPic);
-        bundle.putString("shopName",shopName);
-        bundle.putString("mallName",mallName);
-        bundle.putString("offerRating",offerRating);
+        bundle.putString("brandPic", brandPic);
+        bundle.putString("shopName", shopName);
+        bundle.putString("mallName", mallName);
+        bundle.putString("offerRating", offerRating);
         bundle.putString("offerPic", offerPic);
-        bundle.putString("offerTitle",offerTitle);
-        bundle.putString("offerCategory",offerCategory);
-        bundle.putString("offerSubCategory",offerSubCategory);
-        bundle.putString("offerPercentType",offerPercentType);
+        bundle.putString("offerTitle", offerTitle);
+        bundle.putString("offerCategory", offerCategory);
+        bundle.putString("offerSubCategory", offerSubCategory);
+        bundle.putString("offerPercentType", offerPercentType);
         bundle.putString("offerPercentage", offerPercentage);
-        bundle.putString("offerActualPrice",offerActualPrice);
-        bundle.putString("offerDiscountPrice",offerDiscountPrice);
-        bundle.putString("offerStartDate",offerStartDate);
-        bundle.putString("offerCloseDate",offerCloseDate);
-        bundle.putString("offerDescription",offerDescription);
-        bundle.putString("shopOpenTime",shopOpenTime);
-        bundle.putString("shopCloseTime",shopCloseTime);
+        bundle.putString("offerActualPrice", offerActualPrice);
+        bundle.putString("offerDiscountPrice", offerDiscountPrice);
+        bundle.putString("offerStartDate", offerStartDate);
+        bundle.putString("offerCloseDate", offerCloseDate);
+        bundle.putString("offerDescription", offerDescription);
+        bundle.putString("shopOpenTime", shopOpenTime);
+        bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
         callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
     }
@@ -329,26 +355,42 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("offerSubCatId", offerSubCatId);
         bundle.putString("offerId", offerId);
         bundle.putString("brandName", brandName);
-        bundle.putString("brandPic",brandPic);
-        bundle.putString("shopName",shopName);
-        bundle.putString("mallName",mallName);
-        bundle.putString("offerRating",offerRating);
+        bundle.putString("brandPic", brandPic);
+        bundle.putString("shopName", shopName);
+        bundle.putString("mallName", mallName);
+        bundle.putString("offerRating", offerRating);
         bundle.putString("offerPic", offerPic);
-        bundle.putString("offerTitle",offerTitle);
-        bundle.putString("offerCategory",offerCategory);
-        bundle.putString("offerSubCategory",offerSubCategory);
-        bundle.putString("offerPercentType",offerPercentType);
+        bundle.putString("offerTitle", offerTitle);
+        bundle.putString("offerCategory", offerCategory);
+        bundle.putString("offerSubCategory", offerSubCategory);
+        bundle.putString("offerPercentType", offerPercentType);
         bundle.putString("offerPercentage", offerPercentage);
-        bundle.putString("offerActualPrice",offerActualPrice);
-        bundle.putString("offerDiscountPrice",offerDiscountPrice);
-        bundle.putString("offerStartDate",offerStartDate);
-        bundle.putString("offerCloseDate",offerCloseDate);
-        bundle.putString("offerDescription",offerDescription);
-        bundle.putString("shopOpenTime",shopOpenTime);
-        bundle.putString("shopCloseTime",shopCloseTime);
+        bundle.putString("offerActualPrice", offerActualPrice);
+        bundle.putString("offerDiscountPrice", offerDiscountPrice);
+        bundle.putString("offerStartDate", offerStartDate);
+        bundle.putString("offerCloseDate", offerCloseDate);
+        bundle.putString("offerDescription", offerDescription);
+        bundle.putString("shopOpenTime", shopOpenTime);
+        bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
         fragment1.setMyCallBackUpdateOfferListener(this);
         callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+    }
+
+    @Override
+    public void onViewClick(int position, DetailsList detailsList) {
+        String offerId = detailsList.getOfferDetails().getOfferId().trim();
+        String numView = detailsList.getOfferViewCount().toString().trim();
+        if (!TextUtils.isEmpty(numView) && numView.equals("0")){
+            AllViewUserFragment fragment1 = new AllViewUserFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("offerId", offerId);
+            fragment1.setArguments(bundle);
+            callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        }else {
+            Toast.makeText(activity,"No views now",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -363,7 +405,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void OnCallBackEditProfile() {
-        sendDataOnRegistrationApi();
+        //sendDataOnRegistrationApi();
+        Intent refresh = new Intent(activity, NavigationActivity.class);
+        startActivity(refresh);
+        activity.finish();
     }
 
     @Override
@@ -373,6 +418,11 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void OnCallBackRefreshOffer() {
+        sendDataOnRegistrationApi();
+    }
+
+    @Override
+    public void onCallBackCat() {
         sendDataOnRegistrationApi();
     }
 }

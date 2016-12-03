@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg"
+    android:layout_height="match_parent"
+    android:background="@color/toolbar_color"
     tools:ignore="NewApi">
 
     <RelativeLayout
@@ -39,7 +39,7 @@
                 android:background="@drawable/button_border_white"
                 android:hint="STORE NAME"
                 android:inputType="text"
-                android:nextFocusDown="@+id/et_email"
+                android:nextFocusDown="@+id/et_owner"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
@@ -53,7 +53,7 @@
                 android:background="@drawable/button_border_white"
                 android:hint="OWNER NAME"
                 android:inputType="text"
-                android:nextFocusDown="@+id/et_StoreNum"
+                android:nextFocusDown="@+id/et_email"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
@@ -68,7 +68,7 @@
                 android:hint="EMAIL"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                android:nextFocusDown="@+id/et_owner"
+                android:nextFocusDown="@+id/et_MobileNum"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
@@ -81,8 +81,9 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
                 android:hint="MOBILE NUMBER"
+                android:maxLength="10"
                 android:inputType="phone"
-                android:nextFocusDown="@+id/et_email"
+                android:nextFocusDown="@+id/et_Landline"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
@@ -95,8 +96,9 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
                 android:hint="LANDLINE(optional)"
+                android:maxLength="14"
                 android:inputType="phone"
-                android:nextFocusDown="@+id/et_MobileNum"
+                android:nextFocusDown="@+id/et_password"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
@@ -111,7 +113,7 @@
                 android:hint="PASSWORD"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
-                android:nextFocusDown="@+id/et_Landline"
+                android:nextFocusDown="@+id/et_ConfirmPassword"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
@@ -123,14 +125,20 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
-                android:nextFocusDown="@+id/et_password"
-                android:hint="CONFERM PASSWORD"
+                android:hint="CONFIRM PASSWORD"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
+            <CheckBox
+                android:id="@+id/checkShowPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show password"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btnNext"
@@ -140,7 +148,7 @@
                 android:background="@android:color/white"
                 android:nextFocusDown="@+id/et_ConfirmPassword"
                 android:text="Next"
-                android:textColor="@color/background_color" />
+                android:textColor="@color/blue_button_color" />
 
         </LinearLayout>
 

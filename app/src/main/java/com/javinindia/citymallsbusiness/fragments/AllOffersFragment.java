@@ -3,13 +3,17 @@ package com.javinindia.citymallsbusiness.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.TimeUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +25,7 @@ import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.OfferListResponseparsing;
 import com.javinindia.citymallsbusiness.constant.Constants;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.recyclerview.OfferAdapter;
 
@@ -31,7 +36,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 22-10-2016.
  */
-public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyClickListener,UpdateOfferFragment.OnCallBackUpdateOfferListener {
+public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyClickListener, UpdateOfferFragment.OnCallBackUpdateOfferListener {
     private RecyclerView recyclerview;
     private int startLimit = 0;
     private int countLimit = 10;
@@ -39,6 +44,7 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
     private RequestQueue requestQueue;
     private OfferAdapter adapter;
     ArrayList arrayList;
+    AppCompatTextView txtDataNotFound;
 
     private OnCallBackRefreshListener onCallBackRefreshListener;
 
@@ -70,23 +76,31 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("limits",AstartLimit+""+AcountLimit);
+                        Log.e("limits", AstartLimit + "" + AcountLimit);
                         OfferListResponseparsing responseparsing = new OfferListResponseparsing();
                         responseparsing.responseParseMethod(response);
                         Log.e("request", response);
-                        arrayList = responseparsing.getDetailsListArrayList();
                         String status = responseparsing.getStatus().trim();
-                        if(status.equals("true")){
-                            if(arrayList.size()>0){
-                                if (adapter.getData() != null && adapter.getData().size() > 0) {
-                                    adapter.getData().addAll(arrayList);
-                                    adapter.notifyDataSetChanged();
+                        if (status.equals("true")) {
+                            if (responseparsing.getDetailsListArrayList().size() > 0) {
+                                arrayList = responseparsing.getDetailsListArrayList();
+                                if (arrayList.size() > 0) {
+                                    txtDataNotFound.setVisibility(View.GONE);
+                                    if (adapter.getData() != null && adapter.getData().size() > 0) {
+                                        adapter.getData().addAll(arrayList);
+                                        adapter.notifyDataSetChanged();
+                                    } else {
+                                        adapter.setData(arrayList);
+                                        adapter.notifyDataSetChanged();
+                                    }
                                 } else {
-                                    adapter.setData(arrayList);
-                                    adapter.notifyDataSetChanged();
-
+                                    txtDataNotFound.setVisibility(View.VISIBLE);
                                 }
+                            } else {
+                                txtDataNotFound.setVisibility(View.VISIBLE);
                             }
+                        } else {
+                            txtDataNotFound.setVisibility(View.VISIBLE);
                         }
                     }
                 },
@@ -121,6 +135,8 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
         recyclerview.addOnScrollListener(new replyScrollListener());
         recyclerview.setAdapter(adapter);
         adapter.setMyClickListener(AllOffersFragment.this);
+        txtDataNotFound = (AppCompatTextView) view.findViewById(R.id.txtDataNotFound);
+        txtDataNotFound.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
 
     }
 
@@ -159,29 +175,31 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
         String offerDescription = detailsList.getOfferDetails().getOfferDescription().trim();
         String shopOpenTime = detailsList.getOfferShopDetails().getShopOpenTime().trim();
         String shopCloseTime = detailsList.getOfferShopDetails().getShopCloseTime().trim();
+        String favCount = detailsList.getFavCount().trim();
 
         OfferPostFragment fragment1 = new OfferPostFragment();
 
         Bundle bundle = new Bundle();
         //    bundle.putSerializable("images", postImage);
+        bundle.putString("favCount", favCount);
         bundle.putString("brandName", brandName);
-        bundle.putString("brandPic",brandPic);
-        bundle.putString("shopName",shopName);
-        bundle.putString("mallName",mallName);
-        bundle.putString("offerRating",offerRating);
+        bundle.putString("brandPic", brandPic);
+        bundle.putString("shopName", shopName);
+        bundle.putString("mallName", mallName);
+        bundle.putString("offerRating", offerRating);
         bundle.putString("offerPic", offerPic);
-        bundle.putString("offerTitle",offerTitle);
-        bundle.putString("offerCategory",offerCategory);
-        bundle.putString("offerSubCategory",offerSubCategory);
-        bundle.putString("offerPercentType",offerPercentType);
+        bundle.putString("offerTitle", offerTitle);
+        bundle.putString("offerCategory", offerCategory);
+        bundle.putString("offerSubCategory", offerSubCategory);
+        bundle.putString("offerPercentType", offerPercentType);
         bundle.putString("offerPercentage", offerPercentage);
-        bundle.putString("offerActualPrice",offerActualPrice);
-        bundle.putString("offerDiscountPrice",offerDiscountPrice);
-        bundle.putString("offerStartDate",offerStartDate);
-        bundle.putString("offerCloseDate",offerCloseDate);
-        bundle.putString("offerDescription",offerDescription);
-        bundle.putString("shopOpenTime",shopOpenTime);
-        bundle.putString("shopCloseTime",shopCloseTime);
+        bundle.putString("offerActualPrice", offerActualPrice);
+        bundle.putString("offerDiscountPrice", offerDiscountPrice);
+        bundle.putString("offerStartDate", offerStartDate);
+        bundle.putString("offerCloseDate", offerCloseDate);
+        bundle.putString("offerDescription", offerDescription);
+        bundle.putString("shopOpenTime", shopOpenTime);
+        bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
         callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
 
@@ -221,26 +239,43 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
         bundle.putString("offerSubCatId", offerSubCatId);
         bundle.putString("offerId", offerId);
         bundle.putString("brandName", brandName);
-        bundle.putString("brandPic",brandPic);
-        bundle.putString("shopName",shopName);
-        bundle.putString("mallName",mallName);
-        bundle.putString("offerRating",offerRating);
+        bundle.putString("brandPic", brandPic);
+        bundle.putString("shopName", shopName);
+        bundle.putString("mallName", mallName);
+        bundle.putString("offerRating", offerRating);
         bundle.putString("offerPic", offerPic);
-        bundle.putString("offerTitle",offerTitle);
-        bundle.putString("offerCategory",offerCategory);
-        bundle.putString("offerSubCategory",offerSubCategory);
-        bundle.putString("offerPercentType",offerPercentType);
+        bundle.putString("offerTitle", offerTitle);
+        bundle.putString("offerCategory", offerCategory);
+        bundle.putString("offerSubCategory", offerSubCategory);
+        bundle.putString("offerPercentType", offerPercentType);
         bundle.putString("offerPercentage", offerPercentage);
-        bundle.putString("offerActualPrice",offerActualPrice);
-        bundle.putString("offerDiscountPrice",offerDiscountPrice);
-        bundle.putString("offerStartDate",offerStartDate);
-        bundle.putString("offerCloseDate",offerCloseDate);
-        bundle.putString("offerDescription",offerDescription);
-        bundle.putString("shopOpenTime",shopOpenTime);
-        bundle.putString("shopCloseTime",shopCloseTime);
+        bundle.putString("offerActualPrice", offerActualPrice);
+        bundle.putString("offerDiscountPrice", offerDiscountPrice);
+        bundle.putString("offerStartDate", offerStartDate);
+        bundle.putString("offerCloseDate", offerCloseDate);
+        bundle.putString("offerDescription", offerDescription);
+        bundle.putString("shopOpenTime", shopOpenTime);
+        bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
         fragment1.setMyCallBackUpdateOfferListener(this);
         callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+    }
+
+    @Override
+    public void onViewClick(int position, DetailsList detailsList) {
+        String offerId = detailsList.getOfferDetails().getOfferId().trim();
+        String numView = detailsList.getOfferViewCount().toString().trim();
+        if (!TextUtils.isEmpty(numView) && numView.equals("0")){
+            AllViewUserFragment fragment1 = new AllViewUserFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("offerId", offerId);
+            fragment1.setArguments(bundle);
+            callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        }else {
+            Toast.makeText(activity,"No views now",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override

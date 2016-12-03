@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black">
+    android:layout_marginBottom="10dp"
+    android:background="@color/black_transparent_color">
 
     <RelativeLayout
         android:id="@+id/rlBanner"
@@ -16,7 +17,13 @@
             android:scaleType="fitXY"
             android:visibility="gone" />
 
-        <include layout="@layout/common_progressbar" />
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/imgShopLogoAbout"
@@ -27,7 +34,7 @@
             android:background="@drawable/button_border_white"
             android:padding="1dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/logo" />
+            android:src="@drawable/no_image_icon" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtShopNameAbout"
@@ -52,15 +59,15 @@
             android:layout_gravity="left"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
+            android:backgroundTint="@android:color/white"
             android:clickable="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:isIndicator="true"
             android:numStars="5"
-            android:progressTint="@color/yellow_color"
-            android:secondaryProgressTint="@color/wow_gray"
             android:progressBackgroundTint="@android:color/white"
-            android:backgroundTint="@android:color/white"/>
+            android:progressTint="@color/yellow_color"
+            android:secondaryProgressTint="@color/wow_gray" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtRatingAbout"
@@ -71,7 +78,7 @@
             android:layout_toLeftOf="@+id/txtFaverateCountAbout"
             android:layout_toRightOf="@+id/ratingBarAbout"
             android:text=""
-            android:textColor="@color/text_color"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -84,7 +91,7 @@
             android:layout_toRightOf="@+id/imgShopLogoAbout"
             android:lines="1"
             android:text=""
-            android:textColor="@color/text_color"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -96,14 +103,14 @@
             android:layout_toRightOf="@+id/imgShopLogoAbout"
             android:lines="1"
             android:text=""
-            android:textColor="@color/text_color"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtOffersAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtTimingAbout"
+            android:layout_above="@+id/llButton"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
             android:background="@color/highlight_color"
@@ -114,6 +121,7 @@
             android:textSize="12sp" />
 
         <LinearLayout
+            android:id="@+id/llButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgShopLogoAbout"
@@ -126,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"
+                android:background="@color/toolbar_color"
                 android:text="EDIT PROFILE"
                 android:textColor="@android:color/white"
                 android:visibility="visible" />
@@ -144,12 +152,12 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtFaverateCountAbout"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/imgFav"
-            android:paddingRight="5dp"
-            android:text="521"
+            android:gravity="center_horizontal"
+            android:text="2"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -172,43 +180,55 @@
         android:layout_below="@+id/rlBanner"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtCategoryAbout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:padding="5dp"
-            android:text="All Categories"
-            android:textColor="@android:color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtCategoryAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="All Categories"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnAddCategory"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="Add category" />
+        </LinearLayout>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerviewCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp">
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
         </android.support.v7.widget.RecyclerView>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnAddCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/white"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="Add category"
-            android:textSize="12sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/background_color"></View>
+        <!--  <View
+              android:layout_width="match_parent"
+              android:layout_height="10dp"
+              android:background="@color/background_color"></View>-->
+
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtRecentOffersAbout"

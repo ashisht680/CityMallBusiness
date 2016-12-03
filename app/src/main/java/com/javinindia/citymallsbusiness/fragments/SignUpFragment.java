@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
@@ -21,6 +23,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     private AppCompatEditText et_StoreNum, et_owner, et_email, et_MobileNum, et_Landline, et_password, et_ConfirmPassword;
     private RequestQueue requestQueue;
     private BaseFragment fragment;
+    private CheckBox checkShowPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,9 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         et_password.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_ConfirmPassword = (AppCompatEditText) view.findViewById(R.id.et_ConfirmPassword);
         et_ConfirmPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        checkShowPassword = (CheckBox)view.findViewById(R.id.checkShowPassword);
+        checkShowPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        checkShowPassword.setOnClickListener(this);
     }
 
 
@@ -89,6 +95,15 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.imgBack:
                 activity.onBackPressed();
+                break;
+            case R.id.checkShowPassword:
+                if (checkShowPassword.isChecked()){
+                    et_password.setInputType(InputType.TYPE_CLASS_TEXT);
+                    et_ConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+                }else {
+                    et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    et_ConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
                 break;
         }
     }
@@ -124,27 +139,27 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
 
     private boolean registerValidation(String storeName, String owner, String email, String mobileNum, String landline, String password, String confirmPassword) {
         if (TextUtils.isEmpty(storeName)) {
-            et_StoreNum.setError("Please enter store Name");
+            et_StoreNum.setError("You are not entered store Name");
             et_StoreNum.requestFocus();
             return false;
         } else if (TextUtils.isEmpty(owner)) {
-            et_owner.setError("Please enter name");
+            et_owner.setError("You are not entered owner's name");
             et_owner.requestFocus();
             return false;
         } else if (!Utility.isEmailValid(email)) {
-            et_email.setError("Please enter valid email");
+            et_email.setError("Email id entered is invalid");
             et_email.requestFocus();
             return false;
-        } else if (mobileNum.length() < 10) {
-            et_MobileNum.setError("Please enter valid mobile number");
+        } else if (mobileNum.length() != 10) {
+            et_MobileNum.setError("You are not entered valid mobile number");
             et_MobileNum.requestFocus();
             return false;
-        } else if (password.length() < 8) {
-            et_password.setError("Please enter password more than 8 character");
+        } else if (password.length() < 6) {
+            et_password.setError("Password should be more than 6 characters");
             et_password.requestFocus();
             return false;
         } else if (!confirmPassword.equals(password)) {
-            et_ConfirmPassword.setError("Please enter valid password");
+            et_ConfirmPassword.setError("Password does not match");
             et_ConfirmPassword.requestFocus();
             return false;
         } else {

@@ -137,9 +137,14 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                 if (!txtSelectCategory.getText().equals("Category")) {
                     if (!txtSelectSubCat.getText().equals("Subcategory")) {
                         if (!txtSelectBrand.getText().equals("Brands")) {
+                            //shopId=4&newbrand=ppppp&brands=na&shopCatId=77&shopSubCatId=444
                             methodSubmit();
                         } else {
-                            Toast.makeText(activity, "Select Brand first", Toast.LENGTH_LONG).show();
+                            if (!etBrand.getText().toString().equals("")) {
+                                methodSubmit();
+                            } else {
+                                Toast.makeText(activity, "Select Brand or write brand please", Toast.LENGTH_LONG).show();
+                            }
                         }
                     } else {
                         Toast.makeText(activity, "Select Subcategory first", Toast.LENGTH_LONG).show();
@@ -169,84 +174,92 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     public void onResponse(String response) {
                         loading.dismiss();
                         //  progressDialog.dismiss();
-                        Log.e("MasterTags", response);
+                        Log.e("res brand", response);
                         hideLoader();
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
-                        for (int i = 0; i < cityMasterParsing.getBrandDetailArrayList().size(); i++) {
-                            brandList.add(cityMasterParsing.getBrandDetailArrayList().get(i).getName().trim());
-                            brandIDList.add(cityMasterParsing.getBrandDetailArrayList().get(i).getId().trim());
-                        }
-                        if (brandList.size() > 0) {
-                            brandArray = new String[brandList.size()];
-                            brandList.toArray(brandArray);
-                            brandIdArray = new String[brandIDList.size()];
-                            brandIDList.toArray(brandIdArray);
+                        if (cityMasterParsing.getStatus().equals("true")) {
+                            if (cityMasterParsing.getBrandDetailArrayList().size() > 0) {
+                                for (int i = 0; i < cityMasterParsing.getBrandDetailArrayList().size(); i++) {
+                                    brandList.add(cityMasterParsing.getBrandDetailArrayList().get(i).getName().trim());
+                                    brandIDList.add(cityMasterParsing.getBrandDetailArrayList().get(i).getId().trim());
+                                }
+                                if (brandList.size() > 0) {
+                                    brandArray = new String[brandList.size()];
+                                    brandList.toArray(brandArray);
+                                    brandIdArray = new String[brandIDList.size()];
+                                    brandIDList.toArray(brandIdArray);
 
-                            if (brandList != null && brandList.size() > 0) {
+                                    if (brandList != null && brandList.size() > 0) {
 
-                                AlertDialog.Builder d = new AlertDialog.Builder(activity);
-                                d.setTitle("Select Tease");
-                                final ArrayList<String> data = new ArrayList<>();
-                                final ArrayList<String> dataId = new ArrayList<>();
-                                d.setMultiChoiceItems(brandArray, null, new DialogInterface.OnMultiChoiceClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                        String str = brandArray[which];
-                                        String strId = brandIdArray[which];
+                                        AlertDialog.Builder d = new AlertDialog.Builder(activity);
+                                        d.setTitle("Select Tease");
+                                        final ArrayList<String> data = new ArrayList<>();
+                                        final ArrayList<String> dataId = new ArrayList<>();
+                                        d.setMultiChoiceItems(brandArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                                String str = brandArray[which];
+                                                String strId = brandIdArray[which];
 
-                                        if (isChecked) {
-                                            data.add(str);
-                                            dataId.add(strId);
-                                            Log.e("str1", str + " id " + strId);
-                                        } else if (data.contains(which) && dataId.contains(which)) {
-                                            Log.e("str2", data.get(which) + " id " + dataId.get(which));
-                                            data.remove(data.get(which));
-                                            dataId.remove(dataId.get(which));
-                                        } else if (!isChecked) {
-                                            Log.e("str3", data.get(which) + " id " + dataId.get(which));
-                                            data.remove(data.get(which));
-                                            dataId.remove(dataId.get(which));
-                                        }
+                                                if (isChecked) {
+                                                    data.add(str);
+                                                    dataId.add(strId);
+                                                    Log.e("str1", str + " id " + strId);
+                                                } else if (data.contains(which) && dataId.contains(which)) {
+                                                    Log.e("str2", data.get(which) + " id " + dataId.get(which));
+                                                    data.remove(data.get(which));
+                                                    dataId.remove(dataId.get(which));
+                                                } else if (!isChecked) {
+                                                    Log.e("str3", data.get(which) + " id " + dataId.get(which));
+                                                    data.remove(data.get(which));
+                                                    dataId.remove(dataId.get(which));
+                                                }
+                                            }
+
+                                        });
+                                        d.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                                String str = Arrays.toString(data.toArray());
+                                                String test = str.replaceAll("[\\[\\](){}]", "");
+                                                String strID = Arrays.toString(dataId.toArray());
+                                                BrandID = strID.replaceAll("[\\[\\](){}]", "");
+                                                if (data.size() == 1) {
+                                                    txtSelectBrand.setText(test);
+                                                    Log.e("strID 1", BrandID);
+                                                } else if (data.size() >= 2) {
+                                                    int index = test.lastIndexOf(",");
+                                                    Log.e("test", index + "");
+                                                    StringBuilder myName = new StringBuilder(test);
+                                                    myName.deleteCharAt(index);
+                                                    myName.insert(index, " and");
+                                                    txtSelectBrand.setText(myName);
+                                                    Log.e("strID 2", BrandID);
+                                                } else {
+                                                    txtSelectBrand.setText(test);
+                                                    Log.e("strID 3", BrandID);
+
+                                                }
+
+                                                dialog.dismiss();
+
+
+                                            }
+                                        });
+                                        d.setNegativeButton("Cancel", null);
+                                        d.show();
                                     }
-
-                                });
-                                d.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-
-                                        String str = Arrays.toString(data.toArray());
-                                        String test = str.replaceAll("[\\[\\](){}]", "");
-                                        String strID = Arrays.toString(dataId.toArray());
-                                        BrandID = strID.replaceAll("[\\[\\](){}]", "");
-                                        if (data.size() == 1) {
-                                            txtSelectBrand.setText(test);
-                                            Log.e("strID 1", BrandID);
-                                        } else if (data.size() >= 2) {
-                                            int index = test.lastIndexOf(",");
-                                            Log.e("test", index + "");
-                                            StringBuilder myName = new StringBuilder(test);
-                                            myName.deleteCharAt(index);
-                                            myName.insert(index, " and");
-                                            txtSelectBrand.setText(myName);
-                                            Log.e("strID 2", BrandID);
-                                        } else {
-                                            txtSelectBrand.setText(test);
-                                            Log.e("strID 3", BrandID);
-
-                                        }
-
-                                        dialog.dismiss();
-
-
-                                    }
-                                });
-                                d.setNegativeButton("Cancel", null);
-                                d.show();
+                                } else {
+                                    showDialogMethod("Brand not found");
+                                }
+                            } else {
+                                showDialogMethod("Brand not found");
                             }
                         } else {
-                            showDialogMethod("No brand found");
+                            showDialogMethod("Brand not found");
                         }
 
                     }
@@ -321,7 +334,13 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                 params.put("shopId", SharedPreferencesManager.getUserID(activity));
                 params.put("shopCatId", catId);
                 params.put("shopSubCatId", subCatId);
-                params.put("brands",BrandID);
+                if (etBrand.getText().toString().trim().equals("")) {
+                    params.put("brands", BrandID);
+                    params.put("newbrand", "na");
+                } else {
+                    params.put("brands", "na");
+                    params.put("newbrand", etBrand.getText().toString().trim());
+                }
                 return params;
             }
 
@@ -345,39 +364,46 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("MasterTags", response);
+                        Log.e("res cat", response);
                         hideLoader();
                         final ProductCategory countryMasterApiParsing = new ProductCategory();
                         countryMasterApiParsing.responseImplement(response);
-                        if (countryMasterApiParsing.getShopCategoryDetailsArrayList().size() > 0) {
-                            for (int i = 0; i < countryMasterApiParsing.getShopCategoryDetailsArrayList().size(); i++) {
-                                categoryList.add(countryMasterApiParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory());
-                            }
-                            if (categoryList.size() > 0) {
-                                categoryArray = new String[categoryList.size()];
-                                categoryList.toArray(categoryArray);
-
-                                if (categoryList != null && categoryList.size() > 0) {
-                                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                    builder.setTitle("Select Category");
-                                    builder.setNegativeButton(android.R.string.cancel, null);
-                                    builder.setItems(categoryArray, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int item) {
-                                            // Do something with the selection
-                                            txtSelectCategory.setText(categoryArray[item]);
-                                            txtSelectSubCat.setText("Subcategory");
-                                            int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
-                                            ;
-                                            catId = countryMasterApiParsing.getShopCategoryDetailsArrayList().get(index).getId();
-                                            // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                            Log.e("catId", catId + "\t" + index);
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    builder.create();
-                                    builder.show();
+                        if (countryMasterApiParsing.getStatus().equals("true")) {
+                            if (countryMasterApiParsing.getShopCategoryDetailsArrayList().size() > 0) {
+                                for (int i = 0; i < countryMasterApiParsing.getShopCategoryDetailsArrayList().size(); i++) {
+                                    categoryList.add(countryMasterApiParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory());
                                 }
+                                if (categoryList.size() > 0) {
+                                    categoryArray = new String[categoryList.size()];
+                                    categoryList.toArray(categoryArray);
+
+                                    if (categoryList != null && categoryList.size() > 0) {
+                                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                                        builder.setTitle("Select Category");
+                                        builder.setNegativeButton(android.R.string.cancel, null);
+                                        builder.setItems(categoryArray, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                // Do something with the selection
+                                                txtSelectCategory.setText(categoryArray[item]);
+                                                txtSelectSubCat.setText("Subcategory");
+                                                txtSelectBrand.setText("Brands");
+                                                int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
+                                                ;
+                                                catId = countryMasterApiParsing.getShopCategoryDetailsArrayList().get(index).getId();
+                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
+                                                Log.e("catId", catId + "\t" + index);
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.create();
+                                        builder.show();
+                                    }
+                                }
+                            } else {
+                                showDialogMethod("Category not found");
                             }
+                        } else {
+                            showDialogMethod("Category not found");
                         }
 
 
@@ -419,37 +445,48 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     public void onResponse(String response) {
                         loading.dismiss();
                         //  progressDialog.dismiss();
-                        Log.e("MasterTags", response);
+                        Log.e("res subcat", response);
                         hideLoader();
                         final ProductCategory cityMasterParsing = new ProductCategory();
                         cityMasterParsing.responseImplement(response);
-                        for (int i = 0; i < cityMasterParsing.getShopCategoryDetailsArrayList().size(); i++) {
-                            suCatList.add(cityMasterParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory());
-                        }
-                        if (suCatList.size() > 0) {
-                            suCatArray = new String[suCatList.size()];
-                            suCatList.toArray(suCatArray);
+                        if (cityMasterParsing.getStatus().equals("true")) {
+                            Log.e("sub cat size", cityMasterParsing.getShopCategoryDetailsArrayList().size() + "");
+                            if (cityMasterParsing.getShopCategoryDetailsArrayList().size() > 0) {
+                                for (int i = 0; i < cityMasterParsing.getShopCategoryDetailsArrayList().size(); i++) {
+                                    suCatList.add(cityMasterParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory());
+                                }
+                                if (suCatList.size() > 0) {
+                                    suCatArray = new String[suCatList.size()];
+                                    suCatList.toArray(suCatArray);
 
-                            if (suCatList != null && suCatList.size() > 0) {
-                                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                                builder.setTitle("Select Subcategory");
-                                builder.setNegativeButton(android.R.string.cancel, null);
-                                builder.setItems(suCatArray, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int item) {
-                                        // Do something with the selection
-                                        txtSelectSubCat.setText(suCatArray[item]);
-                                        int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
-                                        ;
-                                        subCatId = cityMasterParsing.getShopCategoryDetailsArrayList().get(index).getId();
-                                        // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                        Log.e("subCatId", subCatId + "\t" + index);
-                                        dialog.dismiss();
+                                    if (suCatList != null && suCatList.size() > 0) {
+                                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                                        builder.setTitle("Select Subcategory");
+                                        builder.setNegativeButton(android.R.string.cancel, null);
+                                        builder.setItems(suCatArray, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int item) {
+                                                // Do something with the selection
+                                                txtSelectSubCat.setText(suCatArray[item]);
+                                                txtSelectBrand.setText("Brands");
+                                                int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
+                                                ;
+                                                subCatId = cityMasterParsing.getShopCategoryDetailsArrayList().get(index).getId();
+                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
+                                                Log.e("subCatId", subCatId + "\t" + index);
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.create();
+                                        builder.show();
                                     }
-                                });
-                                builder.create();
-                                builder.show();
+                                }
+                            } else {
+                                showDialogMethod("Subcategory not found");
                             }
+                        } else {
+                            showDialogMethod("Subcategory not found");
                         }
+
 
                     }
                 },

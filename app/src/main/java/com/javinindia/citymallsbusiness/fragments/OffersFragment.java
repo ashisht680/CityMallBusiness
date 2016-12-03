@@ -13,12 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
-import com.javinindia.citymallsbusiness.recyclerview.OfferAdaptar;
+import com.javinindia.citymallsbusiness.recyclerview.TestOfferAdaptar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +26,11 @@ import java.util.Locale;
 /**
  * Created by Ashish on 08-09-2016.
  */
-public class OffersFragment extends BaseFragment implements TextWatcher, View.OnClickListener, OfferAdaptar.MyClickListener{
+public class OffersFragment extends BaseFragment implements TextWatcher, View.OnClickListener, TestOfferAdaptar.MyClickListener{
 
     private RecyclerView recyclerview;
     private List<CountryModel> mCountryModel;
-    private OfferAdaptar adapter;
+    private TestOfferAdaptar adapter;
     private AppCompatEditText appCompatEditText;
 
     @Override
@@ -59,7 +58,7 @@ public class OffersFragment extends BaseFragment implements TextWatcher, View.On
             mCountryModel.add(new CountryModel(obj.getDisplayCountry(), obj.getISO3Country()));
         }
 
-        adapter = new OfferAdaptar(mCountryModel);
+        adapter = new TestOfferAdaptar(mCountryModel);
         adapter.setMyClickListener(OffersFragment.this);
         recyclerview.setAdapter(adapter);
     }

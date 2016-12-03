@@ -22,14 +22,14 @@ import java.util.Locale;
 /**
  * Created by Ashish on 14-09-2016.
  */
-public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> {
+public class TestOfferAdaptar extends RecyclerView.Adapter<TestOfferAdaptar.ViewHolder> {
     List<CountryModel> list;
     Context context;
     MyClickListener myClickListener;
     ArrayList<CountryModel> countryModelArrayList;
 
 
-    public OfferAdaptar(List<CountryModel> mCountryModel) {
+    public TestOfferAdaptar(List<CountryModel> mCountryModel) {
         this.list = mCountryModel;
         this.countryModelArrayList = new ArrayList<>();
         this.countryModelArrayList.addAll(mCountryModel);
@@ -37,8 +37,8 @@ public class OfferAdaptar extends RecyclerView.Adapter<OfferAdaptar.ViewHolder> 
 
 
     @Override
-    public OfferAdaptar.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+    public TestOfferAdaptar.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                          int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.offer_item_layout, parent, false);
 
