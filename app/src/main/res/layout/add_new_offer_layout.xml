@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:text="To add new offer please fill all the deatils" />
+                android:text="To add new offer please fill all the details" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txtChooseCategory"

@@ -253,7 +253,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onEditClick(int position) {
-        Toast.makeText(activity, "aaaaa", Toast.LENGTH_LONG).show();
         EditProfileFragment1 fragment1 = new EditProfileFragment1();
         fragment1.setMyCallBackOfferListener(this);
         callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);

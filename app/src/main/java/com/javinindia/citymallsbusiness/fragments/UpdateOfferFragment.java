@@ -530,8 +530,10 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                     byte[] data = bos.toByteArray();
                     String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
                     params.put("bimg", encodedImage + "image/jpeg");
+                    params.put("action","new");
                 } else {
                     params.put("bimg", offerPic);
+                    params.put("action","old");
                 }
 
 

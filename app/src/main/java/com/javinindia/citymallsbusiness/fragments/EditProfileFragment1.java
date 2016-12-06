@@ -272,6 +272,12 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                             if (!TextUtils.isEmpty(sLandline)) {
                                 etLandLine.setText(Html.fromHtml(sLandline));
                             }
+                            if (!TextUtils.isEmpty(sState)){
+                                etState.setText(Html.fromHtml(sState));
+                            }
+                            if (!TextUtils.isEmpty(sCity)){
+                                etCity.setText(Html.fromHtml(sCity));
+                            }
                             if (!TextUtils.isEmpty(mName)) {
                                 etMall.setText(Html.fromHtml(mName));
                             }
@@ -488,8 +494,10 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     byte[] data = bos.toByteArray();
                     String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
                     params.put("shopProfilePic", encodedImage + "image/jpeg");
+                    params.put("action","new");
                 } else {
                     params.put("shopProfilePic", sPic);
+                    params.put("action","old");
                 }
                 return params;
             }
@@ -764,8 +772,8 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("state", "Delhi");
-                params.put("city", "New Delhi");
+                params.put("state",etState.getText().toString().trim());
+                params.put("city", etCity.getText().toString().trim());
                 return params;
             }
 

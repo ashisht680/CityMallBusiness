@@ -276,7 +276,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             if (!TextUtils.isEmpty(openTime)) {
                 viewHolder.txtTimingHeader.setText((Html.fromHtml("<font color=#ffffff>" + "Timing:" + "</font>" + " " + "<font color=#ffffff>" + openTime + " - " + closeTime + "</font>")));
             } else {
-                viewHolder.txtTimingHeader.setText("Timing: Not found");
+                viewHolder.txtTimingHeader.setText("Timing:");
             }
             final ArrayList<String> data = new ArrayList<>();
             if (!TextUtils.isEmpty(sNo)) {
