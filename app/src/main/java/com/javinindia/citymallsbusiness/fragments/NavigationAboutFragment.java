@@ -2,16 +2,26 @@ package com.javinindia.citymallsbusiness.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -24,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
+import com.javinindia.citymallsbusiness.activity.LoginActivity;
 import com.javinindia.citymallsbusiness.activity.NavigationActivity;
 import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
 import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
@@ -46,11 +57,9 @@ import java.util.Map;
  */
 public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment1.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener, AddSubCatFragment.OnCallBackCAtegoryListener {
     private RecyclerView recyclerview;
-    private List<CountryModel> mCountryModel;
     private AboutAdaptar adapter;
     private RequestQueue requestQueue;
     ArrayList catArray;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,11 +228,14 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
     private void initialize(View view) {
+
         recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
         AppCompatButton btnAddOffer = (AppCompatButton) view.findViewById(R.id.btnAddOffer);
         btnAddOffer.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         btnAddOffer.setOnClickListener(this);
     }
+
+
 
     @Override
     protected int getFragmentLayout() {
