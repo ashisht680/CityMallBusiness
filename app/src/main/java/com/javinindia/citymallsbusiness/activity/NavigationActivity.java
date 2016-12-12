@@ -67,7 +67,7 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
 
-        initToolbar();
+       /* initToolbar();
         setupDrawerLayout();
         final ImageView avatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
         final TextView txtShopName = (TextView)navigationView.getHeaderView(0).findViewById(R.id.txtShopName);
@@ -83,7 +83,7 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
         }
         if (!TextUtils.isEmpty(SharedPreferencesManager.getOwnerName(getApplicationContext()))){
             txtOwnerName.setText(SharedPreferencesManager.getOwnerName(getApplicationContext()));
-        }
+        }*/
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction().setCustomAnimations(0, 0, 0, 0);
         mFragmentTransaction.replace(R.id.navigationContainer, new NavigationAboutFragment()).commit();
@@ -96,142 +96,39 @@ public class NavigationActivity extends BaseActivity implements LocationSearchFr
         return R.layout.activity_home;
     }
 
-    private void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setTitle(null);
-
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-    }
-
-    private void setupDrawerLayout() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
-
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                displayView(menuItem.getTitle());
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
-    }
-
-    private void displayView(CharSequence title) {
-        if (title.equals("Home")) {
-           // Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-            Intent refresh = new Intent(this, NavigationActivity.class);
-            startActivity(refresh);
-            finish();
-            drawerLayout.closeDrawers();
-        } else if (title.equals("Category List")) {
-          //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-            ListShopProductCategoryFragment fragment = new ListShopProductCategoryFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
-            drawerLayout.closeDrawers();
-        } else if (title.equals("Invite Amigo")) {
-            Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-           /* BaseFragment fragment = new ForgotPasswordFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
-            drawerLayout.closeDrawers();
-        } else if (title.equals("more")) {
-            Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-            /*BaseFragment fragment = new SignUpAddressFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
-            drawerLayout.closeDrawers();
-        } else if (title.equals("settings")) {
-            /*BaseFragment fragment = new VisitFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();*/
-            drawerLayout.closeDrawers();
-        } else if (title.equals("Logout")) {
-          //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
-            dialogBox();
-        }
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void dialogBox() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Logout");
-        alertDialogBuilder.setMessage("Thanks for visiting City mall business! Be back soon!");
-        alertDialogBuilder.setPositiveButton("Ok!",
-                new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_LONG).show();
-                        SharedPreferencesManager.setUserID(getApplicationContext(), null);
-                        SharedPreferencesManager.setUsername(getApplicationContext(), null);
-                        SharedPreferencesManager.setPassword(getApplicationContext(), null);
-                        SharedPreferencesManager.setEmail(getApplicationContext(), null);
-                        SharedPreferencesManager.setLocation(getApplicationContext(), null);
-                        SharedPreferencesManager.setLatitude(getApplicationContext(),null);
-                        SharedPreferencesManager.setLongitude(getApplicationContext(),null);
-                        SharedPreferencesManager.setProfileImage(getApplicationContext(),null);
-                        SharedPreferencesManager.setOwnerName(getApplicationContext(),null);
-                        Intent refresh = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(refresh);//Start the same Activity
-                        finish();
-                    }
-                });
 
-        alertDialogBuilder.setNegativeButton("Take me back",
-                new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-           /* case R.id.action_search:
+           *//* case R.id.action_search:
                 LocationSearchFragment fragment = new LocationSearchFragment();
                 mFragmentManager = getSupportFragmentManager();
                 fragment.setMyCallBackListener(this);
                 mFragmentManager.beginTransaction()
                         .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();
-                return true;*/
+                return true;*//*
             default:
                 return super.onOptionsItemSelected(item);
         }
 
-    }
+    }*/
 
-    @Override
+ /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation_menu, menu);
         return true;
     }
-
+*/
     @Override
     public void onCallBack(String a) {
         Toast.makeText(getApplication(), a, Toast.LENGTH_LONG).show();

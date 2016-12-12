@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/background_color"
     android:layout_height="match_parent">
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtDataNotFound"
+    <include layout="@layout/common_toolbar_layout"/>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Data not found"
-        android:gravity="center"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/rlButton"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp" />
+        android:layout_height="match_parent">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtDataNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Data not found"
+            android:gravity="center"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rlButton"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp" />
+    </RelativeLayout>
 
-</RelativeLayout>
+
+</LinearLayout>

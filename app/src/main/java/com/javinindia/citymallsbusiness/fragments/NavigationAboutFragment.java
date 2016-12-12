@@ -20,11 +20,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,8 +49,10 @@ import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.OfferListRes
 import com.javinindia.citymallsbusiness.apiparsing.shoperprofileparsing.ShopViewResponse;
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
+import com.javinindia.citymallsbusiness.picasso.CircleTransform;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,9 +68,16 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     private AboutAdaptar adapter;
     private RequestQueue requestQueue;
     ArrayList catArray;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
+    private FragmentManager mFragmentManager;
+    private FragmentTransaction mFragmentTransaction;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -70,17 +85,167 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        initToolbar(view);
+        setupDrawerLayout(view);
         Log.e("id", SharedPreferencesManager.getUserID(activity));
         initialize(view);
         sendDataOnRegistrationApi();
         return view;
     }
 
+    private void initToolbar(View view) {
+        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        activity.setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+
+        final ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle(null);
+
+    }
+
+    private void setupDrawerLayout(View view) {
+        drawerLayout = (DrawerLayout) view.findViewById(R.id.DrawerLayout);
+        navigationView = (NavigationView) view.findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                displayView(menuItem.getTitle());
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
+        final ImageView avatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
+        final TextView email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtOwnerName);
+        final TextView txtOwnerName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtShopName);
+        if (!TextUtils.isEmpty(SharedPreferencesManager.getProfileImage(activity))) {
+            Picasso.with(activity).load(SharedPreferencesManager.getProfileImage(activity)).transform(new CircleTransform()).into(avatar);
+        } else {
+            //AVATAR_URL = "http://lorempixel.com/200/200/people/1/";
+            Picasso.with(activity).load(R.drawable.no_image_icon).transform(new CircleTransform()).into(avatar);
+        }
+        if (!TextUtils.isEmpty(SharedPreferencesManager.getUsername(activity))) {
+            txtOwnerName.setText(SharedPreferencesManager.getUsername(activity));
+        }
+        if (!TextUtils.isEmpty(SharedPreferencesManager.getEmail(activity))) {
+            email.setText(SharedPreferencesManager.getEmail(activity));
+        }
+    }
+
+    private void displayView(CharSequence title) {
+        if (title.equals("Home")) {
+            drawerLayout.closeDrawers();
+            // Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+            Intent refresh = new Intent(activity, NavigationActivity.class);
+            startActivity(refresh);
+            activity.finish();
+        } else if (title.equals("Category List")) {
+            drawerLayout.closeDrawers();
+            //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+            ListShopProductCategoryFragment fragment = new ListShopProductCategoryFragment();
+            mFragmentManager = activity.getSupportFragmentManager();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
+        } else if (title.equals("Invite Amigo")) {
+            drawerLayout.closeDrawers();
+            Toast.makeText(activity, title, Toast.LENGTH_LONG).show();
+           /* BaseFragment fragment = new ForgotPasswordFragment();
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
+        } else if (title.equals("more")) {
+            drawerLayout.closeDrawers();
+            Toast.makeText(activity, title, Toast.LENGTH_LONG).show();
+            /*BaseFragment fragment = new SignUpAddressFragment();
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
+        } else if (title.equals("settings")) {
+            drawerLayout.closeDrawers();
+            /*BaseFragment fragment = new VisitFragment();
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();*/
+        } else if (title.equals("Logout")) {
+            //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+            dialogBox();
+        }
+
+    }
+
+    public void dialogBox() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
+        alertDialogBuilder.setTitle("Logout");
+        alertDialogBuilder.setMessage("Thanks for visiting City mall business! Be back soon!");
+        alertDialogBuilder.setPositiveButton("Ok!",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(activity, "Logout", Toast.LENGTH_LONG).show();
+                        SharedPreferencesManager.setUserID(activity, null);
+                        SharedPreferencesManager.setUsername(activity, null);
+                        SharedPreferencesManager.setPassword(activity, null);
+                        SharedPreferencesManager.setEmail(activity, null);
+                        SharedPreferencesManager.setLocation(activity, null);
+                        SharedPreferencesManager.setLatitude(activity,null);
+                        SharedPreferencesManager.setLongitude(activity,null);
+                        SharedPreferencesManager.setProfileImage(activity,null);
+                        SharedPreferencesManager.setOwnerName(activity,null);
+                        Intent refresh = new Intent(activity, LoginActivity.class);
+                        startActivity(refresh);//Start the same Activity
+                        activity.finish();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("Take me back",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(Gravity.LEFT);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        activity.getMenuInflater().inflate(R.menu.navigation_menu, menu);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        drawerLayout.closeDrawer(Gravity.LEFT);
+    }
+
+   /* @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         disableTouchOfBackFragment(savedInstanceState);
-    }
+    }*/
 
     private void sendDataOnRegistrationApi() {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
@@ -258,7 +423,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             case R.id.btnAddOffer:
                 AddNewOfferFragment fragment = new AddNewOfferFragment();
                 fragment.setMyCallBackOfferListener(this);
-                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.navigationContainer);
+              //  callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.navigationContainer);
+                mFragmentManager = activity.getSupportFragmentManager();
+                mFragmentManager.beginTransaction()
+                        .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
                 break;
         }
     }
@@ -267,14 +435,20 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     public void onEditClick(int position) {
         EditProfileFragment1 fragment1 = new EditProfileFragment1();
         fragment1.setMyCallBackOfferListener(this);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+       // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        mFragmentManager = activity.getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
     }
 
     @Override
     public void onAllOffers(int position) {
         AllOffersFragment fragment1 = new AllOffersFragment();
         fragment1.setMyCallBackRefreshListener(this);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+       // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        mFragmentManager = activity.getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
     }
 
     @Override
@@ -329,7 +503,11 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("shopOpenTime", shopOpenTime);
         bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+      //  callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        mFragmentManager = activity.getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+
     }
 
     @Override
@@ -385,7 +563,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
         fragment1.setMyCallBackUpdateOfferListener(this);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+       // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        mFragmentManager = activity.getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
     }
 
     @Override
@@ -398,7 +579,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             Bundle bundle = new Bundle();
             bundle.putString("offerId", offerId);
             fragment1.setArguments(bundle);
-            callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+           // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+            mFragmentManager = activity.getSupportFragmentManager();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
         }else {
             Toast.makeText(activity,"No views now",Toast.LENGTH_LONG).show();
         }

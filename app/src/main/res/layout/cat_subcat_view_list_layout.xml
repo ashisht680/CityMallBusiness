@@ -1,63 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_color"
     android:orientation="vertical">
-
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtTitle"
+    <include layout="@layout/common_toolbar_layout"/>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:gravity="center_horizontal"
-        android:textSize="15sp"
-        android:textColor="@color/toolbar_color"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Shop Categories"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:textSize="15sp"
+            android:textColor="@color/toolbar_color"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Shop Categories"/>
 
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/etSearchCat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTitle"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/button_border_black_fill_white"
-        android:hint="Search"
-        android:textSize="13sp"
-        android:padding="5dp" />
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/etSearchCat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitle"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/button_border_black_fill_white"
+            android:hint="Search"
+            android:textSize="13sp"
+            android:padding="5dp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerviewCatList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etSearchCat"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerviewCatList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etSearchCat"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
 
-    </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/flotBtnAddCat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        app:backgroundTint="@color/toolbar_color"
-        android:src="@drawable/ic_add_white"
-        android:layout_margin="8dp" />
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtNoData"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="No data found"
-        android:gravity="center"
-        android:visibility="gone"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/flotBtnAddCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:backgroundTint="@color/toolbar_color"
+            android:src="@drawable/ic_add_white"
+            android:layout_margin="8dp" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtNoData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No data found"
+            android:gravity="center"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
-</RelativeLayout>
+
+
+</LinearLayout>

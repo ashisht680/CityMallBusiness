@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical">
+    <include layout="@layout/common_toolbar_layout"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -49,12 +50,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:src="@drawable/no_image_icon" />
+
                 <ImageView
                     android:id="@+id/imgProfilePicNotFound"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:src="@drawable/no_image_icon"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/rlUpadteImg"
@@ -127,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -157,7 +159,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img0"
-                        android:background="@color/blue_button_color"
+                        android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="Owner name"
                         android:inputType="text"
@@ -174,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -204,11 +206,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img1"
-                        android:background="@color/blue_button_color"
+                        android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="abcdefg@xyz.com"
                         android:inputType="textEmailAddress"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -221,7 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -251,11 +253,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img2"
-                        android:background="@color/blue_button_color"
+                        android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="mobile number"
                         android:inputType="phone"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -267,7 +269,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -297,10 +299,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img3"
-                        android:background="@color/blue_button_color"
+                        android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="landline number"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -311,7 +313,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -341,14 +343,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img4"
-                        android:background="@color/blue_button_color"
-                        android:gravity="center|left"
+                        android:background="@color/toolbar_color"
                         android:clickable="true"
                         android:cursorVisible="false"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
+                        android:gravity="center|left"
                         android:hint="state"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -359,7 +361,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -389,14 +391,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img5"
-                        android:background="@color/blue_button_color"
-                        android:gravity="center|left"
-                        android:hint="city"
+                        android:background="@color/toolbar_color"
                         android:clickable="true"
                         android:cursorVisible="false"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
-                        android:singleLine="true"
+                        android:gravity="center|left"
+                        android:hint="city"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -407,7 +409,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -437,14 +439,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img6"
-                        android:background="@color/blue_button_color"
-                        android:gravity="center|left"
+                        android:background="@color/toolbar_color"
                         android:clickable="true"
                         android:cursorVisible="false"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
+                        android:gravity="center|left"
                         android:hint="Mall name"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -455,7 +457,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -485,10 +487,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img7"
-                        android:background="@color/blue_button_color"
+                        android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="store number"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -499,7 +501,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue_button_color">
+                android:background="@color/toolbar_color">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -529,10 +531,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_toRightOf="@+id/img8"
-                        android:background="@color/blue_button_color"
+                        android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="floor number"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -542,7 +544,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:background="@color/toolbar_color"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -568,104 +572,110 @@
                         android:src="@drawable/shape_white_triangle" />
 
                 </RelativeLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:weightSum="2">
 
-
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/etStartTime"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_button_color"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:padding="5dp"
-                    android:hint="Open"
-                    android:textColorHint="@android:color/white"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp" />
+                    android:weightSum="2">
 
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/etEndTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/blue_button_color"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:padding="5dp"
-                    android:hint="Close"
-                    android:textColorHint="@android:color/white"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp"
-                    />
-            </LinearLayout>
-           <!-- <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txtAddCategory"
-                        android:layout_width="100dp"
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/etStartTime"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:background="@android:color/white"
-                        android:gravity="center|left"
-                        android:paddingLeft="5dp"
-                        android:text="Categories"
-                        android:textColor="@color/blue_button_color"
+                        android:layout_weight="1"
+                        android:background="@color/toolbar_color"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="left|center_vertical"
+                        android:hint="Open"
+                        android:padding="5dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
 
                     <ImageView
                         android:id="@+id/img10"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_toRightOf="@+id/txtAddCategory"
+                        android:layout_toRightOf="@+id/txtTimingAbout"
                         android:rotation="0"
                         android:src="@drawable/shape_white_triangle" />
 
-                </RelativeLayout>
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/etEndTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:background="@color/toolbar_color"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="left|center_vertical"
+                        android:hint="Close"
+                        android:padding="5dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white"
+                        android:textSize="12dp" />
+                </LinearLayout>
             </LinearLayout>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/grid_tags"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:horizontalSpacing="10dp"
-                android:numColumns="2"
-                android:verticalSpacing="10dp" />
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txtAddNewCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:gravity="center|left"
-                android:text="Add new category"
-                android:layout_marginTop="5dp"
-                android:padding="5dp"
-                android:textAllCaps="true"
-                android:layout_gravity="center_horizontal"
-                android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/white"
-                android:textSize="14dp" />-->
+
+            <!-- <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="5dp">
+
+                 <RelativeLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+
+                     <android.support.v7.widget.AppCompatTextView
+                         android:id="@+id/txtAddCategory"
+                         android:layout_width="100dp"
+                         android:layout_height="30dp"
+                         android:background="@android:color/white"
+                         android:gravity="center|left"
+                         android:paddingLeft="5dp"
+                         android:text="Categories"
+                         android:textColor="@color/blue_button_color"
+                         android:textSize="12dp" />
+
+                     <ImageView
+                         android:id="@+id/img10"
+                         android:layout_width="30dp"
+                         android:layout_height="30dp"
+                         android:layout_toRightOf="@+id/txtAddCategory"
+                         android:rotation="0"
+                         android:src="@drawable/shape_white_triangle" />
+
+                 </RelativeLayout>
+             </LinearLayout>
+             <android.support.v7.widget.RecyclerView
+                 android:id="@+id/grid_tags"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:gravity="left"
+                 android:horizontalSpacing="10dp"
+                 android:numColumns="2"
+                 android:verticalSpacing="10dp" />
+             <android.support.v7.widget.AppCompatTextView
+                 android:id="@+id/txtAddNewCategory"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:background="@android:color/white"
+                 android:gravity="center|left"
+                 android:text="Add new category"
+                 android:layout_marginTop="5dp"
+                 android:padding="5dp"
+                 android:textAllCaps="true"
+                 android:layout_gravity="center_horizontal"
+                 android:singleLine="true"
+                 android:textColor="@android:color/black"
+                 android:textColorHint="@android:color/white"
+                 android:textSize="14dp" />-->
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txtUpdate"

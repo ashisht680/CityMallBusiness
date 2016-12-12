@@ -2,12 +2,16 @@ package com.javinindia.citymallsbusiness.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.OfferListResponseparsing;
 import com.javinindia.citymallsbusiness.constant.Constants;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.recyclerview.AllUserAdapter;
 import com.javinindia.citymallsbusiness.recyclerview.OfferAdapter;
@@ -58,9 +63,29 @@ public class AllViewUserFragment extends BaseFragment implements AllUserAdapter.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        initToolbar(view);
         initializeMethod(view);
         sendRequestOnAllViewFeed();
         return view;
+    }
+
+    private void initToolbar(View view) {
+        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        activity.setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onBackPressed();
+            }
+        });
+        final ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle(null);
+        AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
+        textView.setText("");
+        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
+        textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
     private void sendRequestOnAllViewFeed() {

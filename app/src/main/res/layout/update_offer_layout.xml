@@ -5,6 +5,8 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
+    <include layout="@layout/common_toolbar_layout"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -171,8 +173,8 @@
 
             <ImageView
                 android:id="@+id/ivImage"
-                android:layout_width="220dp"
-                android:layout_height="110dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_gravity="center_horizontal"
@@ -181,8 +183,8 @@
                 android:visibility="visible" />
             <ImageView
                 android:id="@+id/imgOfferPicNotFound"
-                android:layout_width="220dp"
-                android:layout_height="110dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_gravity="center_horizontal"
@@ -230,16 +232,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <CheckBox
+                <!--<CheckBox
                     android:id="@+id/checkboxPercent"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" />-->
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txtEnterPercentTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/checkboxPercent"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
                     android:text="Enter Percentage(%)"
@@ -290,16 +291,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <CheckBox
+                <!--<CheckBox
                     android:id="@+id/checkboxPrise"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" />-->
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txtEnterPriceTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/checkboxPrise"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
                     android:text="Enter Price"

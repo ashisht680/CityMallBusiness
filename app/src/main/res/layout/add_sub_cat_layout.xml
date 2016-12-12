@@ -1,77 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:background="@color/background_color">
-    <LinearLayout
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar_layout" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       android:layout_centerInParent="true"
-        android:orientation="vertical">
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtSelectCategory"
+        android:layout_height="match_parent"
+       android:layout_gravity="center">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Category"
-            android:background="@drawable/button_border_red_fill_white"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:textColor="@color/toolbar_color"
-            android:gravity="center"/>
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtSelectSubCat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Subcategory"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border_red_fill_white"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:textColor="@color/toolbar_color"
-            android:gravity="center"/>
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtSelectBrand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Brands"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border_red_fill_white"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:textColor="@color/toolbar_color"
-            android:gravity="center"/>
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="-----OR-----"
-            android:layout_marginTop="20dp"
-            android:padding="5dp"
-            android:textSize="15sp"
-            android:textColor="@color/blue_button_color"
-            android:gravity="center"/>
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/etBrand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="TYPE BRAND NAME"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border_red_fill_white"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:textColor="@color/toolbar_color"
-            android:gravity="center"/>
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="Submit"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white"
-            android:background="@color/toolbar_color"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:layout_marginTop="50dp"
+            android:padding="8dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtSelectCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_border_red_fill_white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Category"
+                android:textColor="@color/toolbar_color"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtSelectSubCat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_border_red_fill_white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Subcategory"
+                android:textColor="@color/toolbar_color"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtSelectBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_border_red_fill_white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Brands"
+                android:textColor="@color/toolbar_color"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="-----OR-----"
+                android:textColor="@color/blue_button_color"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/etBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_border_red_fill_white"
+                android:gravity="center"
+                android:hint="TYPE BRAND NAME"
+                android:padding="5dp"
+                android:textColor="@color/toolbar_color"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:background="@color/toolbar_color"
+                android:text="Submit"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
 
 
-</RelativeLayout>
+
+
+</LinearLayout>

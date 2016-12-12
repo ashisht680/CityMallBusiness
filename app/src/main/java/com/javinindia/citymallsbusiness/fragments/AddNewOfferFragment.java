@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -22,9 +23,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -76,7 +79,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     private String min = "";
     private String sec = "";
 
-    CheckBox checkboxPercent, checkboxPrise;
+   // CheckBox checkboxPercent, checkboxPrise;
     AppCompatTextView txtChooseCategory, txtAddProductImages, btnStartTime, btnEndTime, txtChooseSubCategory, txtChooseBrand,
             txtChoosePercent, txtAdditional, txtEnterPercentTitle, txtOr, txtEnterPriceTitle, txtTitle, txtTitleDisc;
     AppCompatEditText etProductTitle, etProductDescription, etPercentage, etActualPrice, etDiscountPrice;
@@ -105,6 +108,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     int size = 0;
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
 
+    private File outPutFile = null;
+
     private OnCallBackAddOfferListener callbackAddOffer;
 
     @Override
@@ -130,10 +135,30 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        initToolbar(view);
         initialize(view);
         tempId = Utility.getRandomNumberInRange(10000000, 999999999);
         captureImageInitialization();
+        outPutFile = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
         return view;
+    }
+
+    private void initToolbar(View view) {
+        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        activity.setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onBackPressed();
+            }
+        });
+        final ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle(null);
+        AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
+        textView.setText("");
+        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
+        textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
     @Override
@@ -144,8 +169,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void initialize(View view) {
         mImageView = (ImageView) view.findViewById(R.id.ivImage);
-        checkboxPercent = (CheckBox) view.findViewById(R.id.checkboxPercent);
-        checkboxPrise = (CheckBox) view.findViewById(R.id.checkboxPrise);
+      //  checkboxPercent = (CheckBox) view.findViewById(R.id.checkboxPercent);
+      //  checkboxPrise = (CheckBox) view.findViewById(R.id.checkboxPrise);
         txtAdditional = (AppCompatTextView) view.findViewById(R.id.txtAdditional);
         txtAdditional.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtEnterPercentTitle = (AppCompatTextView) view.findViewById(R.id.txtEnterPercentTitle);
@@ -194,21 +219,21 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         txtChooseSubCategory.setOnClickListener(this);
         txtChooseBrand.setOnClickListener(this);
         txtChoosePercent.setOnClickListener(this);
-        checkboxPercent.setOnClickListener(this);
-        checkboxPrise.setOnClickListener(this);
+      //  checkboxPercent.setOnClickListener(this);
+      //  checkboxPrise.setOnClickListener(this);
         mImageView.setOnClickListener(this);
 
-        checkboxPrise.setChecked(false);
-        checkboxPercent.setChecked(true);
+      //  checkboxPrise.setChecked(false);
+     //   checkboxPercent.setChecked(true);
 
-        etPercentage.setEnabled(true);
+      /*  etPercentage.setEnabled(true);
         etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
 
         etActualPrice.setEnabled(false);
         etActualPrice.setBackgroundColor(Color.GRAY);
 
         etDiscountPrice.setEnabled(false);
-        etDiscountPrice.setBackgroundColor(Color.GRAY);
+        etDiscountPrice.setBackgroundColor(Color.GRAY);*/
     }
 
     @Override
@@ -229,7 +254,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.checkboxPercent:
+            /*case R.id.checkboxPercent:
                 if (checkboxPercent.isChecked()) {
                     checkboxPrise.setChecked(false);
                     checkboxPercent.setChecked(true);
@@ -290,7 +315,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     etDiscountPrice.setBackgroundColor(Color.GRAY);
                     etDiscountPrice.setText("");
                 }
-                break;
+                break;*/
             case R.id.btnSubmitOffer:
                 methodSubmit();
                 break;
@@ -324,11 +349,11 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 }
                 break;
             case R.id.txtChoosePercent:
-                if (checkboxPercent.isChecked()) {
+               // if (checkboxPercent.isChecked()) {
                     persentType();
-                } else {
+               /* } else {
                     Toast.makeText(activity, "Check Enter Percentage(%) first", Toast.LENGTH_LONG).show();
-                }
+                }*/
                 break;
             case R.id.ivImage:
                 photo = null;
@@ -349,7 +374,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                         if (!etProductDescription.getText().equals("")) {
                             if (!btnStartTime.getText().equals("Start date")) {
                                 if (!btnEndTime.getText().equals("End date")) {
-                                    if (checkboxPercent.isChecked()) {
+                                   /* if (checkboxPercent.isChecked()) {
                                         if (!txtChoosePercent.getText().equals("Select Percentage Type")) {
                                             if (!etPercentage.getText().equals("")) {
                                                 methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());
@@ -359,7 +384,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                         } else {
                                             Toast.makeText(activity, "Select Percentage Type first", Toast.LENGTH_LONG).show();
                                         }
-                                    } else {
+                                    } else {*/
                                         if (!etActualPrice.getText().equals("")) {
                                             if (!etDiscountPrice.getText().equals("")) {
                                                 methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());
@@ -369,7 +394,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                         } else {
                                             Toast.makeText(activity, "write actual price", Toast.LENGTH_LONG).show();
                                         }
-                                    }
+                                  //  }
                                 } else {
                                     Toast.makeText(activity, "select End date", Toast.LENGTH_LONG).show();
                                 }
@@ -448,7 +473,11 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 params.put("brandId", brandId);
                 params.put("openDate", sDate);
                 params.put("closeDate", edate);
-                params.put("selectPercentage", percentType);
+                if (txtChoosePercent.getText().toString().equals("Select Percentage Type")){
+                    params.put("selectPercentage", " ");
+                }else {
+                    params.put("selectPercentage", percentType);
+                }
                 params.put("enterPercentage", percent);
                 params.put("actualPrice", actualPrice);
                 params.put("discountedPrice", discountPrice);
@@ -774,31 +803,17 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
             public void onClick(DialogInterface dialog, int item) { // pick from
                 // camera
                 if (item == 0) {
-                    // methodCameraPermissions();
+
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    mImageCaptureUri = Uri.fromFile(new File(Environment
-                            .getExternalStorageDirectory(), "tmp_avatar_"
-                            + String.valueOf(System.currentTimeMillis())
-                            + ".jpg"));
-
-                    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
-                            mImageCaptureUri);
-
-                    try {
-                        intent.putExtra("return-data", true);
-
-                        startActivityForResult(intent, PICK_FROM_CAMERA);
-                    } catch (ActivityNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp1.jpg");
+                    mImageCaptureUri = Uri.fromFile(f);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
 
                 } else {
                     // pick from file
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent,
-                            "Complete action using"), PICK_FROM_FILE);
+                    Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, PICK_FROM_FILE);
                 }
             }
         });
@@ -851,144 +866,128 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
         switch (requestCode) {
             case PICK_FROM_CAMERA:
-                /**
-                 * After taking a picture, do the crop
-                 */
+
                 doCrop();
 
                 break;
 
             case PICK_FROM_FILE:
-                /**
-                 * After selecting image from files, save the selected path
-                 */
+
+                // After selecting image from files, save the selected path
                 mImageCaptureUri = data.getData();
-
                 doCrop();
-
                 break;
 
             case CROP_FROM_CAMERA:
-                Bundle extras = data.getExtras();
-                /**
-                 * After cropping the image, get the bitmap of the cropped image and
-                 * display it on imageview.
-                 */
-                if (extras != null) {
-                    photo = extras.getParcelable("data");
-                    if (photo != null) {
+                try {
+                    if (outPutFile.exists()) {
+                        photo = decodeFile(outPutFile.getAbsolutePath());
+
                         mImageView.setVisibility(View.VISIBLE);
                         mImageView.setImageBitmap(photo);
+                    } else {
+                        Toast.makeText(activity, "Error while save image", Toast.LENGTH_SHORT).show();
                     }
-
-                } else {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                File f = new File(mImageCaptureUri.getPath());
-
-                /**
-                 * Delete the temporary image
-                 */
-                if (f.exists())
-                    f.delete();
-
                 break;
 
         }
     }
 
+    public Bitmap decodeFile(String filePath) {
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, o);
+        final int REQUIRED_SIZE = 1024;
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE)
+                break;
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath, o2);
+        return bitmap;
+    }
+
     private void doCrop() {
         final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
-        /**
-         * Open image crop app by starting an intent
-         * �com.android.camera.action.CROP�.
-         */
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setType("image/*");
-
-        /**
-         * Check if there is image cropper app installed.
-         */
         List<ResolveInfo> list = activity.getPackageManager().queryIntentActivities(
                 intent, 0);
 
         int size = list.size();
-
-        /**
-         * If there is no image cropper app, display warning message
-         */
         if (size == 0) {
-
             Toast.makeText(activity, "Can not find image crop app",
                     Toast.LENGTH_SHORT).show();
-
             return;
         } else {
-            /**
-             * Specify the image path, crop dimension and scale
-             */
             intent.setData(mImageCaptureUri);
-
-            intent.putExtra("outputX", 600);
-            intent.putExtra("outputY", 400);
+            intent.putExtra("outputX", 768);
+            intent.putExtra("outputY", 512);
             intent.putExtra("aspectX", 3);
             intent.putExtra("aspectY", 2);
-          //  intent.putExtra("scale", true);
-            intent.putExtra("return-data", true);
-            /**
-             * There is posibility when more than one image cropper app exist,
-             * so we have to check for it first. If there is only one app, open
-             * then app.
-             */
-            for (ResolveInfo res : list) {
-                final CropOption co = new CropOption();
+            intent.putExtra("scale", true);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outPutFile));
 
-                co.title = activity.getPackageManager().getApplicationLabel(
-                        res.activityInfo.applicationInfo);
-                co.icon = activity.getPackageManager().getApplicationIcon(
-                        res.activityInfo.applicationInfo);
-                co.appIntent = new Intent(intent);
-
-                co.appIntent
-                        .setComponent(new ComponentName(
-                                res.activityInfo.packageName,
-                                res.activityInfo.name));
-
-                cropOptions.add(co);
-                break;
-            }
-
-            CropOptionAdapter adapter = new CropOptionAdapter(
-                    activity, cropOptions);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setTitle("Choose Crop App");
-            builder.setAdapter(adapter,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            startActivityForResult(
-                                    cropOptions.get(item).appIntent,
-                                    CROP_FROM_CAMERA);
-                        }
-                    });
-
-            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-
-                    if (mImageCaptureUri != null) {
-                        // getContentResolver().delete(mImageCaptureUri, null, null);
-                        mImageCaptureUri = null;
-                    }
+            if (size == 1) {
+                Intent i = new Intent(intent);
+                ResolveInfo res = list.get(0);
+                i.setComponent(new ComponentName(res.activityInfo.packageName,
+                        res.activityInfo.name));
+                startActivityForResult(i, CROP_FROM_CAMERA);
+            } else {
+                for (ResolveInfo res : list) {
+                    final CropOption co = new CropOption();
+                    co.title = activity.getPackageManager().getApplicationLabel(
+                            res.activityInfo.applicationInfo);
+                    co.icon = activity.getPackageManager().getApplicationIcon(
+                            res.activityInfo.applicationInfo);
+                    co.appIntent = new Intent(intent);
+                    co.appIntent
+                            .setComponent(new ComponentName(
+                                    res.activityInfo.packageName,
+                                    res.activityInfo.name));
+                    cropOptions.add(co);
                 }
-            });
 
-            AlertDialog alert = builder.create();
+                CropOptionAdapter adapter = new CropOptionAdapter(
+                        activity, cropOptions);
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(activity);
+                builder.setTitle("Choose Crop App");
+                builder.setCancelable(false);
+                builder.setAdapter(adapter,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                startActivityForResult(
+                                        cropOptions.get(item).appIntent,
+                                        CROP_FROM_CAMERA);
+                            }
+                        });
 
-            alert.show();
+                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+
+                        if (mImageCaptureUri != null) {
+                            activity.getContentResolver().delete(mImageCaptureUri, null,
+                                    null);
+                            mImageCaptureUri = null;
+                        }
+                    }
+                });
+
+                android.support.v7.app.AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
-        //}
     }
 
     private void persentType() {
