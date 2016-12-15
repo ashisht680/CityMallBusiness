@@ -4,68 +4,45 @@
     android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentTop="true"
-    android:background="@color/background_color"
-    android:elevation="7dp">
+    android:background="@color/background_color">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBar"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="@color/toolbar_color">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/toolbar_color">
-
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/logo" />
-            </android.support.v7.widget.Toolbar>
-
-
-        </android.support.design.widget.AppBarLayout>
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/logo" />
+        </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/rlButton"
-            android:layout_below="@+id/appBar"
-            android:padding="10dp"
-            android:layout_alignParentLeft="true" />
-        <RelativeLayout
-            android:id="@+id/rlButton"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:padding="10dp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnAddOffer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/black"
-            android:padding="5dp">
+            android:background="@color/toolbar_color"
+            android:text="Add Offer"
+            android:textColor="@android:color/white" />
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnAddOffer"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/toolbar_color"
-                android:text="Add Offer"
-                android:textColor="@android:color/white" />
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-
-
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

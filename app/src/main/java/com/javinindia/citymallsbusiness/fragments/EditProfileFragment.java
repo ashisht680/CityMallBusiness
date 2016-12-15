@@ -1,9 +1,7 @@
 package com.javinindia.citymallsbusiness.fragments;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -44,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -232,7 +228,7 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
             case R.id.txtChooseCategory:
                 ListShopProductCategoryFragment categoryFragment = new ListShopProductCategoryFragment();
                // categoryFragment.setMyCallBackBannerListener(this);
-                callFragmentMethod(categoryFragment, this.getClass().getSimpleName(),R.id.navigationContainer);
+                callFragmentMethod(categoryFragment, this.getClass().getSimpleName(),R.id.container);
                 break;
             case R.id.btnSubmitOffer:
                 methodUpdateView();
@@ -244,7 +240,7 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
             case R.id.imgEditBanner:
                 BannerFragment fragment1 = new BannerFragment();
                 fragment1.setMyCallBackBannerListener(this);
-                callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.navigationContainer);
+                callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.container);
                 break;
         }
     }

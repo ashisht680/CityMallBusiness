@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -55,6 +56,7 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
     private RecyclerView recyclerView;
     AppCompatTextView txtNoData,txtTitle;
     AppCompatEditText etSearchCat;
+    LinearLayout llMain;
 
     private OnCallBackCategoryListListener onCallBackCategoryList;
 
@@ -91,7 +93,7 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
         final ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
-        textView.setText("");
+        textView.setText("Shop Categories");
         textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
@@ -103,6 +105,7 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
     }
 
     private void initializeMethod(View view) {
+        llMain = (LinearLayout)view.findViewById(R.id.llMain);
         txtTitle = (AppCompatTextView)view.findViewById(R.id.txtTitle);
         txtTitle.setTypeface(FontAsapBoldSingleTonClass.getInstance(activity).getTypeFace());
         etSearchCat = (AppCompatEditText)view.findViewById(R.id.etSearchCat);
@@ -132,19 +135,29 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
                         loading.dismiss();
                         ShopCategoryListResponse wowListResponseParsing = new ShopCategoryListResponse();
                         wowListResponseParsing.responseParseMethod(response);
-                        list = wowListResponseParsing.getShopCategoryListArrayList();
-                        if (list != null && list.size() > 0) {
-                            txtNoData.setVisibility(View.GONE);
-                            if (mAdapter.getData() != null && mAdapter.getData().size() > 0) {
-                                mAdapter.getData().addAll(list);
-                                mAdapter.notifyDataSetChanged();
-                            } else {
-                                mAdapter.setData(list);
-                                mAdapter.notifyDataSetChanged();
+                        if (wowListResponseParsing.getStatus().equals("true")){
+                            if (wowListResponseParsing.getShopCategoryListArrayList().size()>0){
+                                list = wowListResponseParsing.getShopCategoryListArrayList();
+                                if (list != null && list.size() > 0) {
+                                    txtNoData.setVisibility(View.GONE);
+                                    llMain.setVisibility(View.VISIBLE);
+                                    if (mAdapter.getData() != null && mAdapter.getData().size() > 0) {
+                                        mAdapter.getData().addAll(list);
+                                        mAdapter.notifyDataSetChanged();
+                                    } else {
+                                        mAdapter.setData(list);
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                } else {
+                                    txtNoData.setVisibility(View.VISIBLE);
+                                    llMain.setVisibility(View.GONE);
+                                }
                             }
-                        } else {
+                        }else {
                             txtNoData.setVisibility(View.VISIBLE);
+                            llMain.setVisibility(View.GONE);
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -268,7 +281,7 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
             case R.id.flotBtnAddCat:
                 AddSubCatFragment fragment1 = new AddSubCatFragment();
                 fragment1.setMyCallBackCategoryListener(this);
-                callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.navigationContainer);
+                callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.container);
                 break;
 
         }

@@ -1,10 +1,7 @@
 package com.javinindia.citymallsbusiness.recyclerview;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -12,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.allViewparsing.UsersInfo;
-import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
 import com.javinindia.citymallsbusiness.font.FontAsapBoldSingleTonClass;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.utility.Utility;
@@ -89,7 +84,7 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
             txtName.setTypeface(FontAsapBoldSingleTonClass.getInstance(context).getTypeFace());
             txtTime = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtTime);
             txtTime.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
-            imgProfile = (ImageView) itemLayoutView.findViewById(R.id.imgShopLogoOffer);
+            imgProfile = (ImageView) itemLayoutView.findViewById(R.id.imgProfile);
         }
     }
 

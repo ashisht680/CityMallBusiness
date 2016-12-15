@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
 import com.javinindia.citymallsbusiness.recyclerview.TestOfferAdaptar;
@@ -99,12 +98,12 @@ public class OffersFragment extends BaseFragment implements TextWatcher, View.On
             case R.id.rlOffers:
                 AddNewOfferFragment fragment = new AddNewOfferFragment();
                // fragment.setMyCallBackListener(this);
-                callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.navigationContainer);
+                callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.container);
                 break;
             case R.id.rlProfile:
                 NavigationAboutFragment fragment1 = new NavigationAboutFragment();
                // fragment1.setMyCallBackListener(this);
-                callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.navigationContainer);
+                callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.container);
                 break;
         }
 
@@ -139,7 +138,7 @@ public class OffersFragment extends BaseFragment implements TextWatcher, View.On
         bundle.putString("timer","08 Sep 2016 – 18 Sep 2016");
         bundle.putString("discription","A shopping mall is a modern, chiefly North American, term for a form of shopping precinct or shopping center, in which one or more buildings form a complex of shops representing merchandisers with interconnecting walkways that enable customers to walk from unit to unit. A shopping arcade is a specific form serving the same purpose.");
         fragment.setArguments(bundle);
-        callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.navigationContainer);
+        callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.container);
 
 
     }

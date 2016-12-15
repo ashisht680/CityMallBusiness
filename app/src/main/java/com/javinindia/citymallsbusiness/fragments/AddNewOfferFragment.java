@@ -1,10 +1,8 @@
 package com.javinindia.citymallsbusiness.fragments;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,11 +11,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,7 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,7 +74,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     private String min = "";
     private String sec = "";
 
-   // CheckBox checkboxPercent, checkboxPrise;
+    // CheckBox checkboxPercent, checkboxPrise;
     AppCompatTextView txtChooseCategory, txtAddProductImages, btnStartTime, btnEndTime, txtChooseSubCategory, txtChooseBrand,
             txtChoosePercent, txtAdditional, txtEnterPercentTitle, txtOr, txtEnterPriceTitle, txtTitle, txtTitleDisc;
     AppCompatEditText etProductTitle, etProductDescription, etPercentage, etActualPrice, etDiscountPrice;
@@ -104,7 +99,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     private static final int PICK_FROM_CAMERA = 1;
     private static final int CROP_FROM_CAMERA = 2;
     private static final int PICK_FROM_FILE = 3;
-    Bitmap photo=null;
+    Bitmap photo = null;
     int size = 0;
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
 
@@ -155,8 +150,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         });
         final ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setTitle(null);
-        AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
-        textView.setText("");
+        AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
+        textView.setText("Add offer");
         textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
@@ -169,8 +164,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void initialize(View view) {
         mImageView = (ImageView) view.findViewById(R.id.ivImage);
-      //  checkboxPercent = (CheckBox) view.findViewById(R.id.checkboxPercent);
-      //  checkboxPrise = (CheckBox) view.findViewById(R.id.checkboxPrise);
+        //  checkboxPercent = (CheckBox) view.findViewById(R.id.checkboxPercent);
+        //  checkboxPrise = (CheckBox) view.findViewById(R.id.checkboxPrise);
         txtAdditional = (AppCompatTextView) view.findViewById(R.id.txtAdditional);
         txtAdditional.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtEnterPercentTitle = (AppCompatTextView) view.findViewById(R.id.txtEnterPercentTitle);
@@ -219,12 +214,12 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         txtChooseSubCategory.setOnClickListener(this);
         txtChooseBrand.setOnClickListener(this);
         txtChoosePercent.setOnClickListener(this);
-      //  checkboxPercent.setOnClickListener(this);
-      //  checkboxPrise.setOnClickListener(this);
+        //  checkboxPercent.setOnClickListener(this);
+        //  checkboxPrise.setOnClickListener(this);
         mImageView.setOnClickListener(this);
 
-      //  checkboxPrise.setChecked(false);
-     //   checkboxPercent.setChecked(true);
+        //  checkboxPrise.setChecked(false);
+        //   checkboxPercent.setChecked(true);
 
       /*  etPercentage.setEnabled(true);
         etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
@@ -349,8 +344,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 }
                 break;
             case R.id.txtChoosePercent:
-               // if (checkboxPercent.isChecked()) {
-                    persentType();
+                // if (checkboxPercent.isChecked()) {
+                persentType();
                /* } else {
                     Toast.makeText(activity, "Check Enter Percentage(%) first", Toast.LENGTH_LONG).show();
                 }*/
@@ -370,8 +365,8 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         if (!txtChooseCategory.getText().equals("Choose category")) {
             if (!txtChooseSubCategory.getText().equals("Choose subcategory")) {
                 if (!txtChooseBrand.getText().equals("Choose Brand")) {
-                    if (!etProductTitle.getText().equals("")) {
-                        if (!etProductDescription.getText().equals("")) {
+                    if (!etProductTitle.getText().toString().equals("")) {
+                        if (!etProductDescription.getText().toString().equals("")) {
                             if (!btnStartTime.getText().equals("Start date")) {
                                 if (!btnEndTime.getText().equals("End date")) {
                                    /* if (checkboxPercent.isChecked()) {
@@ -385,16 +380,16 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                             Toast.makeText(activity, "Select Percentage Type first", Toast.LENGTH_LONG).show();
                                         }
                                     } else {*/
-                                        if (!etActualPrice.getText().equals("")) {
-                                            if (!etDiscountPrice.getText().equals("")) {
-                                                methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());
-                                            } else {
-                                                Toast.makeText(activity, "write discount price", Toast.LENGTH_LONG).show();
-                                            }
+                                    if (!etActualPrice.getText().toString().equals("")) {
+                                        if (!etDiscountPrice.getText().toString().equals("")) {
+                                            methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());
                                         } else {
-                                            Toast.makeText(activity, "write actual price", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(activity, "write discount price", Toast.LENGTH_LONG).show();
                                         }
-                                  //  }
+                                    } else {
+                                        Toast.makeText(activity, "write actual price", Toast.LENGTH_LONG).show();
+                                    }
+                                    //  }
                                 } else {
                                     Toast.makeText(activity, "select End date", Toast.LENGTH_LONG).show();
                                 }
@@ -473,9 +468,9 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 params.put("brandId", brandId);
                 params.put("openDate", sDate);
                 params.put("closeDate", edate);
-                if (txtChoosePercent.getText().toString().equals("Select Percentage Type")){
+                if (txtChoosePercent.getText().toString().equals("Select Percentage Type")) {
                     params.put("selectPercentage", " ");
-                }else {
+                } else {
                     params.put("selectPercentage", percentType);
                 }
                 params.put("enterPercentage", percent);

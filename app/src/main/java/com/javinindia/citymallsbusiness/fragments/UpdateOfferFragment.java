@@ -1,9 +1,7 @@
 package com.javinindia.citymallsbusiness.fragments;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,11 +9,9 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -31,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -172,7 +167,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
         final ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
-        textView.setText("");
+        textView.setText("Update Offers");
         textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }

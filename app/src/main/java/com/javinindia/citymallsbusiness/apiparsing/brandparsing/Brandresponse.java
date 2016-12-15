@@ -1,7 +1,6 @@
 package com.javinindia.citymallsbusiness.apiparsing.brandparsing;
 
 import com.javinindia.citymallsbusiness.apiparsing.base.ApiBaseData;
-import com.javinindia.citymallsbusiness.apiparsing.offerCategoryParsing.OfferCategoryDetail;
 
 import org.json.JSONArray;
 import org.json.JSONException;

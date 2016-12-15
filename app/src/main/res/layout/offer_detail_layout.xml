@@ -3,19 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
-    <include layout="@layout/common_toolbar_layout"/>
+    <include layout="@layout/common_toolbar_layout" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,16 +43,17 @@
                         android:padding="5dp"
                         android:src="@drawable/select"
                         android:visibility="visible" />
+
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtFavCount"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:gravity="center_horizontal"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
                         android:layout_below="@+id/imgFav"
-                        android:text=""/>
+                        android:gravity="center_horizontal"
+                        android:text=""
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtOfferBrandNamePost"
@@ -99,11 +101,22 @@
                         android:id="@+id/txtMallNamePost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/ratingBar"
+                        android:text=""
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/white"
+                        android:layout_below="@+id/txtRating"
                         android:layout_toLeftOf="@+id/txtFavCount"
+                        android:layout_toStartOf="@+id/txtFavCount" />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text=""
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/white"
+                        android:layout_below="@+id/txtMallNamePost"
+                        android:layout_toLeftOf="@+id/txtFavCount"
+                        android:layout_toStartOf="@+id/txtFavCount" />
                 </RelativeLayout>
 
                 <!--<android.support.v7.widget.AppCompatTextView
@@ -130,37 +143,55 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp">
+                    android:padding="10dp">
 
                     <include layout="@layout/common_progressbar" />
 
                     <ImageView
                         android:id="@+id/imgOffer"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:minHeight="300dp"
-                        android:minWidth="300dp"
-                        android:padding="5dp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp"
                         android:src="@drawable/no_image_icon" />
                 </RelativeLayout>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtOfferActualPrice"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/toolbar_color"
-                    android:gravity="center"
-                    android:paddingTop="5dp"
-                    android:text=""
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp"
-                    android:visibility="visible" />
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtOfferActualPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:background="@color/toolbar_color"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:text=""
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp"
+                        android:layout_weight="1"/>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtOfferDiscountPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+
+                        android:background="@color/toolbar_color"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:text=""
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtOfferPrice"
+                    android:id="@+id/txtOfferPercentage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -182,7 +213,7 @@
                     android:background="@color/toolbar_color"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text=""
+                    android:text="category"
                     android:textColor="@android:color/white"
                     android:textSize="18dp" />
 
@@ -265,8 +296,6 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
-
 
 
 </LinearLayout>

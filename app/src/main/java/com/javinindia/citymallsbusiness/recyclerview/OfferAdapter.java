@@ -1,7 +1,6 @@
 package com.javinindia.citymallsbusiness.recyclerview;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -14,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
 import com.javinindia.citymallsbusiness.font.FontAsapBoldSingleTonClass;
@@ -109,21 +106,23 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             // viewHolder.txtActualPrice.setText(offerType);
             //   viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             viewHolder.txtOfferPercent.setText(offerType + "\t" + offerPercent + "% off");
-        } else if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim())) {
+        } else if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
             String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
             String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
             String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
             double actual = Double.parseDouble(offerActualPrice);
             double discount = Double.parseDouble(offerDiscountPrice);
-            int percent =100- (int) ((discount * 100.0f) / actual);
+            int percent = (int) (100 -(discount * 100.0f) / actual);
             viewHolder.txtOfferPercent.setText(offerType + "\t" + percent + "% off");
+        } else if (TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
+            viewHolder.txtOfferPercent.setText(requestDetail.getOfferDetails().getOfferPercentage().trim() + "% off");
         } else {
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim())) {
                 String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
                 String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
                 double actual = Double.parseDouble(offerActualPrice);
                 double discount = Double.parseDouble(offerDiscountPrice);
-                int percent = (int) ((discount * 100.0f) / actual);
+                int percent = (int) (100-(discount * 100.0f) / actual);
                 viewHolder.txtOfferPercent.setText(percent + "% off");
             }
 

@@ -1,15 +1,12 @@
 package com.javinindia.citymallsbusiness.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -29,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,8 +38,6 @@ import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.activity.LoginActivity;
 import com.javinindia.citymallsbusiness.activity.NavigationActivity;
-import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
-import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.OfferListResponseparsing;
 import com.javinindia.citymallsbusiness.apiparsing.shoperprofileparsing.ShopViewResponse;
@@ -55,9 +49,8 @@ import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -73,7 +66,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     private NavigationView navigationView;
 
     private FragmentManager mFragmentManager;
-    private FragmentTransaction mFragmentTransaction;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +96,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
-
         final ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setTitle(null);
 
@@ -141,39 +133,28 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     private void displayView(CharSequence title) {
         if (title.equals("Home")) {
             drawerLayout.closeDrawers();
-            // Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
             Intent refresh = new Intent(activity, NavigationActivity.class);
             startActivity(refresh);
             activity.finish();
+        } else if (title.equals("Add Category")) {
+            drawerLayout.closeDrawers();
+            AddSubCatFragment categoryFragment = new AddSubCatFragment();
+            callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.container);
+        } else if (title.equals("Add Offer")) {
+            drawerLayout.closeDrawers();
+            AddNewOfferFragment fragment = new AddNewOfferFragment();
+            fragment.setMyCallBackOfferListener(this);
+            callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
         } else if (title.equals("Category List")) {
             drawerLayout.closeDrawers();
-            //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
             ListShopProductCategoryFragment fragment = new ListShopProductCategoryFragment();
-            mFragmentManager = activity.getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
-        } else if (title.equals("Invite Amigo")) {
+            callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+        } else if (title.equals("About App")) {
             drawerLayout.closeDrawers();
-            Toast.makeText(activity, title, Toast.LENGTH_LONG).show();
-           /* BaseFragment fragment = new ForgotPasswordFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
-        } else if (title.equals("more")) {
-            drawerLayout.closeDrawers();
-            Toast.makeText(activity, title, Toast.LENGTH_LONG).show();
-            /*BaseFragment fragment = new SignUpAddressFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(Constants.NAVIGATION_DETAILS).commit();*/
-        } else if (title.equals("settings")) {
-            drawerLayout.closeDrawers();
-            /*BaseFragment fragment = new VisitFragment();
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();*/
+            AboutAppFragments fragment = new AboutAppFragments();
+            callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
         } else if (title.equals("Logout")) {
-            //  Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+            drawerLayout.closeDrawers();
             dialogBox();
         }
 
@@ -194,10 +175,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                         SharedPreferencesManager.setPassword(activity, null);
                         SharedPreferencesManager.setEmail(activity, null);
                         SharedPreferencesManager.setLocation(activity, null);
-                        SharedPreferencesManager.setLatitude(activity,null);
-                        SharedPreferencesManager.setLongitude(activity,null);
-                        SharedPreferencesManager.setProfileImage(activity,null);
-                        SharedPreferencesManager.setOwnerName(activity,null);
+                        SharedPreferencesManager.setLatitude(activity, null);
+                        SharedPreferencesManager.setLongitude(activity, null);
+                        SharedPreferencesManager.setProfileImage(activity, null);
+                        SharedPreferencesManager.setOwnerName(activity, null);
                         Intent refresh = new Intent(activity, LoginActivity.class);
                         startActivity(refresh);//Start the same Activity
                         activity.finish();
@@ -223,7 +204,16 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             case android.R.id.home:
                 drawerLayout.openDrawer(Gravity.LEFT);
                 return true;
-
+            case R.id.action_changePass:
+                ChangePasswordFragment fragment = new ChangePasswordFragment();
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+                drawerLayout.closeDrawers();
+                return true;
+            case R.id.action_feedback:
+                FeedbackFragment fragment1 = new FeedbackFragment();
+                callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+                drawerLayout.closeDrawers();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -235,17 +225,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         activity.getMenuInflater().inflate(R.menu.navigation_menu, menu);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        drawerLayout.closeDrawer(Gravity.LEFT);
-    }
-
-   /* @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        disableTouchOfBackFragment(savedInstanceState);
-    }*/
 
     private void sendDataOnRegistrationApi() {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
@@ -291,6 +270,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                             sFloor = shopViewResponse.getFloor().trim();
                             sNo = shopViewResponse.getShopNum().trim();
                             saveDataOnPreference(sEmail, sName, mLat, mLong, sID, sPic, oName);
+                            methodSetNavData();
                             catArray = shopViewResponse.getShopCategoryDetailsArrayList();
                             LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
                             recyclerview.setLayoutManager(layoutManager);
@@ -326,6 +306,24 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         volleyDefaultTimeIncreaseMethod(stringRequest);
         requestQueue = Volley.newRequestQueue(activity);
         requestQueue.add(stringRequest);
+    }
+
+    private void methodSetNavData() {
+        final ImageView avatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
+        final TextView email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtOwnerName);
+        final TextView txtOwnerName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtShopName);
+        if (!TextUtils.isEmpty(SharedPreferencesManager.getProfileImage(activity))) {
+            Picasso.with(activity).load(SharedPreferencesManager.getProfileImage(activity)).transform(new CircleTransform()).into(avatar);
+        } else {
+            //AVATAR_URL = "http://lorempixel.com/200/200/people/1/";
+            Picasso.with(activity).load(R.drawable.no_image_icon).transform(new CircleTransform()).into(avatar);
+        }
+        if (!TextUtils.isEmpty(SharedPreferencesManager.getUsername(activity))) {
+            txtOwnerName.setText(SharedPreferencesManager.getUsername(activity));
+        }
+        if (!TextUtils.isEmpty(SharedPreferencesManager.getEmail(activity))) {
+            email.setText(SharedPreferencesManager.getEmail(activity));
+        }
     }
 
     private void saveDataOnPreference(String sEmail, String sName, String mLat, String mLong, String sID, String profilepic, String oName) {
@@ -401,7 +399,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
 
-
     @Override
     protected int getFragmentLayout() {
         return R.layout.about_layout;
@@ -423,10 +420,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             case R.id.btnAddOffer:
                 AddNewOfferFragment fragment = new AddNewOfferFragment();
                 fragment.setMyCallBackOfferListener(this);
-              //  callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.navigationContainer);
+                //  callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
                 mFragmentManager = activity.getSupportFragmentManager();
                 mFragmentManager.beginTransaction()
-                        .replace(R.id.navigationContainer, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
+                        .replace(R.id.container, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
                 break;
         }
     }
@@ -435,31 +432,30 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     public void onEditClick(int position) {
         EditProfileFragment1 fragment1 = new EditProfileFragment1();
         fragment1.setMyCallBackOfferListener(this);
-       // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
-        mFragmentManager = activity.getSupportFragmentManager();
-        mFragmentManager.beginTransaction()
-                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
     }
 
     @Override
     public void onAllOffers(int position) {
         AllOffersFragment fragment1 = new AllOffersFragment();
         fragment1.setMyCallBackRefreshListener(this);
-       // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
-        mFragmentManager = activity.getSupportFragmentManager();
+        //callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+        /*mFragmentManager = activity.getSupportFragmentManager();
         mFragmentManager.beginTransaction()
-                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+                .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();*/
     }
 
     @Override
     public void onAddCategory(int position) {
         AddSubCatFragment categoryFragment = new AddSubCatFragment();
         categoryFragment.setMyCallBackCategoryListener(this);
-        callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.navigationContainer);
+        callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.container);
     }
 
     @Override
     public void onOfferClick(int position, DetailsList detailsList) {
+        String shopNewAddress = "";
+        String shopPic = detailsList.getOfferShopDetails().getShopProfilePic().trim();
         String brandName = detailsList.getOfferBrandDetails().getBrandName().trim();
         String brandPic = detailsList.getOfferBrandDetails().getBrandLogo().trim();
         String shopName = detailsList.getOfferShopDetails().getShopName().trim();
@@ -478,11 +474,28 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         String offerDescription = detailsList.getOfferDetails().getOfferDescription().trim();
         String shopOpenTime = detailsList.getOfferShopDetails().getShopOpenTime().trim();
         String shopCloseTime = detailsList.getOfferShopDetails().getShopCloseTime().trim();
+        String shopNo = detailsList.getOfferShopDetails().getShopNo().trim();
+        String floor = detailsList.getOfferShopDetails().getShopFloorNo().trim();
         String favCount = detailsList.getFavCount().trim();
+        final ArrayList<String> data = new ArrayList<>();
+        if (!TextUtils.isEmpty(shopNo)) {
+            data.add(shopNo);
+        }
+        if (!TextUtils.isEmpty(floor)) {
+            data.add(floor);
+        }
+
+        if (data.size() > 0) {
+            String str = Arrays.toString(data.toArray());
+            String test = str.replaceAll("[\\[\\](){}]", "");
+            shopNewAddress = test;
+        }
+
         OfferPostFragment fragment1 = new OfferPostFragment();
 
         Bundle bundle = new Bundle();
-        //    bundle.putSerializable("images", postImage);
+        bundle.putString("shopNewAddress", shopNewAddress);
+        bundle.putString("shopPic", shopPic);
         bundle.putString("favCount", favCount);
         bundle.putString("brandName", brandName);
         bundle.putString("brandPic", brandPic);
@@ -503,10 +516,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("shopOpenTime", shopOpenTime);
         bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
-      //  callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        //callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
         mFragmentManager = activity.getSupportFragmentManager();
         mFragmentManager.beginTransaction()
-                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+                .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
 
     }
 
@@ -563,28 +576,28 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
         fragment1.setMyCallBackUpdateOfferListener(this);
-       // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+        // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
         mFragmentManager = activity.getSupportFragmentManager();
         mFragmentManager.beginTransaction()
-                .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+                .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
     }
 
     @Override
     public void onViewClick(int position, DetailsList detailsList) {
         String offerId = detailsList.getOfferDetails().getOfferId().trim();
         String numView = detailsList.getOfferViewCount().toString().trim();
-        if (!TextUtils.isEmpty(numView) && numView.equals("0")){
+        if (!TextUtils.isEmpty(numView) && !numView.equals("0")) {
             AllViewUserFragment fragment1 = new AllViewUserFragment();
 
             Bundle bundle = new Bundle();
             bundle.putString("offerId", offerId);
             fragment1.setArguments(bundle);
-           // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.navigationContainer);
+            //  callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
             mFragmentManager = activity.getSupportFragmentManager();
             mFragmentManager.beginTransaction()
-                    .replace(R.id.navigationContainer, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
-        }else {
-            Toast.makeText(activity,"No views now",Toast.LENGTH_LONG).show();
+                    .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+        } else {
+            Toast.makeText(activity, "No views now", Toast.LENGTH_LONG).show();
         }
     }
 

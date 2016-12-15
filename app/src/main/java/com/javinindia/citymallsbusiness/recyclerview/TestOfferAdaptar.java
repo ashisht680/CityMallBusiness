@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 
-
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.CountryModel;
 

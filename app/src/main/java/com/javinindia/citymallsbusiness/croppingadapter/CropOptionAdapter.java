@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.javinindia.citymallsbusiness.R;
 
 import java.util.ArrayList;

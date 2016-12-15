@@ -153,9 +153,10 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
             e.printStackTrace();
         }
         if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
-            fragment = new LoginFragment();
+           // fragment = new LoginFragment();
             Toast.makeText(activity, "Congrats! Your password has been submitted.", Toast.LENGTH_SHORT).show();
-            callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.navigationContainer);
+            activity.onBackPressed();
+           // callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.container);
         } else {
             if (!TextUtils.isEmpty(msg)) {
                 showDialogMethod(msg);

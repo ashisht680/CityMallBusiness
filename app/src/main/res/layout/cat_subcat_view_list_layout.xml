@@ -1,45 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_color"
     android:orientation="vertical">
-    <include layout="@layout/common_toolbar_layout"/>
+
+    <include layout="@layout/common_toolbar_layout" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:gravity="center_horizontal"
-            android:textSize="15sp"
+            android:padding="5dp"
+            android:text="Shop Categories"
             android:textColor="@color/toolbar_color"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="Shop Categories"/>
+            android:textSize="15sp"
+            android:visibility="gone"/>
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/etSearchCat"
+        <LinearLayout
+            android:id="@+id/llMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtTitle"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="8dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/button_border_black_fill_white"
-            android:hint="Search"
-            android:textSize="13sp"
-            android:padding="5dp" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/txtTitle"
+            android:weightSum="7"
+            android:visibility="gone">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/etSearchCat"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:background="@drawable/button_border_black_fill_white"
+                android:hint="Search"
+                android:padding="5dp"
+                android:textSize="15sp"
+                android:layout_weight="6.3"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:background="@android:color/black"
+                android:layout_weight="0.7"
+                android:src="@android:drawable/ic_search_category_default"/>
+        </LinearLayout>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerviewCatList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etSearchCat"
+            android:layout_below="@+id/llMain"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp">
@@ -52,18 +73,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            app:backgroundTint="@color/toolbar_color"
+            android:layout_margin="8dp"
             android:src="@drawable/ic_add_white"
-            android:layout_margin="8dp" />
+            app:backgroundTint="@color/toolbar_color" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtNoData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="No data found"
             android:gravity="center"
-            android:visibility="gone"/>
+            android:text="No data found"
+            android:visibility="gone" />
     </RelativeLayout>
-
 
 
 </LinearLayout>

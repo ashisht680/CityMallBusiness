@@ -3,7 +3,6 @@ package com.javinindia.citymallsbusiness.apiparsing.shoperprofileparsing;
 import android.util.Log;
 
 import com.javinindia.citymallsbusiness.apiparsing.base.ApiBaseData;
-import com.javinindia.citymallsbusiness.apiparsing.shopmalllistparsing.MallDetails;
 
 import org.json.JSONArray;
 import org.json.JSONException;

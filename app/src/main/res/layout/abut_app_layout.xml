@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_color">
+
+    <include layout="@layout/common_toolbar_layout"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/logo"
+                android:layout_gravity="center_horizontal"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City Malls Business"
+                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="What is the mobile app about?"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtAns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="City Malls Business mobile app (business) makes selling in mall easy by bringing every shop in the hands of the mall visitor.\n\nOn the City Malls Business Mobile business app Mall shop owners can:" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtPoints"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="◎	 Post Best Offers\n◎	 Make their products &amp; offers online\n◎	 Compete with all ecommerce sites\n◎	 Build Brand Value\n◎	 Reach out to thousands of new customers" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

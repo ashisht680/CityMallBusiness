@@ -67,7 +67,7 @@ public abstract class BaseFragment extends Fragment implements Response.Listener
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(getResources().getColor(android.R.color.black));
+            window.setStatusBarColor(Color.parseColor("#000000"));
         }
     }
 

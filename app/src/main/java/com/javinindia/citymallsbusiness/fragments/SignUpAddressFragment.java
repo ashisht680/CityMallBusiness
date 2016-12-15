@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -156,8 +155,8 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                 activity.onBackPressed();
                 break;
             case R.id.txtTermCondition:
-               /* BaseFragment termFragment = new TermsFragment();
-                callFragmentMethodDead(termFragment, Constants.OTHER_USER_FEED, R.id.container);*/
+                BaseFragment termFragment = new TermAndConditionFragment();
+                callFragmentMethod(termFragment, this.getClass().getSimpleName(), R.id.container);
                 break;
             case R.id.et_State:
                 methodState();

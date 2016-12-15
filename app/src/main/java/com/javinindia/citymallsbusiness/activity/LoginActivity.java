@@ -1,6 +1,5 @@
 package com.javinindia.citymallsbusiness.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +8,7 @@ import android.text.TextUtils;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.fragments.BaseFragment;
 import com.javinindia.citymallsbusiness.fragments.LoginFragment;
+import com.javinindia.citymallsbusiness.fragments.NavigationAboutFragment;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 
 /**
@@ -29,9 +29,15 @@ public class LoginActivity extends BaseActivity {
             fragmentTransaction.add(R.id.container, baseFragment);
             fragmentTransaction.commit();
         } else {
-            Intent splashIntent = new Intent(LoginActivity.this, NavigationActivity.class);
+           /* Intent splashIntent = new Intent(LoginActivity.this, NavigationActivity.class);
             startActivity(splashIntent);
-            finish();
+            finish();*/
+            BaseFragment baseFragment = new NavigationAboutFragment();
+            FragmentManager fm = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.setCustomAnimations(0, 0, 0, 0);
+            fragmentTransaction.add(R.id.container, baseFragment);
+            fragmentTransaction.commit();
         }
     }
     @Override

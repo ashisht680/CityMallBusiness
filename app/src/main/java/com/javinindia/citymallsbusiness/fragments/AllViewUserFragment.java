@@ -20,12 +20,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
-import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.OfferListResponseparsing;
+import com.javinindia.citymallsbusiness.apiparsing.allViewparsing.AllViewsUsersResponse;
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.recyclerview.AllUserAdapter;
-import com.javinindia.citymallsbusiness.recyclerview.OfferAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +46,6 @@ public class AllViewUserFragment extends BaseFragment implements AllUserAdapter.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //   images = (ArrayList<PostImage>) getArguments().getSerializable("images");
         offerId = getArguments().getString("offerId");
         getArguments().remove("offerId");
         Log.e("offerId",offerId);
@@ -83,7 +81,7 @@ public class AllViewUserFragment extends BaseFragment implements AllUserAdapter.
         final ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
-        textView.setText("");
+        textView.setText("Viewers");
         textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
@@ -93,12 +91,12 @@ public class AllViewUserFragment extends BaseFragment implements AllUserAdapter.
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        OfferListResponseparsing responseparsing = new OfferListResponseparsing();
+                        AllViewsUsersResponse responseparsing = new AllViewsUsersResponse();
                         responseparsing.responseParseMethod(response);
                         Log.e("request", response);
-                        arrayList = responseparsing.getDetailsListArrayList();
-                        String status = responseparsing.getStatus().trim();
-                        if(status.equals("true")){
+
+                        if(responseparsing.getStatus()==1){
+                            arrayList = responseparsing.getUsersInfoArrayList();
                             if(arrayList.size()>0){
                                 if (adapter.getData() != null && adapter.getData().size() > 0) {
                                     adapter.getData().addAll(arrayList);

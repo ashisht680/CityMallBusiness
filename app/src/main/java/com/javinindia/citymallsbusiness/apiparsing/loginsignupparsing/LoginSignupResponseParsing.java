@@ -1,7 +1,5 @@
 package com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing;
 
-import android.util.Log;
-
 import com.javinindia.citymallsbusiness.apiparsing.base.ApiBaseData;
 
 import org.json.JSONException;

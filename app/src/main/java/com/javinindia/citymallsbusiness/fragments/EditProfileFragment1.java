@@ -1,10 +1,7 @@
 package com.javinindia.citymallsbusiness.fragments;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,19 +13,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
@@ -40,7 +30,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -60,12 +49,8 @@ import com.javinindia.citymallsbusiness.apiparsing.stateparsing.CountryMasterApi
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
-import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
 import com.javinindia.citymallsbusiness.recyclerview.ShopCategoryAdaptar;
 import com.javinindia.citymallsbusiness.utility.Utility;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -125,10 +110,10 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+      /*  if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // takePictureButton.setEnabled(false);
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
-        }
+        }*/
     }
 
     public interface OnCallBackEditProfileListener {
@@ -143,14 +128,12 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initToolbar(view);
         initialize(view);
-        sendDataOnRegistrationApi();
-        captureImageInitialization();
-        outPutFile = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+
         return view;
     }
+
 
     private void initToolbar(View view) {
         final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -165,7 +148,7 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
         final ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
-        textView.setText("");
+        textView.setText("Edit Profile");
         textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
@@ -173,7 +156,11 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        disableTouchOfBackFragment(savedInstanceState);
+
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        sendDataOnRegistrationApi();
+        captureImageInitialization();
+        outPutFile = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
     }
 
     private void initialize(View view) {
@@ -244,7 +231,7 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("response", response);
+                        Log.e("response edit", response);
                         String status = null, sID = null, msg = null, banner;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sStoreNum, sFloorNum;
                         String shopCategory, shopSubCategory, country, pincode, rating, mallOpenTime, mallCloseTime, distance, dicription, shopOpenTime, shopCloseTime;

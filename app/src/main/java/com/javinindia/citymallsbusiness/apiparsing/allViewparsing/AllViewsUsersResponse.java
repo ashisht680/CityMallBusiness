@@ -2,8 +2,6 @@ package com.javinindia.citymallsbusiness.apiparsing.allViewparsing;
 
 import android.util.Log;
 
-import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
