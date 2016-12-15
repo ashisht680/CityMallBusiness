@@ -11,6 +11,8 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -25,7 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
-import com.javinindia.citymallsbusiness.activity.NavigationActivity;
+import com.javinindia.citymallsbusiness.activity.LoginActivity;
 import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.apiparsing.shopmalllistparsing.ShopMallListResponseParsing;
 import com.javinindia.citymallsbusiness.apiparsing.stateparsing.CityMasterParsing;
@@ -61,7 +63,7 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //   activity.getSupportActionBar().hide();
+        setHasOptionsMenu(true);
         storeName = getArguments().getString("storeName");
         owner = getArguments().getString("owner");
         email = getArguments().getString("email");
@@ -75,6 +77,14 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
         getArguments().remove("landline");
         getArguments().remove("password");
         Log.e("address", storeName + "\t" + owner + "\t" + email + "\t" + mobileNum + "\t" + landline + "\t" + password + "");
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
     }
 
     @Nullable
@@ -200,7 +210,6 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("mall", response);
-                        hideLoader();
                         final ShopMallListResponseParsing shopMallListResponseParsing = new ShopMallListResponseParsing();
                         shopMallListResponseParsing.responseParseMethod(response);
                         if (shopMallListResponseParsing.getStatus().equals("true")) {
@@ -281,7 +290,6 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                         loading.dismiss();
                         //  progressDialog.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         CityMasterParsing cityMasterParsing = new CityMasterParsing();
                         cityMasterParsing.responseParseMethod(response);
                         for (int i = 0; i < cityMasterParsing.getCountryDetails().getCityDetails().size(); i++) {
@@ -346,7 +354,6 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         CountryMasterApiParsing countryMasterApiParsing = new CountryMasterApiParsing();
                         countryMasterApiParsing.responseParseMethod(response);
                         if (countryMasterApiParsing.getCountryDetails().getStateDetailsArrayList().size() > 0) {
@@ -448,7 +455,7 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                             mLong = loginSignupResponseParsing.getMallLong();
                             Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
                             saveDataOnPreference(sEmail, sName, mLat, mLong, sID, sPic,oName);
-                            Intent refresh = new Intent(activity, NavigationActivity.class);
+                            Intent refresh = new Intent(activity, LoginActivity.class);
                             startActivity(refresh);//Start the same Activity
                             activity.finish();
                            /* fragment = new OffersFragment();

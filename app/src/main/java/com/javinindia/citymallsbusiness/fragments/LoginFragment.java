@@ -9,6 +9,8 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -22,7 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
-import com.javinindia.citymallsbusiness.activity.NavigationActivity;
+import com.javinindia.citymallsbusiness.activity.LoginActivity;
 import com.javinindia.citymallsbusiness.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
@@ -45,8 +47,16 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        activity.getSupportActionBar().hide();
-        Log.e("device", SharedPreferencesManager.getDeviceToken(activity));
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
     }
 
     @Nullable
@@ -154,7 +164,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                         Log.e("response", response);
                         String status = null, sID = null, msg = null, sPic = null;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, banner;
-                        hideLoader();
                         LoginSignupResponseParsing loginSignupResponseParsing = new LoginSignupResponseParsing();
                         loginSignupResponseParsing.responseParseMethod(response);
 
@@ -179,7 +188,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                             mLong = loginSignupResponseParsing.getMallLong();
                             Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + sAddress + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong + "\t" + sPic);
                             saveDataOnPreference(sEmail, sName, mLat, mLong, sID, banner, oName);
-                            Intent refresh = new Intent(activity, NavigationActivity.class);
+                            Intent refresh = new Intent(activity, LoginActivity.class);
                             startActivity(refresh);//Start the same Activity
                             activity.finish();
                             Log.e("image", SharedPreferencesManager.getProfileImage(activity));

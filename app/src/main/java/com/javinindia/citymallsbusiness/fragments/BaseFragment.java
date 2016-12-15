@@ -138,40 +138,40 @@ public abstract class BaseFragment extends Fragment implements Response.Listener
      *
      * @return ProgressBar
      */
-    private ProgressBar findLoader() {
+  /*  private ProgressBar findLoader() {
         if (activity != null) {
             return (ProgressBar) activity.findViewById(R.id.loadProgress);
         } else {
             return null;
         }
-    }
+    }*/
 
     /**
      * Makes global progressbar visible
      */
-    public void showLoader() {
+   /* public void showLoader() {
         ProgressBar progressBar = findLoader();
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
-    }
+    }*/
 
     /**
      * Hides global progressbar by setting its visibility to GONE
      */
-    public void hideLoader() {
+    /*public void hideLoader() {
         ProgressBar progressBar = findLoader();
         if (progressBar != null) {
             findLoader().setVisibility(View.GONE);
         }
-    }
+    }*/
 
 
     protected void callFragmentMethodDead(BaseFragment baseFragment, final String TAG) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.setCustomAnimations(0, 0, 0, 0);
-        fragmentTransaction.add(R.id.navigationContainer, baseFragment);
+        fragmentTransaction.add(R.id.container, baseFragment);
        // fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

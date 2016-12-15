@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -38,6 +40,7 @@ public class OfferPostFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         shopPic = getArguments().getString("shopPic");
         favCount = getArguments().getString("favCount");
         brandName = getArguments().getString("brandName");
@@ -61,6 +64,14 @@ public class OfferPostFragment extends BaseFragment implements View.OnClickListe
         shopNewAddress = getArguments().getString("shopNewAddress");
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

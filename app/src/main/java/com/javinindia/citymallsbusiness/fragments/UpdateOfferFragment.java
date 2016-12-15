@@ -23,6 +23,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -107,6 +109,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         //   images = (ArrayList<PostImage>) getArguments().getSerializable("images");
         brandId = getArguments().getString("brandId");
         catId = getArguments().getString("offerCatId");
@@ -130,6 +133,15 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
         offerDescription = getArguments().getString("offerDescription");
         shopOpenTime = getArguments().getString("shopOpenTime");
         shopCloseTime = getArguments().getString("shopCloseTime");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
     }
 
     public interface OnCallBackUpdateOfferListener {
@@ -586,7 +598,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                         loading.dismiss();
                         //  progressDialog.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
                         for (int i = 0; i < cityMasterParsing.getBrandDetailArrayList().size(); i++) {
@@ -658,7 +669,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         final OfferCategoryresponse countryMasterApiParsing = new OfferCategoryresponse();
                         countryMasterApiParsing.responseImplement(response);
                         if (countryMasterApiParsing.getSetShopCategoryDetailsArrayList().size() > 0) {
@@ -734,7 +744,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         final OfferCategoryresponse cityMasterParsing = new OfferCategoryresponse();
                         cityMasterParsing.responseImplement(response);
                         for (int i = 0; i < cityMasterParsing.getSetShopCategoryDetailsArrayList().size(); i++) {

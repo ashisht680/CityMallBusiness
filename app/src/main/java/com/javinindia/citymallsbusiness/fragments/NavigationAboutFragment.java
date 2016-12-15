@@ -37,7 +37,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.activity.LoginActivity;
-import com.javinindia.citymallsbusiness.activity.NavigationActivity;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.DetailsList;
 import com.javinindia.citymallsbusiness.apiparsing.offerListparsing.OfferListResponseparsing;
 import com.javinindia.citymallsbusiness.apiparsing.shoperprofileparsing.ShopViewResponse;
@@ -87,7 +86,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
     private void initToolbar(View view) {
-        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarNav);
         activity.setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.menu);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -133,7 +132,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     private void displayView(CharSequence title) {
         if (title.equals("Home")) {
             drawerLayout.closeDrawers();
-            Intent refresh = new Intent(activity, NavigationActivity.class);
+            Intent refresh = new Intent(activity, LoginActivity.class);
             startActivity(refresh);
             activity.finish();
         } else if (title.equals("Add Category")) {
@@ -439,10 +438,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     public void onAllOffers(int position) {
         AllOffersFragment fragment1 = new AllOffersFragment();
         fragment1.setMyCallBackRefreshListener(this);
-        //callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
-        /*mFragmentManager = activity.getSupportFragmentManager();
-        mFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();*/
+        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
     }
 
     @Override
@@ -516,11 +512,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("shopOpenTime", shopOpenTime);
         bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
-        //callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
-        mFragmentManager = activity.getSupportFragmentManager();
-        mFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
-
+        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
     }
 
     @Override
@@ -576,10 +568,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         bundle.putString("shopCloseTime", shopCloseTime);
         fragment1.setArguments(bundle);
         fragment1.setMyCallBackUpdateOfferListener(this);
-        // callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
-        mFragmentManager = activity.getSupportFragmentManager();
-        mFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
     }
 
     @Override
@@ -588,14 +577,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         String numView = detailsList.getOfferViewCount().toString().trim();
         if (!TextUtils.isEmpty(numView) && !numView.equals("0")) {
             AllViewUserFragment fragment1 = new AllViewUserFragment();
-
             Bundle bundle = new Bundle();
             bundle.putString("offerId", offerId);
             fragment1.setArguments(bundle);
-            //  callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
-            mFragmentManager = activity.getSupportFragmentManager();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment1).addToBackStack(this.getClass().getSimpleName()).commit();
+            callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
         } else {
             Toast.makeText(activity, "No views now", Toast.LENGTH_LONG).show();
         }
@@ -614,7 +599,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     @Override
     public void OnCallBackEditProfile() {
         //sendDataOnRegistrationApi();
-        Intent refresh = new Intent(activity, NavigationActivity.class);
+        Intent refresh = new Intent(activity, LoginActivity.class);
         startActivity(refresh);
         activity.finish();
     }

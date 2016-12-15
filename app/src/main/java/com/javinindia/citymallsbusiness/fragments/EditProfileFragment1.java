@@ -1,5 +1,6 @@
 package com.javinindia.citymallsbusiness.fragments;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
@@ -16,6 +17,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -25,6 +28,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -109,11 +114,12 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
-      /*  if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // takePictureButton.setEnabled(false);
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
-        }*/
+        }
     }
 
     public interface OnCallBackEditProfileListener {
@@ -161,6 +167,15 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
         sendDataOnRegistrationApi();
         captureImageInitialization();
         outPutFile = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+       if (menu != null){
+           menu.findItem(R.id.action_changePass).setVisible(false);
+           menu.findItem(R.id.action_feedback).setVisible(false);
+       }
     }
 
     private void initialize(View view) {
@@ -599,7 +614,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         CountryMasterApiParsing countryMasterApiParsing = new CountryMasterApiParsing();
                         countryMasterApiParsing.responseParseMethod(response);
                         if (countryMasterApiParsing.getCountryDetails().getStateDetailsArrayList().size() > 0) {
@@ -669,7 +683,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                         loading.dismiss();
                         //  progressDialog.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         CityMasterParsing cityMasterParsing = new CityMasterParsing();
                         cityMasterParsing.responseParseMethod(response);
                         for (int i = 0; i < cityMasterParsing.getCountryDetails().getCityDetails().size(); i++) {
@@ -735,7 +748,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("mall", response);
-                        hideLoader();
                         final ShopMallListResponseParsing shopMallListResponseParsing = new ShopMallListResponseParsing();
                         shopMallListResponseParsing.responseParseMethod(response);
                         if (shopMallListResponseParsing.getMallDetailsArrayList().size() > 0) {

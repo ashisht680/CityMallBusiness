@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -39,7 +41,16 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  activity.getSupportActionBar().hide();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
     }
 
     @Nullable
@@ -92,7 +103,6 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
             case R.id.btn_reset_password:
                 String email = etEmailAddress.getText().toString().trim();
                 if (Utility.isEmailValid(email)) {
-                    showLoader();
                     sendDataOnForgetPasswordApi(email);
                 } else if (TextUtils.isEmpty(email)) {
                     etEmailAddress.setError("Enter your email id");
@@ -114,14 +124,12 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        hideLoader();
                         responseImplement(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        hideLoader();
                         volleyErrorHandle(error);
                     }
                 }) {

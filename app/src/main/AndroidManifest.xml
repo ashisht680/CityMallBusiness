@@ -44,9 +44,6 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NavigationActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.CustomPhotoGalleryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />

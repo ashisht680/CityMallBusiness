@@ -8,4 +8,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="MyToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+    </style>
 </resources>

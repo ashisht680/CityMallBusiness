@@ -1,9 +1,4 @@
 <resources>
     <string name="app_name">City Malls Business</string>
-    <string name="action_search">search</string>
-    <string name="open_drawer">Open Drawer</string>
-    <string name="close_drawer">Close Drawer</string>
-    <string name="search_hint">Search Places</string>
-    <string name="search_settings">Search Places</string>
 
 </resources>

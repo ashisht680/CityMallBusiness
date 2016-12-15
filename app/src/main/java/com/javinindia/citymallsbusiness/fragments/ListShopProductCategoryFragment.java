@@ -17,6 +17,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -66,6 +68,21 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
 
     public void setMyCallBackCategoryListener(OnCallBackCategoryListListener callback) {
         this.onCallBackCategoryList = callback;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
     }
 
 
@@ -231,7 +248,6 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        hideLoader();
                         Log.e("delete",response);
                         JSONObject jsonObject = null;
                         String status = null, userid = null, msg = null, username = null, phone = null, gender = null, email = null;
@@ -256,7 +272,6 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        hideLoader();
                         //volleyErrorHandle(error);
                         noInternetToast(error);
                     }

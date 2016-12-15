@@ -28,6 +28,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -110,10 +112,19 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // takePictureButton.setEnabled(false);
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
         }
     }
 
@@ -514,7 +525,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                         loading.dismiss();
                         //  progressDialog.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {
@@ -592,7 +602,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("cat", response);
-                        hideLoader();
                         final OfferCategoryresponse countryMasterApiParsing = new OfferCategoryresponse();
                         countryMasterApiParsing.responseImplement(response);
                         if (countryMasterApiParsing.getStatus().equals("true")) {
@@ -670,7 +679,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("MasterTags", response);
-                        hideLoader();
                         final OfferCategoryresponse cityMasterParsing = new OfferCategoryresponse();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {

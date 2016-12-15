@@ -7,6 +7,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -28,7 +30,16 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   activity.getSupportActionBar().hide();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
     }
 
     @Nullable
@@ -118,7 +129,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         String confirmPassword = et_ConfirmPassword.getText().toString().trim();
 
         if (registerValidation(storeName, owner, email, mobileNum, landline, password, confirmPassword)) {
-            showLoader();
             sendDataOnRegistrationApi(storeName, owner, email, mobileNum, landline, password, confirmPassword);
         }
 

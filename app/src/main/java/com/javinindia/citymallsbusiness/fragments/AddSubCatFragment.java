@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -68,6 +70,21 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
 
     public void setMyCallBackCategoryListener(OnCallBackCAtegoryListener callback) {
         this.callbackCat = callback;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (menu != null){
+            menu.findItem(R.id.action_changePass).setVisible(false);
+            menu.findItem(R.id.action_feedback).setVisible(false);
+        }
     }
 
     @Nullable
@@ -199,7 +216,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                         loading.dismiss();
                         //  progressDialog.dismiss();
                         Log.e("res brand", response);
-                        hideLoader();
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {
@@ -389,7 +405,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     public void onResponse(String response) {
                         loading.dismiss();
                         Log.e("res cat", response);
-                        hideLoader();
                         final ProductCategory countryMasterApiParsing = new ProductCategory();
                         countryMasterApiParsing.responseImplement(response);
                         if (countryMasterApiParsing.getStatus().equals("true")) {
@@ -470,7 +485,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                         loading.dismiss();
                         //  progressDialog.dismiss();
                         Log.e("res subcat", response);
-                        hideLoader();
                         final ProductCategory cityMasterParsing = new ProductCategory();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {
