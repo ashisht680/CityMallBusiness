@@ -419,10 +419,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             case R.id.btnAddOffer:
                 AddNewOfferFragment fragment = new AddNewOfferFragment();
                 fragment.setMyCallBackOfferListener(this);
-                //  callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
-                mFragmentManager = activity.getSupportFragmentManager();
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+               /* mFragmentManager = activity.getSupportFragmentManager();
                 mFragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment).addToBackStack(this.getClass().getSimpleName()).commit();
+                        .replace(R.id.container, fragment).addToBackStack(this.getClass().getSimpleName()).commit();*/
                 break;
         }
     }
