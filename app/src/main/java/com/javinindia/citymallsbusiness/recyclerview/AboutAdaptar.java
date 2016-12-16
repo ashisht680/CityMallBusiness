@@ -84,7 +84,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         int holderId;
         //***********************Recent list
         public AppCompatTextView txtShopName, txtSubCategoryItem, txtOfferTitle, txtOfferCategoryItem, txtTimingOffer,
-                txtViewItem, txtEditOfferItem, txtActualPrice, txtDiscountPrice,txtOfferPercent;
+                txtViewItem, txtEditOfferItem, txtActualPrice, txtDiscountPrice,txtOfferPercent,txtMRP;
         public CardView rlMain;
         public ImageView imgShopLogoOffer;
         LinearLayout llOffItem;
@@ -121,6 +121,8 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 txtEditOfferItem = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtEditOfferItem);
                 txtEditOfferItem.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 llOffItem = (LinearLayout) itemLayoutView.findViewById(R.id.llOffItem);
+                txtMRP = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtMRP);
+                txtMRP.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 txtActualPrice = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtActualPrice);
                 txtActualPrice.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 txtDiscountPrice = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtDiscountPrice);
@@ -210,10 +212,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
                 String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
                 String offerPercent = requestDetail.getOfferDetails().getOfferPercentage().trim();
-                // viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#b94115"));
-                // viewHolder.txtActualPrice.setText(offerType);
-                //   viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                viewHolder.txtOfferPercent.setText(offerType + "\t" + offerPercent + "% off");
+                viewHolder.txtOfferPercent.setText(offerType + "\n" + offerPercent + "% off");
             } else if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
                 String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
                 String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
@@ -221,9 +220,9 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 double actual = Double.parseDouble(offerActualPrice);
                 double discount = Double.parseDouble(offerDiscountPrice);
                 int percent = (int) (100 -(discount * 100.0f) / actual);
-                viewHolder.txtOfferPercent.setText(offerType + "\t" + percent + "% off");
+                viewHolder.txtOfferPercent.setText(offerType + "\n" + percent + "% off");
             } else if (TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
-                viewHolder.txtOfferPercent.setText(requestDetail.getOfferDetails().getOfferPercentage().trim() + "% off");
+                viewHolder.txtOfferPercent.setText("UPTO\n"+requestDetail.getOfferDetails().getOfferPercentage().trim() + "% off");
             } else {
                 if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim())) {
                     String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
@@ -231,63 +230,18 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                     double actual = Double.parseDouble(offerActualPrice);
                     double discount = Double.parseDouble(offerDiscountPrice);
                     int percent = (int) (100-(discount * 100.0f) / actual);
-                    viewHolder.txtOfferPercent.setText(percent + "% off");
+                    viewHolder.txtOfferPercent.setText("UPTO\n"+percent + "% off");
                 }
 
             }
-
-            /*if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim()) && !requestDetail.getOfferDetails().getOfferPercentage().equals("0")) {
-                String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
-                String offerPercent = requestDetail.getOfferDetails().getOfferPercentage().trim();
-                // viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#b94115"));
-                // viewHolder.txtActualPrice.setText(offerType);
-                //   viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                viewHolder.txtOfferPercent.setText(offerType + "\t" + offerPercent + "% off");
-            } else if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim())) {
-                String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
-                String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
-                String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
-                double actual = Double.parseDouble(offerActualPrice);
-                double discount = Double.parseDouble(offerDiscountPrice);
-                int percent = (int) (100- (discount * 100.0f) / actual);
-                viewHolder.txtOfferPercent.setText(offerType + "\t" + percent + "% off");
-            } else {
-                if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim())) {
-                    String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
-                    String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
-                    double actual = Double.parseDouble(offerActualPrice);
-                    double discount = Double.parseDouble(offerDiscountPrice);
-                    int percent = (int) ((discount * 100.0f) / actual);
-                    viewHolder.txtOfferPercent.setText(percent + "% off");
-                }
-
-            }*/
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim())) {
                 String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
                 String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
-                //  viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#1da6b9"));
-                viewHolder.txtActualPrice.setText(Html.fromHtml("\u20B9" + offerActualPrice + "/-"));
+                viewHolder.txtActualPrice.setText(Html.fromHtml("\u20B9 " + offerActualPrice + "/-"));
                 viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                viewHolder.txtDiscountPrice.setText(Html.fromHtml("\u20B9" + offerDiscountPrice + "/-"));
+                viewHolder.txtDiscountPrice.setText(Html.fromHtml("OFFER\t\t\t\n \u20B9" + offerDiscountPrice + "/-"));
             }
 
-            /*if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
-                String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
-                String offerPercent = requestDetail.getOfferDetails().getOfferPercentage().trim();
-                viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#b94115"));
-                viewHolder.txtActualPrice.setText(offerType);
-                viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                viewHolder.txtDiscountPrice.setText(offerPercent + "% off");
-            } else {
-                if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim())) {
-                    String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
-                    String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
-                    viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#1da6b9"));
-                    viewHolder.txtActualPrice.setText("Rs " + offerActualPrice + "/-");
-                    viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    viewHolder.txtDiscountPrice.setText("Rs " + offerDiscountPrice + "/-");
-                }
-            }*/
             if (!TextUtils.isEmpty(requestDetail.getOfferBrandDetails().getBrandLogo().trim())) {
                 String brandLogo = requestDetail.getOfferBrandDetails().getBrandLogo().trim();
                 Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.imgShopLogoOffer, brandLogo);

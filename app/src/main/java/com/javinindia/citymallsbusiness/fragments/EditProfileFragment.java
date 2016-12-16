@@ -69,7 +69,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 12-10-2016.
  */
-public class EditProfileFragment1 extends BaseFragment implements View.OnClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener {
+public class EditProfileFragment extends BaseFragment implements View.OnClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener {
     private RequestQueue requestQueue;
 
     ImageView imgProfilePic,imgProfilePicNotFound;
@@ -448,7 +448,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("response edit", response);
                         String status = null, sID = null, msg = null, sPic = null, banner;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance;
@@ -613,7 +612,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("MasterTags", response);
                         CountryMasterApiParsing countryMasterApiParsing = new CountryMasterApiParsing();
                         countryMasterApiParsing.responseParseMethod(response);
                         if (countryMasterApiParsing.getCountryDetails().getStateDetailsArrayList().size() > 0) {
@@ -630,7 +628,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                                     builder.setNegativeButton(android.R.string.cancel, null);
                                     builder.setItems(stateArray, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int item) {
-                                            // Do something with the selection
                                             etState.setText(stateArray[item]);
                                             etCity.setText("");
                                             etMall.setText("");
@@ -681,8 +678,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        //  progressDialog.dismiss();
-                        Log.e("MasterTags", response);
                         CityMasterParsing cityMasterParsing = new CityMasterParsing();
                         cityMasterParsing.responseParseMethod(response);
                         for (int i = 0; i < cityMasterParsing.getCountryDetails().getCityDetails().size(); i++) {
@@ -698,7 +693,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                                 builder.setNegativeButton(android.R.string.cancel, null);
                                 builder.setItems(cityArray, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int item) {
-                                        // Do something with the selection
                                         etCity.setText(cityArray[item]);
                                         etMall.setText("");
                                     }
@@ -747,7 +741,6 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("mall", response);
                         final ShopMallListResponseParsing shopMallListResponseParsing = new ShopMallListResponseParsing();
                         shopMallListResponseParsing.responseParseMethod(response);
                         if (shopMallListResponseParsing.getMallDetailsArrayList().size() > 0) {
@@ -764,15 +757,9 @@ public class EditProfileFragment1 extends BaseFragment implements View.OnClickLi
                                     builder.setNegativeButton(android.R.string.cancel, null);
                                     builder.setItems(mallArray, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int item) {
-                                            // Do something with the selection
                                             etMall.setText(mallArray[item]);
-
-                                            // Log.e("mall", shopMallListResponseParsing.getMallDetailsArrayList().get(1).getId());
                                             int index = Arrays.asList(mallArray).indexOf(mallArray[item]);
-                                            ;
                                             mallId = shopMallListResponseParsing.getMallDetailsArrayList().get(index).getId();
-                                            //   et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                            Log.e("mallId", mallId + "\t" + index);
                                             dialog.dismiss();
                                         }
                                     });

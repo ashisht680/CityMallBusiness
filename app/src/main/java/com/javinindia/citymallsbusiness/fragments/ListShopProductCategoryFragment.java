@@ -272,7 +272,6 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //volleyErrorHandle(error);
                         noInternetToast(error);
                     }
                 }) {

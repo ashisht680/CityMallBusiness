@@ -3,10 +3,10 @@ package com.javinindia.citymallsbusiness.fragments;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -55,7 +55,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 09-09-2016.
  */
-public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment1.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener, AddSubCatFragment.OnCallBackCAtegoryListener {
+public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener, AddSubCatFragment.OnCallBackCAtegoryListener {
     private RecyclerView recyclerview;
     private AboutAdaptar adapter;
     private RequestQueue requestQueue;
@@ -63,8 +63,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-
-    private FragmentManager mFragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +116,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         if (!TextUtils.isEmpty(SharedPreferencesManager.getProfileImage(activity))) {
             Picasso.with(activity).load(SharedPreferencesManager.getProfileImage(activity)).transform(new CircleTransform()).into(avatar);
         } else {
-            //AVATAR_URL = "http://lorempixel.com/200/200/people/1/";
             Picasso.with(activity).load(R.drawable.no_image_icon).transform(new CircleTransform()).into(avatar);
         }
         if (!TextUtils.isEmpty(SharedPreferencesManager.getUsername(activity))) {
@@ -152,6 +149,14 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             drawerLayout.closeDrawers();
             AboutAppFragments fragment = new AboutAppFragments();
             callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+        } else if (title.equals("Rate us")) {
+            drawerLayout.closeDrawers();
+            final String appPackageName = activity.getPackageName(); // getPackageName() from Context or Activity object
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            }
         } else if (title.equals("Logout")) {
             drawerLayout.closeDrawers();
             dialogBox();
@@ -168,7 +173,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(activity, "Logout", Toast.LENGTH_LONG).show();
                         SharedPreferencesManager.setUserID(activity, null);
                         SharedPreferencesManager.setUsername(activity, null);
                         SharedPreferencesManager.setPassword(activity, null);
@@ -314,7 +318,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         if (!TextUtils.isEmpty(SharedPreferencesManager.getProfileImage(activity))) {
             Picasso.with(activity).load(SharedPreferencesManager.getProfileImage(activity)).transform(new CircleTransform()).into(avatar);
         } else {
-            //AVATAR_URL = "http://lorempixel.com/200/200/people/1/";
             Picasso.with(activity).load(R.drawable.no_image_icon).transform(new CircleTransform()).into(avatar);
         }
         if (!TextUtils.isEmpty(SharedPreferencesManager.getUsername(activity))) {
@@ -420,16 +423,13 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 AddNewOfferFragment fragment = new AddNewOfferFragment();
                 fragment.setMyCallBackOfferListener(this);
                 callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
-               /* mFragmentManager = activity.getSupportFragmentManager();
-                mFragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment).addToBackStack(this.getClass().getSimpleName()).commit();*/
                 break;
         }
     }
 
     @Override
     public void onEditClick(int position) {
-        EditProfileFragment1 fragment1 = new EditProfileFragment1();
+        EditProfileFragment fragment1 = new EditProfileFragment();
         fragment1.setMyCallBackOfferListener(this);
         callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
     }
@@ -598,7 +598,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void OnCallBackEditProfile() {
-        //sendDataOnRegistrationApi();
         Intent refresh = new Intent(activity, LoginActivity.class);
         startActivity(refresh);
         activity.finish();

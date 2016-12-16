@@ -122,7 +122,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null){
+        if (menu != null) {
             menu.findItem(R.id.action_changePass).setVisible(false);
             menu.findItem(R.id.action_feedback).setVisible(false);
         }
@@ -355,11 +355,9 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 }
                 break;
             case R.id.txtChoosePercent:
-                // if (checkboxPercent.isChecked()) {
+
                 persentType();
-               /* } else {
-                    Toast.makeText(activity, "Check Enter Percentage(%) first", Toast.LENGTH_LONG).show();
-                }*/
+
                 break;
             case R.id.ivImage:
                 photo = null;
@@ -380,17 +378,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                         if (!etProductDescription.getText().toString().equals("")) {
                             if (!btnStartTime.getText().equals("Start date")) {
                                 if (!btnEndTime.getText().equals("End date")) {
-                                   /* if (checkboxPercent.isChecked()) {
-                                        if (!txtChoosePercent.getText().equals("Select Percentage Type")) {
-                                            if (!etPercentage.getText().equals("")) {
-                                                methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());
-                                            } else {
-                                                Toast.makeText(activity, "write percentage", Toast.LENGTH_LONG).show();
-                                            }
-                                        } else {
-                                            Toast.makeText(activity, "Select Percentage Type first", Toast.LENGTH_LONG).show();
-                                        }
-                                    } else {*/
                                     if (!etActualPrice.getText().toString().equals("")) {
                                         if (!etDiscountPrice.getText().toString().equals("")) {
                                             methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());

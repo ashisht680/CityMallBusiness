@@ -9,34 +9,39 @@
         <item
             android:id="@+id/drawer_home"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_home_black"
             android:title="Home"/>
         <item
             android:id="@+id/drawer_addCategory"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_playlist_add_white"
             android:title="Add Category"/>
         <item
             android:id="@+id/drawer_addOffer"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/offers"
             android:title="Add Offer"/>
         <item
             android:id="@+id/drawer_profile"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_list_white"
             android:title="Category List"/>
 
         <item
             android:id="@+id/drawer_about"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_info_black"
             android:title="About App"/>
+        <item
+            android:id="@+id/drawer_rate"
+            android:checkable="false"
+            android:icon="@drawable/ic_star_rate_black"
+            android:title="Rate us"/>
 
         <item
             android:id="@+id/drawer_favourite"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/log_out_black"
             android:title="Logout"/>
 
     </group>

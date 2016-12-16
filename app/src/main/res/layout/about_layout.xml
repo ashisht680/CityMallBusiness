@@ -14,11 +14,12 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarNav"
-            theme="@style/MyToolbarStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-            android:background="@color/toolbar_color">
+            android:background="@color/toolbar_color"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <ImageView
                 android:id="@+id/logo"

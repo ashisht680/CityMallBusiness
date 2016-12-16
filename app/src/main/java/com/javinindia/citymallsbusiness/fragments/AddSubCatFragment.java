@@ -178,7 +178,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                 if (!txtSelectCategory.getText().equals("Category")) {
                     if (!txtSelectSubCat.getText().equals("Subcategory")) {
                         if (!txtSelectBrand.getText().equals("Brands")) {
-                            //shopId=4&newbrand=ppppp&brands=na&shopCatId=77&shopSubCatId=444
                             methodSubmit();
                         } else {
                             if (!etBrand.getText().toString().equals("")) {
@@ -214,8 +213,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        //  progressDialog.dismiss();
-                        Log.e("res brand", response);
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {
@@ -245,13 +242,10 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                                 if (isChecked) {
                                                     data.add(str);
                                                     dataId.add(strId);
-                                                    Log.e("str1", str + " id " + strId);
                                                 } else if (data.contains(which) && dataId.contains(which)) {
-                                                    Log.e("str2", data.get(which) + " id " + dataId.get(which));
                                                     data.remove(data.get(which));
                                                     dataId.remove(dataId.get(which));
                                                 } else if (!isChecked) {
-                                                    Log.e("str3", data.get(which) + " id " + dataId.get(which));
                                                     data.remove(data.get(which));
                                                     dataId.remove(dataId.get(which));
                                                 }
@@ -269,19 +263,14 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                                 BrandID = strID.replaceAll("[\\[\\](){}]", "");
                                                 if (data.size() == 1) {
                                                     txtSelectBrand.setText(test);
-                                                    Log.e("strID 1", BrandID);
                                                 } else if (data.size() >= 2) {
                                                     int index = test.lastIndexOf(",");
-                                                    Log.e("test", index + "");
                                                     StringBuilder myName = new StringBuilder(test);
                                                     myName.deleteCharAt(index);
                                                     myName.insert(index, " and");
                                                     txtSelectBrand.setText(myName);
-                                                    Log.e("strID 2", BrandID);
                                                 } else {
                                                     txtSelectBrand.setText(test);
-                                                    Log.e("strID 3", BrandID);
-
                                                 }
 
                                                 dialog.dismiss();
@@ -404,7 +393,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("res cat", response);
                         final ProductCategory countryMasterApiParsing = new ProductCategory();
                         countryMasterApiParsing.responseImplement(response);
                         if (countryMasterApiParsing.getStatus().equals("true")) {
@@ -422,15 +410,11 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                         builder.setNegativeButton(android.R.string.cancel, null);
                                         builder.setItems(categoryArray, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int item) {
-                                                // Do something with the selection
                                                 txtSelectCategory.setText(categoryArray[item]);
                                                 txtSelectSubCat.setText("Subcategory");
                                                 txtSelectBrand.setText("Brands");
                                                 int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
-                                                ;
                                                 catId = countryMasterApiParsing.getShopCategoryDetailsArrayList().get(index).getId();
-                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                                Log.e("catId", catId + "\t" + index);
                                                 dialog.dismiss();
                                             }
                                         });
@@ -483,12 +467,9 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        //  progressDialog.dismiss();
-                        Log.e("res subcat", response);
                         final ProductCategory cityMasterParsing = new ProductCategory();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {
-                            Log.e("sub cat size", cityMasterParsing.getShopCategoryDetailsArrayList().size() + "");
                             if (cityMasterParsing.getShopCategoryDetailsArrayList().size() > 0) {
                                 for (int i = 0; i < cityMasterParsing.getShopCategoryDetailsArrayList().size(); i++) {
                                     suCatList.add(cityMasterParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory());
@@ -503,14 +484,10 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                         builder.setNegativeButton(android.R.string.cancel, null);
                                         builder.setItems(suCatArray, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int item) {
-                                                // Do something with the selection
                                                 txtSelectSubCat.setText(suCatArray[item]);
                                                 txtSelectBrand.setText("Brands");
                                                 int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
-                                                ;
                                                 subCatId = cityMasterParsing.getShopCategoryDetailsArrayList().get(index).getId();
-                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                                Log.e("subCatId", subCatId + "\t" + index);
                                                 dialog.dismiss();
                                             }
                                         });

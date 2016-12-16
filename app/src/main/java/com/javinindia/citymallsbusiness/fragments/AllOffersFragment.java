@@ -114,10 +114,8 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("limits", AstartLimit + "" + AcountLimit);
                         OfferListResponseparsing responseparsing = new OfferListResponseparsing();
                         responseparsing.responseParseMethod(response);
-                        Log.e("request", response);
                         String status = responseparsing.getStatus().trim();
                         if (status.equals("true")) {
                             if (responseparsing.getDetailsListArrayList().size() > 0) {
@@ -365,8 +363,6 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
                 if (nonVisibleItemCounts <= effectiveVisibleThreshold) {
                     startLimit = startLimit + 1;
                     countLimit = 10;
-
-                    //showLoader();
 
                     sendRequestOnReplyFeed(startLimit, countLimit);
                     loading = true;

@@ -51,7 +51,6 @@ public class AllViewUserFragment extends BaseFragment implements AllUserAdapter.
         setHasOptionsMenu(true);
         offerId = getArguments().getString("offerId");
         getArguments().remove("offerId");
-        Log.e("offerId",offerId);
     }
 
     @Override
@@ -105,8 +104,6 @@ public class AllViewUserFragment extends BaseFragment implements AllUserAdapter.
                     public void onResponse(String response) {
                         AllViewsUsersResponse responseparsing = new AllViewsUsersResponse();
                         responseparsing.responseParseMethod(response);
-                        Log.e("request", response);
-
                         if(responseparsing.getStatus()==1){
                             arrayList = responseparsing.getUsersInfoArrayList();
                             if(arrayList.size()>0){
