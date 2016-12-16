@@ -6,7 +6,8 @@ public class Constants {
     public static final String TEST_URL = "http://hnwkart.com/";
     public static final String LOGIN_URL = Constants.NEW_BASE_URL + "shopownerlogin.php";
     public static final String SIGN_UP_URL = Constants.NEW_BASE_URL + "shopownersignup.php";
-    public static final String FORGET_PASSWORD_URL = Constants.NEW_BASE_URL + "forget_password.php";
+    public static final String FORGET_PASSWORD_URL = Constants.NEW_BASE_URL + "forgetpasswordd.php";
+    public static final String CHANGE_PASSWORD_URL = Constants.NEW_BASE_URL + "changepassword.php";
     public static final String STATE_URL = Constants.TEST_URL + "countryMaster.php";
     public static final String MALL_LIST_URL = Constants.NEW_BASE_URL + "shopMallList.php";
     public static final String SHOP_PROFILE_URL = Constants.NEW_BASE_URL + "shopView.php";
@@ -27,9 +28,8 @@ public class Constants {
     public static final String UPDATE_OFFER_URL = Constants.NEW_BASE_URL + "updateOffer.php";
     public static final String OFFER_LIST_URL = Constants.NEW_BASE_URL + "offer.php";
     public static final String VIEWER_LIST_URL = Constants.NEW_BASE_URL + "showAllViewsUsers.php";
+    public static final String FEEDBACK_URL = Constants.NEW_BASE_URL + "feedback.php";
 
-    public static final String ABC = "http://propertymantratv.com/service/";
-    public static final String VISIT_URL = Constants.ABC + "insertBookvisit.php";
 
     public static final String APP_SETTINGS = "APP_SETTINGS";
     public static final String USERNAME = "username";

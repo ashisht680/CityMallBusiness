@@ -1,9 +1,11 @@
 package com.javinindia.citymallsbusiness.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,7 +49,7 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null){
+        if (menu != null) {
             menu.findItem(R.id.action_changePass).setVisible(false);
             menu.findItem(R.id.action_feedback).setVisible(false);
         }
@@ -68,11 +70,11 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
     }
 
     private void initialize(View view) {
-        ImageView imgBack=(ImageView)view.findViewById(R.id.imgBack);
+        ImageView imgBack = (ImageView) view.findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
-        TextView txtForgot = (TextView)view.findViewById(R.id.txtForgot);
+        TextView txtForgot = (TextView) view.findViewById(R.id.txtForgot);
         txtForgot.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        TextView txtForgotdiscription = (TextView)view.findViewById(R.id.txtForgotdiscription);
+        TextView txtForgotdiscription = (TextView) view.findViewById(R.id.txtForgotdiscription);
         txtForgotdiscription.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         AppCompatButton buttonResetPassword = (AppCompatButton) view.findViewById(R.id.btn_reset_password);
         buttonResetPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
@@ -124,6 +126,7 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("forgot",response.toString());
                         responseImplement(response);
                     }
                 },
@@ -136,7 +139,7 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
+                params.put("uname", email);
                 return params;
             }
 
@@ -148,11 +151,12 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
 
     private void responseImplement(String response) {
         JSONObject jsonObject = null;
-        String status = null, userid = null, msg = null;
+        String userid = null, msg = null;
+        int status = 0;
         try {
             jsonObject = new JSONObject(response);
             if (jsonObject.has("status"))
-                status = jsonObject.optString("status");
+                status = jsonObject.optInt("status");
             if (jsonObject.has("userid"))
                 userid = jsonObject.optString("userid");
             if (jsonObject.has("msg"))
@@ -160,11 +164,9 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (status.equalsIgnoreCase("true") && !status.isEmpty()) {
-           // fragment = new LoginFragment();
-            Toast.makeText(activity, "Congrats! Your password has been submitted.", Toast.LENGTH_SHORT).show();
+        if (status==1) {
+            Toast.makeText(activity, "New password has sent to your registered mail/mobile number.", Toast.LENGTH_SHORT).show();
             activity.onBackPressed();
-           // callFragmentMethod(fragment, this.getClass().getSimpleName(),R.id.container);
         } else {
             if (!TextUtils.isEmpty(msg)) {
                 showDialogMethod(msg);
