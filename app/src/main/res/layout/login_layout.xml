@@ -98,7 +98,7 @@
             android:layout_height="35dp"
             android:padding="3dp"
             android:background="@android:color/white"
-            android:text="REGISTER AS NEW SHOP"
+            android:text="REGISTER AS A NEW SHOP"
             android:textColor="@color/blue_button_color"
             android:textSize="15dp"
             android:layout_marginLeft="8dp"

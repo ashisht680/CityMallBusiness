@@ -282,13 +282,13 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                         d.show();
                                     }
                                 } else {
-                                    showDialogMethod("Brand not found");
+                                    showDialogMethod("There are no Brand under this category");
                                 }
                             } else {
-                                showDialogMethod("Brand not found");
+                                showDialogMethod("There are no Brand under this category");
                             }
                         } else {
-                            showDialogMethod("Brand not found");
+                            showDialogMethod("There are no Brand under this category");
                         }
 
                     }
@@ -340,7 +340,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
 
                         if (status.equals("true") && !TextUtils.isEmpty(status)) {
                             callbackCat.onCallBackCat();
-                            activity.onBackPressed();
+                           // activity.onBackPressed();
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod(msg);
@@ -423,10 +423,11 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                     }
                                 }
                             } else {
-                                showDialogMethod("Category not found");
+                                //A53) please change message to - There are no brands under this category.
+                                showDialogMethod("There are no Category");
                             }
                         } else {
-                            showDialogMethod("Category not found");
+                            showDialogMethod("There are no Category");
                         }
 
 
@@ -496,10 +497,10 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                     }
                                 }
                             } else {
-                                showDialogMethod("Subcategory not found");
+                                showDialogMethod("There are no Subcategory under this category");
                             }
                         } else {
-                            showDialogMethod("Subcategory not found");
+                            showDialogMethod("There are no Subcategory under this category");
                         }
 
 

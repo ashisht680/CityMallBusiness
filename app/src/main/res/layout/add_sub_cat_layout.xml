@@ -70,7 +70,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_border_red_fill_white"
                 android:gravity="center"
-                android:hint="TYPE BRAND NAME"
+                android:hint="Type Brand Name"
                 android:padding="5dp"
                 android:textColor="@color/toolbar_color"
                 android:textSize="20sp" />

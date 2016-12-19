@@ -161,7 +161,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
             et_email.requestFocus();
             return false;
         } else if (mobileNum.length() != 10) {
-            et_MobileNum.setError("You are not entered valid mobile number");
+            et_MobileNum.setError("Mobile number entered is invalid");
             et_MobileNum.requestFocus();
             return false;
         } else if (password.length() < 6) {

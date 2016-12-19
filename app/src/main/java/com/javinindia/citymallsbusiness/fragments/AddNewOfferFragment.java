@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -46,6 +47,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.citymallsbusiness.R;
+import com.javinindia.citymallsbusiness.activity.LoginActivity;
 import com.javinindia.citymallsbusiness.apiparsing.brandparsing.Brandresponse;
 import com.javinindia.citymallsbusiness.apiparsing.offerCategoryParsing.OfferCategoryresponse;
 import com.javinindia.citymallsbusiness.constant.Constants;
@@ -68,7 +70,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 15-09-2016.
  */
-public class AddNewOfferFragment extends BaseFragment implements View.OnClickListener {
+public class AddNewOfferFragment extends BaseFragment implements View.OnClickListener,AddSubCatFragment.OnCallBackCAtegoryListener {
     private String day = "";
     private String month = "";
     private String year = "";
@@ -126,6 +128,11 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
             menu.findItem(R.id.action_changePass).setVisible(false);
             menu.findItem(R.id.action_feedback).setVisible(false);
         }
+    }
+
+    @Override
+    public void onCallBackCat() {
+
     }
 
     public interface OnCallBackAddOfferListener {
@@ -544,10 +551,10 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                     }
                                 }
                             } else {
-                                showDialogMethod("No brand found\nplease add some brands");
+                                showDialogMethod("There are no Brands under this Subcategory.");
                             }
                         } else {
-                            showDialogMethod("No brand found\nplease add some brands");
+                            showDialogMethod("There are no Brands under this Subcategory.");
                         }
                     }
                 },
@@ -623,10 +630,12 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                     }
                                 }
                             } else {
-                                showDialogMethod("No Category found\nPlease add some categories");
+                                dialogBox();
+                               // showDialogMethod("No Category found\nPlease add some categories");
                             }
                         } else {
-                            showDialogMethod("No Category found\nPlease add some categories");
+                            dialogBox();
+                           // showDialogMethod("No Category found\nPlease add some categories");
                         }
                     }
                 },
@@ -650,6 +659,33 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         volleyDefaultTimeIncreaseMethod(stringRequest);
         requestQueue = Volley.newRequestQueue(activity);
         requestQueue.add(stringRequest);
+    }
+
+    public void dialogBox() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
+        alertDialogBuilder.setMessage("You have not added any categories. Please add!");
+        alertDialogBuilder.setPositiveButton("Ok!",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        AddSubCatFragment fragment1 = new AddSubCatFragment();
+                        fragment1.setMyCallBackCategoryListener(AddNewOfferFragment.this);
+                        callFragmentMethod(fragment1, this.getClass().getSimpleName(),R.id.container);
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void methodSubcat() {
@@ -695,10 +731,11 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                     }
                                 }
                             } else {
-                                showDialogMethod("No Subcategory found\nplease add some subcategory");
+                                //A53) please change message to - There are no brands under this category.
+                                showDialogMethod("There are no Subcategory under this category.");
                             }
                         } else {
-                            showDialogMethod("No Subcategory found\nplease add some subcategory");
+                            showDialogMethod("There are no Subcategory under this category.");
                         }
 
                     }

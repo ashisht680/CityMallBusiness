@@ -260,6 +260,7 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
                                 mAdapter.notifyItemChanged(position);
                                 if (list.size()==0){
                                     txtNoData.setVisibility(View.VISIBLE);
+                                    llMain.setVisibility(View.VISIBLE);
                                 }
                             }
 

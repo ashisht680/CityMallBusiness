@@ -55,7 +55,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 09-09-2016.
  */
-public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, ListShopProductCategoryFragment.OnCallBackCategoryListListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener, AddSubCatFragment.OnCallBackCAtegoryListener {
+public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener,AddSubCatFragment.OnCallBackCAtegoryListener {
     private RecyclerView recyclerview;
     private AboutAdaptar adapter;
     private RequestQueue requestQueue;
@@ -135,6 +135,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         } else if (title.equals("Add Category")) {
             drawerLayout.closeDrawers();
             AddSubCatFragment categoryFragment = new AddSubCatFragment();
+            categoryFragment.setMyCallBackCategoryListener(this);
             callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.container);
         } else if (title.equals("Add Offer")) {
             drawerLayout.closeDrawers();
@@ -444,7 +445,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     @Override
     public void onAddCategory(int position) {
         AddSubCatFragment categoryFragment = new AddSubCatFragment();
-        categoryFragment.setMyCallBackCategoryListener(this);
         callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.container);
     }
 
@@ -586,10 +586,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         }
     }
 
-    @Override
-    public void onCallBackCatList() {
-        sendDataOnRegistrationApi();
-    }
 
     @Override
     public void OnCallBackAddOffer() {
@@ -615,6 +611,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onCallBackCat() {
-        sendDataOnRegistrationApi();
+
     }
 }

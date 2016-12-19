@@ -41,7 +41,7 @@
                 android:inputType="text"
                 android:nextFocusDown="@+id/et_owner"
                 android:padding="8dp"
-                android:singleLine="true"
+               android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -55,7 +55,7 @@
                 android:inputType="text"
                 android:nextFocusDown="@+id/et_email"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -70,7 +70,7 @@
                 android:inputType="textEmailAddress"
                 android:nextFocusDown="@+id/et_MobileNum"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -85,7 +85,7 @@
                 android:inputType="phone"
                 android:nextFocusDown="@+id/et_Landline"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -100,7 +100,7 @@
                 android:inputType="phone"
                 android:nextFocusDown="@+id/et_password"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -115,7 +115,7 @@
                 android:inputType="textPassword"
                 android:nextFocusDown="@+id/et_ConfirmPassword"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -129,7 +129,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
             <CheckBox

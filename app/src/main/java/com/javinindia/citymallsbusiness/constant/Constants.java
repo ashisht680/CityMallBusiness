@@ -6,7 +6,7 @@ public class Constants {
     public static final String TEST_URL = "http://hnwkart.com/";
     public static final String LOGIN_URL = Constants.NEW_BASE_URL + "shopownerlogin.php";
     public static final String SIGN_UP_URL = Constants.NEW_BASE_URL + "shopownersignup.php";
-    public static final String FORGET_PASSWORD_URL = Constants.NEW_BASE_URL + "forgetpasswordd.php";
+    public static final String FORGET_PASSWORD_URL = Constants.NEW_BASE_URL + "forget_shop.php";
     public static final String CHANGE_PASSWORD_URL = Constants.NEW_BASE_URL + "changepassword.php";
     public static final String STATE_URL = Constants.TEST_URL + "countryMaster.php";
     public static final String MALL_LIST_URL = Constants.NEW_BASE_URL + "shopMallList.php";

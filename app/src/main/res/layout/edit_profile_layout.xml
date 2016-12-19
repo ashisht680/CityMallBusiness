@@ -5,7 +5,7 @@
     android:background="@color/background_color"
     android:orientation="vertical">
 
-    <include layout="@layout/common_toolbar_layout"/>
+    <include layout="@layout/common_toolbar_layout" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -164,7 +164,7 @@
                         android:gravity="center|left"
                         android:hint="Owner name"
                         android:inputType="text"
-                        android:singleLine="true"
+                        android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -257,6 +257,7 @@
                         android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="mobile number"
+                        android:maxLength="10"
                         android:inputType="phone"
                         android:lines="1"
                         android:textColor="@android:color/white"
@@ -299,14 +300,16 @@
                         android:id="@+id/etLandLine"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_toRightOf="@+id/img3"
                         android:background="@color/toolbar_color"
+                        android:layout_toRightOf="@+id/img3"
                         android:gravity="center|left"
                         android:hint="landline number"
+                        android:maxLength="15"
+                        android:inputType="phone"
                         android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"/>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -492,6 +495,7 @@
                         android:gravity="center|left"
                         android:hint="store number"
                         android:lines="1"
+                        android:maxLength="10"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -535,6 +539,7 @@
                         android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="floor number"
+                        android:maxLength="10"
                         android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"

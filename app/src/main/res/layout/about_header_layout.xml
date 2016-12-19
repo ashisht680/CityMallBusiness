@@ -88,7 +88,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
-            android:lines="1"
+            android:maxLines="2"
             android:text=""
             android:textColor="@android:color/white"
             android:textSize="12sp" />
@@ -179,48 +179,48 @@
         android:layout_below="@+id/rlBanner"
         android:orientation="vertical">
 
-      <!--  <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+        <!--  <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp"
+              android:orientation="horizontal"
+              android:weightSum="2">
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txtCategoryAbout"
+              <android.support.v7.widget.AppCompatTextView
+                  android:id="@+id/txtCategoryAbout"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:layout_weight="1"
+                  android:padding="5dp"
+                  android:text="All Categories"
+                  android:textColor="@android:color/white"
+                  android:textSize="15sp"
+                  android:textStyle="bold" />
+
+              <android.support.v7.widget.AppCompatButton
+                  android:id="@+id/btnAddCategory"
+                  android:layout_width="match_parent"
+                  android:layout_height="30dp"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginBottom="5dp"
+                  android:layout_weight="1"
+                  android:background="@android:color/white"
+                  android:paddingLeft="30dp"
+                  android:paddingRight="30dp"
+                  android:text="Add category" />
+          </LinearLayout>-->
+
+
+        <!--    <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerviewCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:text="All Categories"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnAddCategory"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:background="@android:color/white"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:text="Add category" />
-        </LinearLayout>-->
-
-
-    <!--    <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerviewCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-        </android.support.v7.widget.RecyclerView>-->
+            </android.support.v7.widget.RecyclerView>-->
 
 
         <!--  <View

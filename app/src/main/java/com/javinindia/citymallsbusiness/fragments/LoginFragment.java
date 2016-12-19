@@ -77,8 +77,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         etUsername.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etPassword = (EditText) view.findViewById(R.id.et_password);
         etPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etUsername.setText(SharedPreferencesManager.getEmail(activity));
-        etPassword.setText(SharedPreferencesManager.getPassword(activity));
         TextView txtRegistration = (TextView) view.findViewById(R.id.txtRegistration);
         txtRegistration.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         buttonLogin.setOnClickListener(this);
@@ -238,7 +236,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
     private boolean validation(String username, String password) {
         if (TextUtils.isEmpty(username)) {
-            etUsername.setError("Mobile number entered is invalid");
+            etUsername.setError("Mobile/Email field is empty.");
             etUsername.requestFocus();
             return false;
         } else if (TextUtils.isEmpty(password)) {
