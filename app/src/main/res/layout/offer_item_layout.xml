@@ -30,6 +30,7 @@
                 android:id="@+id/imgShopLogoOffer"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:scaleType="centerCrop"
                 android:background="@drawable/button_border_black"
                 android:padding="1dp"
                 android:src="@drawable/no_image_icon" />
@@ -104,7 +105,7 @@
                 android:layout_toRightOf="@+id/imgShopLogoOffer"
                 android:background="@color/blue_button_color"
                 android:padding="5dp"
-                android:text="985 Views"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
 
@@ -203,7 +204,7 @@
                 android:gravity="center"
                 android:padding="3dp"
                 android:text=""
-                android:textColor="@android:color/black" />
+                android:textColor="@color/offer_green_color" />
 
 
         </LinearLayout>

@@ -133,10 +133,10 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
                                     txtDataNotFound.setVisibility(View.VISIBLE);
                                 }
                             } else {
-                                txtDataNotFound.setVisibility(View.VISIBLE);
+                               // txtDataNotFound.setVisibility(View.VISIBLE);
                             }
                         } else {
-                            txtDataNotFound.setVisibility(View.VISIBLE);
+                           // txtDataNotFound.setVisibility(View.VISIBLE);
                         }
                     }
                 },

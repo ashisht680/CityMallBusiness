@@ -81,7 +81,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null){
+        if (menu != null) {
             menu.findItem(R.id.action_changePass).setVisible(false);
             menu.findItem(R.id.action_feedback).setVisible(false);
         }
@@ -109,7 +109,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
         });
         final ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setTitle(null);
-        AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
+        AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
         textView.setText("Add category");
         textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
@@ -177,14 +177,14 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
             case R.id.btnSubmit:
                 if (!txtSelectCategory.getText().equals("Category")) {
                     if (!txtSelectSubCat.getText().equals("Subcategory")) {
-                        if (!txtSelectBrand.getText().equals("Brands")) {
+                        if (!txtSelectBrand.getText().equals("Brands") && !etBrand.getText().toString().equals("")) {
+                            Toast.makeText(activity, "Please either select brand or type brand.", Toast.LENGTH_LONG).show();
+                        } else if (!txtSelectBrand.getText().equals("Brands") && etBrand.getText().toString().equals("")) {
+                            methodSubmit();
+                        } else if (txtSelectBrand.getText().equals("Brands") && !etBrand.getText().toString().equals("")) {
                             methodSubmit();
                         } else {
-                            if (!etBrand.getText().toString().equals("")) {
-                                methodSubmit();
-                            } else {
-                                Toast.makeText(activity, "Select Brand or write brand please", Toast.LENGTH_LONG).show();
-                            }
+                            Toast.makeText(activity, "Select Brand or write brand please", Toast.LENGTH_LONG).show();
                         }
                     } else {
                         Toast.makeText(activity, "Select Subcategory first", Toast.LENGTH_LONG).show();
@@ -230,7 +230,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                     if (brandList != null && brandList.size() > 0) {
 
                                         AlertDialog.Builder d = new AlertDialog.Builder(activity);
-                                        d.setTitle("Select Tease");
+                                        d.setTitle("Select Brands");
                                         final ArrayList<String> data = new ArrayList<>();
                                         final ArrayList<String> dataId = new ArrayList<>();
                                         d.setMultiChoiceItems(brandArray, null, new DialogInterface.OnMultiChoiceClickListener() {
@@ -243,11 +243,11 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                                     data.add(str);
                                                     dataId.add(strId);
                                                 } else if (data.contains(which) && dataId.contains(which)) {
-                                                    data.remove(data.get(which));
-                                                    dataId.remove(dataId.get(which));
+                                                    data.remove(str);
+                                                    dataId.remove(strId);
                                                 } else if (!isChecked) {
-                                                    data.remove(data.get(which));
-                                                    dataId.remove(dataId.get(which));
+                                                    data.remove(str);
+                                                    dataId.remove(strId);
                                                 }
                                             }
 
@@ -340,7 +340,11 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
 
                         if (status.equals("true") && !TextUtils.isEmpty(status)) {
                             callbackCat.onCallBackCat();
-                           // activity.onBackPressed();
+                            txtSelectCategory.setText("Category");
+                            txtSelectSubCat.setText("Subcategory");
+                            txtSelectBrand.setText("Brands");
+                            etBrand.setText(" ");
+                            // activity.onBackPressed();
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod(msg);
@@ -363,10 +367,12 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                 params.put("shopId", SharedPreferencesManager.getUserID(activity));
                 params.put("shopCatId", catId);
                 params.put("shopSubCatId", subCatId);
-                if (etBrand.getText().toString().trim().equals("")) {
+
+                if (!txtSelectBrand.getText().equals("Brands") && etBrand.getText().toString().trim().equals("")) {
                     params.put("brands", BrandID);
                     params.put("newbrand", "na");
-                } else {
+
+                } else if (txtSelectBrand.getText().equals("Brands") && !etBrand.getText().toString().trim().equals("")) {
                     params.put("brands", "na");
                     params.put("newbrand", etBrand.getText().toString().trim());
                 }
@@ -398,7 +404,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                         if (countryMasterApiParsing.getStatus().equals("true")) {
                             if (countryMasterApiParsing.getShopCategoryDetailsArrayList().size() > 0) {
                                 for (int i = 0; i < countryMasterApiParsing.getShopCategoryDetailsArrayList().size(); i++) {
-                                    categoryList.add(countryMasterApiParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory());
+                                    categoryList.add(countryMasterApiParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory().trim());
                                 }
                                 if (categoryList.size() > 0) {
                                     categoryArray = new String[categoryList.size()];
@@ -414,7 +420,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                                 txtSelectSubCat.setText("Subcategory");
                                                 txtSelectBrand.setText("Brands");
                                                 int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
-                                                catId = countryMasterApiParsing.getShopCategoryDetailsArrayList().get(index).getId();
+                                                catId = countryMasterApiParsing.getShopCategoryDetailsArrayList().get(index).getId().trim();
                                                 dialog.dismiss();
                                             }
                                         });
@@ -473,7 +479,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                         if (cityMasterParsing.getStatus().equals("true")) {
                             if (cityMasterParsing.getShopCategoryDetailsArrayList().size() > 0) {
                                 for (int i = 0; i < cityMasterParsing.getShopCategoryDetailsArrayList().size(); i++) {
-                                    suCatList.add(cityMasterParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory());
+                                    suCatList.add(cityMasterParsing.getShopCategoryDetailsArrayList().get(i).getShopCategory().trim());
                                 }
                                 if (suCatList.size() > 0) {
                                     suCatArray = new String[suCatList.size()];
@@ -488,7 +494,7 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                                                 txtSelectSubCat.setText(suCatArray[item]);
                                                 txtSelectBrand.setText("Brands");
                                                 int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
-                                                subCatId = cityMasterParsing.getShopCategoryDetailsArrayList().get(index).getId();
+                                                subCatId = cityMasterParsing.getShopCategoryDetailsArrayList().get(index).getId().trim();
                                                 dialog.dismiss();
                                             }
                                         });

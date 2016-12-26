@@ -14,5 +14,6 @@
     <color name="black_transparent_color">#99000000</color>
     <!--<color name="direction_button_color">#a1161d</color>-->
     <color name="blue_button_color">#1da6b9</color>
+    <color name="offer_green_color">#38D15F</color>
 
 </resources>

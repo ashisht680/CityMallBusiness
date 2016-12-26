@@ -292,6 +292,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="Rate CM"
+                    android:visibility="gone"
                     android:textColor="@android:color/white" />
             </RelativeLayout>
         </LinearLayout>

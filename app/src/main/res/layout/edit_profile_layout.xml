@@ -495,7 +495,7 @@
                         android:gravity="center|left"
                         android:hint="store number"
                         android:lines="1"
-                        android:maxLength="10"
+                        android:maxLength="25"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="12dp" />
@@ -539,7 +539,7 @@
                         android:background="@color/toolbar_color"
                         android:gravity="center|left"
                         android:hint="floor number"
-                        android:maxLength="10"
+                        android:maxLength="25"
                         android:lines="1"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"

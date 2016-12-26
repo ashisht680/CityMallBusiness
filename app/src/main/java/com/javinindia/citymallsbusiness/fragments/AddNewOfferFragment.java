@@ -78,6 +78,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     private String min = "";
     private String sec = "";
 
+
     // CheckBox checkboxPercent, checkboxPrise;
     AppCompatTextView txtChooseCategory, txtAddProductImages, btnStartTime, btnEndTime, txtChooseSubCategory, txtChooseBrand,
             txtChoosePercent, txtAdditional, txtEnterPercentTitle, txtOr, txtEnterPriceTitle, txtTitle, txtTitleDisc;
@@ -115,10 +116,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            // takePictureButton.setEnabled(false);
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
-        }
     }
 
     @Override
@@ -371,7 +368,11 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 mImageView.setVisibility(View.GONE);
                 break;
             case R.id.txtAddProductImages:
-                dialog.show();
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+                }else {
+                    dialog.show();
+                }
                 break;
         }
 
@@ -381,13 +382,19 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         if (!txtChooseCategory.getText().equals("Choose category")) {
             if (!txtChooseSubCategory.getText().equals("Choose subcategory")) {
                 if (!txtChooseBrand.getText().equals("Choose Brand")) {
-                    if (!etProductTitle.getText().toString().equals("")) {
-                        if (!etProductDescription.getText().toString().equals("")) {
+                    if (!etProductTitle.getText().toString().trim().equals("")) {
+                        if (!etProductDescription.getText().toString().trim().equals("")) {
                             if (!btnStartTime.getText().equals("Start date")) {
                                 if (!btnEndTime.getText().equals("End date")) {
-                                    if (!etActualPrice.getText().toString().equals("")) {
-                                        if (!etDiscountPrice.getText().toString().equals("")) {
-                                            methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());
+                                    if (!etActualPrice.getText().toString().trim().equals("")) {
+                                        if (!etDiscountPrice.getText().toString().trim().equals("")) {
+                                            int act = Integer.parseInt(etActualPrice.getText().toString().trim());
+                                            int dct = Integer.parseInt(etDiscountPrice.getText().toString().trim());
+                                            if (act-dct>0){
+                                                methodAddOffer(catId, subCatId, brandId, etProductTitle.getText().toString(), etProductDescription.getText().toString(), btnStartTime.getText().toString(), btnEndTime.getText().toString(), txtChoosePercent.getText().toString(), etPercentage.getText().toString(), etActualPrice.getText().toString(), etDiscountPrice.getText().toString());
+                                            }else {
+                                                Toast.makeText(activity, "The Discounted Price should always be lesser than the Actual Price.", Toast.LENGTH_LONG).show();
+                                            }
                                         } else {
                                             Toast.makeText(activity, "write discount price", Toast.LENGTH_LONG).show();
                                         }
@@ -1040,13 +1047,11 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-                    return;
-
-
+                    dialog.show();
+                    //return;
+                }else {
+                    Toast.makeText(activity, "You Denied for camera permission so you cant't add image", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         }
     }

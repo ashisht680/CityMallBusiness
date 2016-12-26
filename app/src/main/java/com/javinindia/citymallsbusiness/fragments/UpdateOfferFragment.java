@@ -1,11 +1,13 @@
 package com.javinindia.citymallsbusiness.fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +15,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -98,6 +103,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
     private static final int PICK_FROM_FILE = 3;
     Bitmap photo=null;
     int size = 0;
+    public static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
 
     private File outPutFile = null;
 
@@ -436,7 +442,11 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                // mImageView.setVisibility(View.GONE);
                 break;
             case R.id.txtAddProductImages:
-                dialog.show();
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+                }else {
+                    dialog.show();
+                }
                 break;
         }
 
@@ -1065,5 +1075,21 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
         });
         builder.create();
         builder.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    dialog.show();
+                    //return;
+                }else {
+                    Toast.makeText(activity, "You Denied for camera permission so you cant't update image", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 }

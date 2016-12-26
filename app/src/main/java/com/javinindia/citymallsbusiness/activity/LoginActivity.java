@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.fragments.BaseFragment;
 import com.javinindia.citymallsbusiness.fragments.CheckConnectionFragment;
 import com.javinindia.citymallsbusiness.fragments.LoginFragment;
 import com.javinindia.citymallsbusiness.fragments.NavigationAboutFragment;
+import com.javinindia.citymallsbusiness.notification.MyAndroidFirebaseInstanceIdService;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 
 /**

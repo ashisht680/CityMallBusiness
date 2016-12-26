@@ -84,7 +84,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         int holderId;
         //***********************Recent list
         public AppCompatTextView txtShopName, txtSubCategoryItem, txtOfferTitle, txtOfferCategoryItem, txtTimingOffer,
-                txtViewItem, txtEditOfferItem, txtActualPrice, txtDiscountPrice,txtOfferPercent,txtMRP;
+                txtViewItem, txtEditOfferItem, txtActualPrice, txtDiscountPrice, txtOfferPercent, txtMRP;
         public CardView rlMain;
         public ImageView imgShopLogoOffer;
         LinearLayout llOffItem;
@@ -98,7 +98,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
         //btnAddCategory;
         //, txtCategoryHeader
         public RatingBar ratingBarAbout;
-      //  RecyclerView catRecyclerView;
+        //  RecyclerView catRecyclerView;
 
 
         public ViewHolder(View itemLayoutView, int ViewType) {
@@ -145,7 +145,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 txtLocationHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtLocationAbout);
                 txtLocationHeader.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 //txtCategoryHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtCategoryAbout);
-               // txtCategoryHeader.setTypeface(FontAsapBoldSingleTonClass.getInstance(context).getTypeFace());
+                // txtCategoryHeader.setTypeface(FontAsapBoldSingleTonClass.getInstance(context).getTypeFace());
                 txtFaverateCountHeader = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtFaverateCountAbout);
                 txtFaverateCountHeader.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 btnEditProfile = (AppCompatButton) itemLayoutView.findViewById(R.id.btnEditProfile);
@@ -153,9 +153,9 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 btnAllOffer = (AppCompatButton) itemLayoutView.findViewById(R.id.btnAllOffer);
                 btnAllOffer.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 ratingBarAbout = (RatingBar) itemLayoutView.findViewById(R.id.ratingBarAbout);
-              //  catRecyclerView = (RecyclerView) itemLayoutView.findViewById(R.id.recyclerviewCategory);
-             //   btnAddCategory = (AppCompatButton) itemLayoutView.findViewById(R.id.btnAddCategory);
-             //   btnAddCategory.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
+                //  catRecyclerView = (RecyclerView) itemLayoutView.findViewById(R.id.recyclerviewCategory);
+                //   btnAddCategory = (AppCompatButton) itemLayoutView.findViewById(R.id.btnAddCategory);
+                //   btnAddCategory.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 txtOffersAbout = (AppCompatTextView) itemLayoutView.findViewById(R.id.txtOffersAbout);
                 txtOffersAbout.setTypeface(FontAsapRegularSingleTonClass.getInstance(context).getTypeFace());
                 holderId = 0;
@@ -219,18 +219,18 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 String offerType = requestDetail.getOfferDetails().getOfferPercentageType().trim();
                 double actual = Double.parseDouble(offerActualPrice);
                 double discount = Double.parseDouble(offerDiscountPrice);
-                int percent = (int) (100 -(discount * 100.0f) / actual);
+                int percent = (int) (100 - (discount * 100.0f) / actual);
                 viewHolder.txtOfferPercent.setText(offerType + "\n" + percent + "% off");
             } else if (TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentageType().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferPercentage().trim())) {
-                viewHolder.txtOfferPercent.setText("UPTO\n"+requestDetail.getOfferDetails().getOfferPercentage().trim() + "% off");
+                viewHolder.txtOfferPercent.setText("UPTO\n" + requestDetail.getOfferDetails().getOfferPercentage().trim() + "% off");
             } else {
                 if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferActualPrice().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferDiscountedPrice().trim())) {
                     String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
                     String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
                     double actual = Double.parseDouble(offerActualPrice);
                     double discount = Double.parseDouble(offerDiscountPrice);
-                    int percent = (int) (100-(discount * 100.0f) / actual);
-                    viewHolder.txtOfferPercent.setText("UPTO\n"+percent + "% off");
+                    int percent = (int) (100 - (discount * 100.0f) / actual);
+                    viewHolder.txtOfferPercent.setText("UPTO\n" + percent + "% off");
                 }
 
             }
@@ -242,9 +242,15 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 viewHolder.txtDiscountPrice.setText(Html.fromHtml("OFFER\t\t\t\n \u20B9" + offerDiscountPrice + "/-"));
             }
 
-            if (!TextUtils.isEmpty(requestDetail.getOfferBrandDetails().getBrandLogo().trim())) {
+            if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferBanner().trim())) {
+                String offerBanner = requestDetail.getOfferDetails().getOfferBanner().trim();
+                Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.imgShopLogoOffer, offerBanner);
+            } else if (!TextUtils.isEmpty(requestDetail.getOfferBrandDetails().getBrandLogo().trim())) {
                 String brandLogo = requestDetail.getOfferBrandDetails().getBrandLogo().trim();
                 Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.imgShopLogoOffer, brandLogo);
+            } else if (!TextUtils.isEmpty(requestDetail.getOfferShopDetails().getShopProfilePic().trim())) {
+                String shopLogo = requestDetail.getOfferShopDetails().getShopProfilePic().trim();
+                Utility.imageLoadGlideLibrary(context, viewHolder.progressBar, viewHolder.imgShopLogoOffer, shopLogo);
             } else {
                 viewHolder.imgShopLogoOffer.setImageResource(R.drawable.no_image_icon);
             }

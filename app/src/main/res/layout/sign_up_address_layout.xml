@@ -39,11 +39,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
-                android:hint="STATE"
                 android:clickable="true"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="STATE"
                 android:inputType="phone"
                 android:nextFocusDown="@+id/et_email"
                 android:padding="8dp"
@@ -57,11 +57,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
-                android:hint="CITY"
                 android:clickable="true"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="CITY"
                 android:inputType="phone"
                 android:nextFocusDown="@+id/et_State"
                 android:padding="8dp"
@@ -70,21 +70,20 @@
                 android:textColorHint="@android:color/white" />
 
 
-
-       <!--     <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_Address"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/button_border_white"
-                android:gravity="top"
-                android:hint="ADDRESS"
-                android:inputType="text"
-                android:lines="3"
-                android:nextFocusDown="@+id/et_City"
-                android:padding="8dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />-->
+            <!--     <android.support.v7.widget.AppCompatEditText
+                     android:id="@+id/et_Address"
+                     android:layout_width="match_parent"
+                     android:layout_height="70dp"
+                     android:layout_margin="8dp"
+                     android:background="@drawable/button_border_white"
+                     android:gravity="top"
+                     android:hint="ADDRESS"
+                     android:inputType="text"
+                     android:lines="3"
+                     android:nextFocusDown="@+id/et_City"
+                     android:padding="8dp"
+                     android:textColor="@android:color/white"
+                     android:textColorHint="@android:color/white" />-->
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_Mall"
@@ -92,17 +91,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
-                android:hint="MALL"
                 android:clickable="true"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="MALL"
                 android:inputType="phone"
+                android:lines="1"
                 android:nextFocusDown="@+id/et_Address"
                 android:padding="8dp"
-                android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
+
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/etStoreNum"
                 android:layout_width="match_parent"
@@ -111,10 +111,12 @@
                 android:background="@drawable/button_border_white"
                 android:hint="STORE NUMBER"
                 android:inputType="text"
+                android:lines="1"
+                android:maxLength="25"
                 android:padding="8dp"
-                android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"/>
+                android:textColorHint="@android:color/white" />
+
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/etFloor"
                 android:layout_width="match_parent"
@@ -122,26 +124,28 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
                 android:hint="FLOOR"
-                android:inputType="number"
+                android:inputType="text"
+                android:maxLength="25"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"/>
+                android:textColorHint="@android:color/white" />
+
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_PinCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_border_white"
-                android:hint="PINCODE"
                 android:clickable="true"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="PINCODE"
                 android:inputType="phone"
                 android:nextFocusDown="@+id/et_Mall"
                 android:padding="8dp"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
@@ -178,8 +182,8 @@
             android:id="@+id/imgBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/lltop"
             android:layout_alignParentBottom="true"
+            android:layout_below="@+id/lltop"
             android:layout_margin="5dp"
             android:src="@drawable/back" />
     </RelativeLayout>

@@ -115,11 +115,6 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            // takePictureButton.setEnabled(false);
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
-        }
     }
 
     public interface OnCallBackEditProfileListener {
@@ -383,7 +378,11 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                 methodUpdateView();
                 break;
             case R.id.rlUpadteImg:
-                dialog.show();
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+                }else {
+                    dialog.show();
+                }
                 break;
             case R.id.etState:
                 methodState();
@@ -1007,13 +1006,11 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
 
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-                    return;
-
-
+                    dialog.show();
+                    //return;
+                }else {
+                    Toast.makeText(activity, "You Denied for camera permission so you cant't update image", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         }
     }

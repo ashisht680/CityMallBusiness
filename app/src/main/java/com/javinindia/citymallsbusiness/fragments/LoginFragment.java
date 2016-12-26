@@ -211,9 +211,11 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", username);
                 params.put("password", password);
-                //  String deviceToken = SharedPreferencesManager.getDeviceToken(activity);
-                //   params.put("deviceToken", deviceToken);
-                //  params.put("type", "manual");
+                if (!TextUtils.isEmpty(SharedPreferencesManager.getDeviceToken(activity))){
+                    params.put("deviceToken",SharedPreferencesManager.getDeviceToken(activity));
+                }else {
+                    params.put("deviceToken","deviceToken");
+                }
                 return params;
             }
 

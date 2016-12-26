@@ -135,7 +135,7 @@ public class FeedbackFragment extends BaseFragment {
             e.printStackTrace();
         }
         if (status==1) {
-           Toast.makeText(activity,"Your feedback successfully submitted.",Toast.LENGTH_LONG).show();
+           Toast.makeText(activity,"Congrats! Your feedback has been successfully submitted. We'll get back to you shortly!",Toast.LENGTH_LONG).show();
             activity.onBackPressed();
         } else {
             if (!TextUtils.isEmpty(msg)) {

@@ -362,11 +362,11 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                                     }
                                 }
                             } else {
-                                Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
+                              //  Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
                             }
 
                         } else {
-                            Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
                         }
 
                     }

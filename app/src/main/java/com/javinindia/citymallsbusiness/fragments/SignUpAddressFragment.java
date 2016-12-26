@@ -489,7 +489,11 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                 params.put("mall", mallId);
                 params.put("shopNo", storeNumshit);
                 params.put("floor", floorhit);
-                // params.put("address", completeAddress);
+                if (!TextUtils.isEmpty(SharedPreferencesManager.getDeviceToken(activity))){
+                    params.put("deviceToken",SharedPreferencesManager.getDeviceToken(activity));
+                }else {
+                    params.put("deviceToken","deviceToken");
+                }
                 return params;
             }
 

@@ -28,7 +28,7 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="City Malls Business"
+                android:text="City Stores Business"
                 android:textColor="@android:color/black"
                 android:gravity="center_horizontal"
                 android:textSize="18sp" />

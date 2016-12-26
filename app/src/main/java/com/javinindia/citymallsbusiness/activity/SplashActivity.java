@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.font.FontAsapBoldTtalicSingleTonClass;
+import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 
 public class SplashActivity extends BaseActivity {
@@ -30,7 +31,7 @@ public class SplashActivity extends BaseActivity {
         SharedPreferencesManager.setDeviceToken(getApplicationContext(), android_id);
         setContentView(getLayoutResourceId());
         TextView txt_splash = (TextView) findViewById(R.id.txt_splash);
-        txt_splash.setTypeface(FontAsapBoldTtalicSingleTonClass.getInstance(getApplicationContext()).getTypeFace());
+        txt_splash.setTypeface(FontAsapRegularSingleTonClass.getInstance(getApplicationContext()).getTypeFace());
 
         new Handler().postDelayed(new Runnable() {
             @Override
