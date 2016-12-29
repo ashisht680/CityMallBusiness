@@ -44,6 +44,7 @@
             android:layout_toLeftOf="@+id/imgFav"
             android:layout_toRightOf="@+id/imgShopLogoAbout"
             android:text="WoodLand"
+            android:maxLines="2"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -111,11 +112,12 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/llButton"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/imgShopLogoAbout"
+
             android:background="@color/highlight_color"
             android:lines="1"
             android:padding="2dp"
             android:text="35 Offers"
+            android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
             android:textSize="12sp" />
 

@@ -11,7 +11,7 @@
             android:id="@+id/txtDataNotFound"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Data not found"
+            android:text="You have not published any offer."
             android:gravity="center"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
