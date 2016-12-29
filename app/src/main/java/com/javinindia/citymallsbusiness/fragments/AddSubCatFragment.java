@@ -32,6 +32,7 @@ import com.javinindia.citymallsbusiness.apiparsing.productcategory.ProductCatego
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
+import com.javinindia.citymallsbusiness.utility.CheckConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +45,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 03-10-2016.
  */
-public class AddSubCatFragment extends BaseFragment implements View.OnClickListener {
+public class AddSubCatFragment extends BaseFragment implements View.OnClickListener,CheckConnectionFragment.OnCallBackInternetListener {
     private RequestQueue requestQueue;
     AppCompatTextView txtSelectCategory, txtSelectSubCat, txtSelectBrand;
     AppCompatButton btnSubmit;
@@ -63,6 +64,11 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
     String BrandID;
 
     private OnCallBackCAtegoryListener callbackCat;
+
+    @Override
+    public void OnCallBackInternet() {
+        activity.onBackPressed();
+    }
 
     public interface OnCallBackCAtegoryListener {
         void onCallBackCat();
@@ -175,26 +181,38 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                 }
                 break;
             case R.id.btnSubmit:
-                if (!txtSelectCategory.getText().equals("Category")) {
-                    if (!txtSelectSubCat.getText().equals("Subcategory")) {
-                        if (!txtSelectBrand.getText().equals("Brands") && !etBrand.getText().toString().equals("")) {
-                            Toast.makeText(activity, "Please either select brand or type brand.", Toast.LENGTH_LONG).show();
-                        } else if (!txtSelectBrand.getText().equals("Brands") && etBrand.getText().toString().equals("")) {
-                            methodSubmit();
-                        } else if (txtSelectBrand.getText().equals("Brands") && !etBrand.getText().toString().equals("")) {
-                            methodSubmit();
+                if (CheckConnection.haveNetworkConnection(activity)) {
+                    if (!txtSelectCategory.getText().equals("Category")) {
+                        if (!txtSelectSubCat.getText().equals("Subcategory")) {
+                            if (!txtSelectBrand.getText().equals("Brands") && !etBrand.getText().toString().equals("")) {
+                                Toast.makeText(activity, "Please either select brand or type brand.", Toast.LENGTH_LONG).show();
+                            } else if (!txtSelectBrand.getText().equals("Brands") && etBrand.getText().toString().equals("")) {
+                                methodSubmit();
+                            } else if (txtSelectBrand.getText().equals("Brands") && !etBrand.getText().toString().equals("")) {
+                                methodSubmit();
+                            } else {
+                                Toast.makeText(activity, "Select Brand or write brand please", Toast.LENGTH_LONG).show();
+                            }
                         } else {
-                            Toast.makeText(activity, "Select Brand or write brand please", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "Select Subcategory first", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(activity, "Select Subcategory first", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Select category first", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Select category first", Toast.LENGTH_LONG).show();
+                    methodCallCheckInternet();
                 }
+
                 break;
 
         }
+    }
+
+
+    public void methodCallCheckInternet() {
+        CheckConnectionFragment fragment = new CheckConnectionFragment();
+        fragment.setMyCallBackInternetListener(this);
+        callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
     }
 
     private void methodBrands() {

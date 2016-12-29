@@ -45,6 +45,7 @@ import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.picasso.CircleTransform;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
 import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
+import com.javinindia.citymallsbusiness.utility.CheckConnection;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 09-09-2016.
  */
-public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener,AddSubCatFragment.OnCallBackCAtegoryListener {
+public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, AboutAdaptar.MyClickListener, AddNewOfferFragment.OnCallBackAddOfferListener, EditProfileFragment.OnCallBackEditProfileListener, UpdateOfferFragment.OnCallBackUpdateOfferListener, AllOffersFragment.OnCallBackRefreshListener, AddSubCatFragment.OnCallBackCAtegoryListener, CheckConnectionFragment.OnCallBackInternetListener {
     private RecyclerView recyclerview;
     private AboutAdaptar adapter;
     private RequestQueue requestQueue;
@@ -127,42 +128,45 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
     private void displayView(CharSequence title) {
-        if (title.equals("Home")) {
-            drawerLayout.closeDrawers();
-            Intent refresh = new Intent(activity, LoginActivity.class);
-            startActivity(refresh);
-            activity.finish();
-        } else if (title.equals("Add Category")) {
-            drawerLayout.closeDrawers();
-            AddSubCatFragment categoryFragment = new AddSubCatFragment();
-            categoryFragment.setMyCallBackCategoryListener(this);
-            callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.container);
-        } else if (title.equals("Add Offer")) {
-            drawerLayout.closeDrawers();
-            AddNewOfferFragment fragment = new AddNewOfferFragment();
-            fragment.setMyCallBackOfferListener(this);
-            callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
-        } else if (title.equals("Category List")) {
-            drawerLayout.closeDrawers();
-            ListShopProductCategoryFragment fragment = new ListShopProductCategoryFragment();
-            callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
-        } else if (title.equals("About App")) {
-            drawerLayout.closeDrawers();
-            AboutAppFragments fragment = new AboutAppFragments();
-            callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
-        } else if (title.equals("Rate us")) {
-            drawerLayout.closeDrawers();
-            final String appPackageName = activity.getPackageName(); // getPackageName() from Context or Activity object
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-            } catch (android.content.ActivityNotFoundException anfe) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        if (CheckConnection.haveNetworkConnection(activity)) {
+            if (title.equals("Home")) {
+                drawerLayout.closeDrawers();
+                Intent refresh = new Intent(activity, LoginActivity.class);
+                startActivity(refresh);
+                activity.finish();
+            } else if (title.equals("Add Category")) {
+                drawerLayout.closeDrawers();
+                AddSubCatFragment categoryFragment = new AddSubCatFragment();
+                categoryFragment.setMyCallBackCategoryListener(this);
+                callFragmentMethod(categoryFragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Add Offer")) {
+                drawerLayout.closeDrawers();
+                AddNewOfferFragment fragment = new AddNewOfferFragment();
+                fragment.setMyCallBackOfferListener(this);
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Category List")) {
+                drawerLayout.closeDrawers();
+                ListShopProductCategoryFragment fragment = new ListShopProductCategoryFragment();
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("About App")) {
+                drawerLayout.closeDrawers();
+                AboutAppFragments fragment = new AboutAppFragments();
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Rate us")) {
+                drawerLayout.closeDrawers();
+                final String appPackageName = activity.getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            } else if (title.equals("Logout")) {
+                drawerLayout.closeDrawers();
+                dialogBox();
             }
-        } else if (title.equals("Logout")) {
-            drawerLayout.closeDrawers();
-            dialogBox();
+        } else {
+            methodCallCheckInternet();
         }
-
     }
 
     public void dialogBox() {
@@ -362,11 +366,11 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                                     }
                                 }
                             } else {
-                              //  Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
+                                //  Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
                             }
 
                         } else {
-                           // Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
+                            // Toast.makeText(activity, "No offers", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -421,25 +425,43 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnAddOffer:
-                AddNewOfferFragment fragment = new AddNewOfferFragment();
-                fragment.setMyCallBackOfferListener(this);
-                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+                if (CheckConnection.haveNetworkConnection(activity)) {
+                    AddNewOfferFragment fragment = new AddNewOfferFragment();
+                    fragment.setMyCallBackOfferListener(this);
+                    callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+                } else {
+                    methodCallCheckInternet();
+                }
                 break;
         }
     }
 
+    public void methodCallCheckInternet() {
+        CheckConnectionFragment fragment = new CheckConnectionFragment();
+        fragment.setMyCallBackInternetListener(this);
+        callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+    }
+
     @Override
     public void onEditClick(int position) {
-        EditProfileFragment fragment1 = new EditProfileFragment();
-        fragment1.setMyCallBackOfferListener(this);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+        if (CheckConnection.haveNetworkConnection(activity)) {
+            EditProfileFragment fragment1 = new EditProfileFragment();
+            fragment1.setMyCallBackOfferListener(this);
+            callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+        } else {
+            methodCallCheckInternet();
+        }
     }
 
     @Override
     public void onAllOffers(int position) {
-        AllOffersFragment fragment1 = new AllOffersFragment();
-        fragment1.setMyCallBackRefreshListener(this);
-        callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+        if (CheckConnection.haveNetworkConnection(activity)) {
+            AllOffersFragment fragment1 = new AllOffersFragment();
+            fragment1.setMyCallBackRefreshListener(this);
+            callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+        } else {
+            methodCallCheckInternet();
+        }
     }
 
     @Override
@@ -573,16 +595,20 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onViewClick(int position, DetailsList detailsList) {
-        String offerId = detailsList.getOfferDetails().getOfferId().trim();
-        String numView = detailsList.getOfferViewCount().toString().trim();
-        if (!TextUtils.isEmpty(numView) && !numView.equals("0")) {
-            AllViewUserFragment fragment1 = new AllViewUserFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("offerId", offerId);
-            fragment1.setArguments(bundle);
-            callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+        if (CheckConnection.haveNetworkConnection(activity)) {
+            String offerId = detailsList.getOfferDetails().getOfferId().trim();
+            String numView = detailsList.getOfferViewCount().toString().trim();
+            if (!TextUtils.isEmpty(numView) && !numView.equals("0")) {
+                AllViewUserFragment fragment1 = new AllViewUserFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("offerId", offerId);
+                fragment1.setArguments(bundle);
+                callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+            } else {
+                Toast.makeText(activity, "No views now", Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(activity, "No views now", Toast.LENGTH_LONG).show();
+            methodCallCheckInternet();
         }
     }
 
@@ -612,5 +638,12 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     @Override
     public void onCallBackCat() {
 
+    }
+
+    @Override
+    public void OnCallBackInternet() {
+        Intent refresh = new Intent(activity, LoginActivity.class);
+        startActivity(refresh);//Start the same Activity
+        activity.finish();
     }
 }

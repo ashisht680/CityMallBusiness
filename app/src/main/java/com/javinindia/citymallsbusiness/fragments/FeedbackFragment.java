@@ -28,6 +28,7 @@ import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapBoldSingleTonClass;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
+import com.javinindia.citymallsbusiness.utility.CheckConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +40,7 @@ import java.util.Map;
  * Created by Ashish on 14-12-2016.
  */
 
-public class FeedbackFragment extends BaseFragment {
+public class FeedbackFragment extends BaseFragment implements CheckConnectionFragment.OnCallBackInternetListener {
     AppCompatEditText etFeedback;
     AppCompatButton btnFeedback;
     private RequestQueue requestQueue;
@@ -54,7 +55,7 @@ public class FeedbackFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null){
+        if (menu != null) {
             menu.findItem(R.id.action_changePass).setVisible(false);
             menu.findItem(R.id.action_feedback).setVisible(false);
         }
@@ -66,28 +67,39 @@ public class FeedbackFragment extends BaseFragment {
         View view = inflater.inflate(getFragmentLayout(), container, false);
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initToolbar(view);
-        AppCompatTextView txtFeedback,txtTitle,txtPoints;
-        txtFeedback = (AppCompatTextView)view.findViewById(R.id.txtFeedback);
+        AppCompatTextView txtFeedback, txtTitle, txtPoints;
+        txtFeedback = (AppCompatTextView) view.findViewById(R.id.txtFeedback);
         txtFeedback.setTypeface(FontAsapBoldSingleTonClass.getInstance(activity).getTypeFace());
-        txtTitle = (AppCompatTextView)view.findViewById(R.id.txtTitle);
+        txtTitle = (AppCompatTextView) view.findViewById(R.id.txtTitle);
         txtTitle.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        etFeedback = (AppCompatEditText)view.findViewById(R.id.etFeedback);
+        etFeedback = (AppCompatEditText) view.findViewById(R.id.etFeedback);
         etFeedback.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        btnFeedback = (AppCompatButton)view.findViewById(R.id.btnFeedback);
+        btnFeedback = (AppCompatButton) view.findViewById(R.id.btnFeedback);
         btnFeedback.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
 
         btnFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!etFeedback.getText().toString().trim().equals("")){
-                    String feed = etFeedback.getText().toString().trim();
-                    methodHit(feed);
-                }else {
-                    Toast.makeText(activity,"You are not entered Feedback",Toast.LENGTH_LONG).show();
+                if (!etFeedback.getText().toString().trim().equals("")) {
+                    if (CheckConnection.haveNetworkConnection(activity)) {
+                        String feed = etFeedback.getText().toString().trim();
+                        methodHit(feed);
+                    } else {
+                        methodCallCheckInternet();
+                    }
+
+                } else {
+                    Toast.makeText(activity, "You are not entered Feedback", Toast.LENGTH_LONG).show();
                 }
             }
         });
         return view;
+    }
+
+    public void methodCallCheckInternet() {
+        CheckConnectionFragment fragment = new CheckConnectionFragment();
+        fragment.setMyCallBackInternetListener(this);
+        callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
     }
 
     private void methodHit(final String feed) {
@@ -134,8 +146,8 @@ public class FeedbackFragment extends BaseFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (status==1) {
-           Toast.makeText(activity,"Congrats! Your feedback has been successfully submitted. We'll get back to you shortly!",Toast.LENGTH_LONG).show();
+        if (status == 1) {
+            Toast.makeText(activity, "Congrats! Your feedback has been successfully submitted. We'll get back to you shortly!", Toast.LENGTH_LONG).show();
             activity.onBackPressed();
         } else {
             if (!TextUtils.isEmpty(msg)) {
@@ -175,5 +187,10 @@ public class FeedbackFragment extends BaseFragment {
     @Override
     public void onNetworkConnected() {
 
+    }
+
+    @Override
+    public void OnCallBackInternet() {
+        activity.onBackPressed();
     }
 }

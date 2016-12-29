@@ -18,6 +18,7 @@ import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.activity.LoginActivity;
 import com.javinindia.citymallsbusiness.font.FontAsapBoldSingleTonClass;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
+import com.javinindia.citymallsbusiness.utility.CheckConnection;
 
 /**
  * Created by Ashish on 16-12-2016.
@@ -25,48 +26,39 @@ import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 
 public class CheckConnectionFragment extends BaseFragment {
 
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
+    private OnCallBackInternetListener backInternetListener;
 
-        ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
 
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
+    public interface OnCallBackInternetListener {
+        void OnCallBackInternet();
     }
+
+    public void setMyCallBackInternetListener(OnCallBackInternetListener callback) {
+        this.backInternetListener = callback;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        AppCompatTextView txtAppName,txtNoInt,txtGotIt;
-        txtAppName = (AppCompatTextView)view.findViewById(R.id.txtAppName);
+        AppCompatTextView txtAppName, txtNoInt, txtGotIt;
+        txtAppName = (AppCompatTextView) view.findViewById(R.id.txtAppName);
         txtAppName.setTypeface(FontAsapBoldSingleTonClass.getInstance(activity).getTypeFace());
-        txtNoInt = (AppCompatTextView)view.findViewById(R.id.txtNoInt);
+        txtNoInt = (AppCompatTextView) view.findViewById(R.id.txtNoInt);
         txtNoInt.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        txtGotIt = (AppCompatTextView)view.findViewById(R.id.txtGotIt);
+        txtGotIt = (AppCompatTextView) view.findViewById(R.id.txtGotIt);
         txtGotIt.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtGotIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (haveNetworkConnection()) {
-                    Intent refresh = new Intent(activity, LoginActivity.class);
-                    startActivity(refresh);//Start the same Activity
-                    activity.finish();
-
+                if (CheckConnection.haveNetworkConnection(activity)) {
+                    backInternetListener.OnCallBackInternet();
                 } else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
                     alertDialogBuilder.setTitle("No Internet Connection");
                     alertDialogBuilder.setMessage("You are offline please check your internet connection");
-                    alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setPositiveButton("got it!", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                         }
@@ -80,6 +72,7 @@ public class CheckConnectionFragment extends BaseFragment {
         });
         return view;
     }
+
     @Override
     protected int getFragmentLayout() {
         return R.layout.internet_check_layout;

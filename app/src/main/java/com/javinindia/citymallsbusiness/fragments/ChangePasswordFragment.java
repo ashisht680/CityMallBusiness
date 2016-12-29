@@ -29,6 +29,7 @@ import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.constant.Constants;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
 import com.javinindia.citymallsbusiness.preference.SharedPreferencesManager;
+import com.javinindia.citymallsbusiness.utility.CheckConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +40,7 @@ import java.util.Map;
 /**
  * Created by Ashish on 16-11-2016.
  */
-public class ChangePasswordFragment extends BaseFragment implements View.OnClickListener {
+public class ChangePasswordFragment extends BaseFragment implements View.OnClickListener,CheckConnectionFragment.OnCallBackInternetListener {
 
     private AppCompatEditText et_old_password, et_new_password;
     private RequestQueue requestQueue;
@@ -142,7 +143,14 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
                         et_new_password.setError("Enter your new password");
                         et_new_password.requestFocus();
                     } else {
-                        sendDataOnForgetPasswordApi(oldPass, newPass);
+                        if (CheckConnection.haveNetworkConnection(activity)) {
+                            sendDataOnForgetPasswordApi(oldPass, newPass);
+                        } else {
+                            CheckConnectionFragment fragment = new CheckConnectionFragment();
+                            fragment.setMyCallBackInternetListener(this);
+                            callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+                        }
+
                     }
                 }
 
@@ -225,4 +233,8 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
             menu.clear();
     }
 
+    @Override
+    public void OnCallBackInternet() {
+        activity.onBackPressed();
+    }
 }
