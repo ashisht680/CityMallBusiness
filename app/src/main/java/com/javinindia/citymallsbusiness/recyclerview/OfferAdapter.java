@@ -60,19 +60,19 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
 
         if (!TextUtils.isEmpty(requestDetail.getOfferBrandDetails().getBrandName().trim())) {
             String brandName = requestDetail.getOfferBrandDetails().getBrandName().trim();
-            viewHolder.txtShopName.setText(Html.fromHtml(brandName));
+            viewHolder.txtShopName.setText(Utility.fromHtml(brandName));
         }
         if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferSubcategory().trim())) {
             String subCategory = requestDetail.getOfferDetails().getOfferSubcategory().trim();
-            viewHolder.txtSubCategoryItem.setText(Html.fromHtml(subCategory));
+            viewHolder.txtSubCategoryItem.setText(Utility.fromHtml(subCategory));
         }
         if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferTitle().trim())) {
             String offerTitle = requestDetail.getOfferDetails().getOfferTitle().trim();
-            viewHolder.txtOfferTitle.setText(Html.fromHtml(offerTitle));
+            viewHolder.txtOfferTitle.setText(Utility.fromHtml(offerTitle));
         }
         if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferCategory().trim())) {
             String category = requestDetail.getOfferDetails().getOfferCategory().trim();
-            viewHolder.txtOfferCategoryItem.setText(Html.fromHtml("on " + category));
+            viewHolder.txtOfferCategoryItem.setText(Utility.fromHtml("on " + category));
         }
         if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferOpenDate().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferCloseDate().trim())) {
             String openTime = requestDetail.getOfferDetails().getOfferOpenDate().trim();
@@ -116,9 +116,9 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
             String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
             //  viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#1da6b9"));
-            viewHolder.txtActualPrice.setText(Html.fromHtml("\u20B9" + offerActualPrice + "/-"));
+            viewHolder.txtActualPrice.setText(Utility.fromHtml("\u20B9" + offerActualPrice + "/-"));
             viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            viewHolder.txtDiscountPrice.setText(Html.fromHtml("\u20B9" + offerDiscountPrice + "/-"));
+            viewHolder.txtDiscountPrice.setText(Utility.fromHtml("\u20B9" + offerDiscountPrice + "/-"));
         }
 
         if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferBanner().trim())) {

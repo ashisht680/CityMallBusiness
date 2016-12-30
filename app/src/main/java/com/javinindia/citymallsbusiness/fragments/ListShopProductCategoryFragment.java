@@ -111,7 +111,6 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
         textView.setText("Shop Categories");
-        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
@@ -148,7 +147,6 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("sdffdf",response);
                         loading.dismiss();
                         ShopCategoryListResponse wowListResponseParsing = new ShopCategoryListResponse();
                         wowListResponseParsing.responseParseMethod(response);
@@ -248,7 +246,6 @@ public class ListShopProductCategoryFragment extends BaseFragment  implements Sh
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("delete",response);
                         JSONObject jsonObject = null;
                         String status = null, userid = null, msg = null, username = null, phone = null, gender = null, email = null;
                         try {

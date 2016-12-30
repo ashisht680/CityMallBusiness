@@ -186,7 +186,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
         textView.setText("Update Offers");
-        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
@@ -214,36 +213,12 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
             btnEndTime.setText(offerCloseDate);
         if (!TextUtils.isEmpty(offerPercentType)) {
             txtChoosePercent.setText(offerPercentType);
-
-           /* checkboxPrise.setChecked(false);
-            checkboxPercent.setChecked(true);
-
-            etPercentage.setEnabled(true);
-            etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-            etActualPrice.setEnabled(false);
-            etActualPrice.setBackgroundColor(Color.GRAY);
-
-            etDiscountPrice.setEnabled(false);
-            etDiscountPrice.setBackgroundColor(Color.GRAY);*/
         }
         if (!TextUtils.isEmpty(offerPercentage))
             etPercentage.setText(offerPercentage);
 
         if (!TextUtils.isEmpty(offerActualPrice)) {
             etActualPrice.setText(offerActualPrice);
-
-           /* checkboxPercent.setChecked(false);
-            checkboxPrise.setChecked(true);
-
-            etPercentage.setEnabled(false);
-            etPercentage.setBackgroundColor(Color.GRAY);
-
-            etActualPrice.setEnabled(true);
-            etActualPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-            etDiscountPrice.setEnabled(true);
-            etDiscountPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);*/
         }
         if (!TextUtils.isEmpty(offerDiscountPr))
             etDiscountPrice.setText(offerDiscountPr);
@@ -260,8 +235,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
     private void initialize(View view) {
         imgOfferPicNotFound = (ImageView)view.findViewById(R.id.imgOfferPicNotFound);
         mImageView = (ImageView) view.findViewById(R.id.ivImage);
-     //   checkboxPercent = (CheckBox) view.findViewById(R.id.checkboxPercent);
-    //    checkboxPrise = (CheckBox) view.findViewById(R.id.checkboxPrise);
         txtAdditional = (AppCompatTextView) view.findViewById(R.id.txtAdditional);
         txtAdditional.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtEnterPercentTitle = (AppCompatTextView) view.findViewById(R.id.txtEnterPercentTitle);
@@ -274,8 +247,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
         txtTitle.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtTitleDisc = (AppCompatTextView) view.findViewById(R.id.txtTitleDisc);
         txtTitleDisc.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        //horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.scroll1);
-        //  lnrImages = (LinearLayout) view.findViewById(R.id.lnrImages);
         txtChooseCategory = (AppCompatTextView) view.findViewById(R.id.txtChooseCategory);
         txtChooseCategory.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtChooseSubCategory = (AppCompatTextView) view.findViewById(R.id.txtChooseSubCategory);
@@ -306,14 +277,8 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
         btnStartTime.setOnClickListener(this);
         btnEndTime.setOnClickListener(this);
         txtAddProductImages.setOnClickListener(this);
-        //  txtChooseCategory.setOnClickListener(this);
-        //  txtChooseSubCategory.setOnClickListener(this);
-        //  txtChooseBrand.setOnClickListener(this);
         txtChoosePercent.setOnClickListener(this);
-      //  checkboxPercent.setOnClickListener(this);
-      //  checkboxPrise.setOnClickListener(this);
         mImageView.setOnClickListener(this);
-
     }
 
     @Override
@@ -334,70 +299,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-           /* case R.id.checkboxPercent:
-                if (checkboxPercent.isChecked()) {
-                    checkboxPrise.setChecked(false);
-                    checkboxPercent.setChecked(true);
-
-                    etPercentage.setEnabled(true);
-                    etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etActualPrice.setEnabled(false);
-                    etActualPrice.setBackgroundColor(Color.GRAY);
-                    etActualPrice.setText("");
-
-                    etDiscountPrice.setEnabled(false);
-                    etDiscountPrice.setBackgroundColor(Color.GRAY);
-                    etDiscountPrice.setText("");
-                } else {
-                    checkboxPercent.setChecked(false);
-                    checkboxPrise.setChecked(true);
-
-                    etPercentage.setEnabled(false);
-                    etPercentage.setBackgroundColor(Color.GRAY);
-                    etPercentage.setText("");
-
-                    etActualPrice.setEnabled(true);
-                    etActualPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etDiscountPrice.setEnabled(true);
-                    etDiscountPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-
-                }
-                break;
-            case R.id.checkboxPrise:
-                if (checkboxPrise.isChecked()) {
-                    checkboxPercent.setChecked(false);
-                    checkboxPrise.setChecked(true);
-
-                    etPercentage.setEnabled(false);
-                    etPercentage.setBackgroundColor(Color.GRAY);
-                    etPercentage.setText("");
-
-                    etActualPrice.setEnabled(true);
-                    etActualPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etDiscountPrice.setEnabled(true);
-                    etDiscountPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    txtChoosePercent.setText("Select Percentage Type");
-                } else {
-                    checkboxPrise.setChecked(false);
-                    checkboxPercent.setChecked(true);
-
-                    etPercentage.setEnabled(true);
-                    etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etActualPrice.setEnabled(false);
-                    etActualPrice.setBackgroundColor(Color.GRAY);
-                    etActualPrice.setText("");
-
-                    etDiscountPrice.setEnabled(false);
-                    etDiscountPrice.setBackgroundColor(Color.GRAY);
-                    etDiscountPrice.setText("");
-                }
-                break;*/
             case R.id.btnSubmitOffer:
                 methodSubmit();
                 break;
@@ -431,11 +332,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                 }
                 break;
             case R.id.txtChoosePercent:
-               // if (checkboxPercent.isChecked()) {
                     persentType();
-               /* } else {
-                    Toast.makeText(activity, "Check Enter Percentage(%) first", Toast.LENGTH_LONG).show();
-                }*/
                 break;
             case R.id.ivImage:
                // photo = null;
@@ -510,8 +407,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.e("add response", response);
                         loading.dismiss();
                         JSONObject jsonObject = null;
                         String status = null, userId = null, socialId = null, msg = null;
@@ -606,8 +501,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        //  progressDialog.dismiss();
-                        Log.e("MasterTags", response);
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
                         for (int i = 0; i < cityMasterParsing.getBrandDetailArrayList().size(); i++) {
@@ -626,10 +519,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                                         // Do something with the selection
                                         txtChooseBrand.setText(brandArray[item]);
                                         int index = Arrays.asList(brandArray).indexOf(brandArray[item]);
-                                        ;
-                                        brandId = cityMasterParsing.getBrandDetailArrayList().get(index).getId();
-                                        // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                        Log.e("brandId", brandId + "\t" + index);
+                                        brandId = cityMasterParsing.getBrandDetailArrayList().get(index).getId().trim();
                                         dialog.dismiss();
                                     }
                                 });
@@ -678,7 +568,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("MasterTags", response);
                         final OfferCategoryresponse countryMasterApiParsing = new OfferCategoryresponse();
                         countryMasterApiParsing.responseImplement(response);
                         if (countryMasterApiParsing.getSetShopCategoryDetailsArrayList().size() > 0) {
@@ -700,10 +589,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                                             txtChooseSubCategory.setText("Choose subcategory");
                                             txtChooseBrand.setText("Choose Brand");
                                             int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
-                                            ;
-                                            catId = countryMasterApiParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
-                                            // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                            Log.e("catId", catId + "\t" + index);
+                                            catId = countryMasterApiParsing.getSetShopCategoryDetailsArrayList().get(index).getId().trim();
                                             dialog.dismiss();
                                         }
                                     });
@@ -753,7 +639,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("MasterTags", response);
                         final OfferCategoryresponse cityMasterParsing = new OfferCategoryresponse();
                         cityMasterParsing.responseImplement(response);
                         for (int i = 0; i < cityMasterParsing.getSetShopCategoryDetailsArrayList().size(); i++) {
@@ -771,8 +656,7 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
                                     public void onClick(DialogInterface dialog, int item) {
                                         txtChooseSubCategory.setText(suCatArray[item]);
                                         int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
-                                        subCatId = cityMasterParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
-                                        Log.e("subCatId", subCatId + "\t" + index);
+                                        subCatId = cityMasterParsing.getSetShopCategoryDetailsArrayList().get(index).getId().trim();
                                         dialog.dismiss();
                                     }
                                 });
@@ -838,29 +722,6 @@ public class UpdateOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void methodAddImages() {
         dialog.show();
-      /*  final CharSequence[] options = {"Take from camera", "Select from gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take from camera")) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-                } else if (options[item].equals("Select from gallery")) {
-                    Intent intent = new Intent();
-                    intent.setType("image*//*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);//
-                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                  *//*  Intent intent = new Intent(activity, CustomPhotoGalleryActivity.class);
-                    startActivityForResult(intent, 2);*//*
-
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();*/
     }
 
     private void captureImageInitialization() {

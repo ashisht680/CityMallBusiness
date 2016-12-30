@@ -56,7 +56,7 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
 
         if (!TextUtils.isEmpty(requestDetail.getName().trim())) {
             String Name = requestDetail.getName().trim();
-            viewHolder.txtName.setText(Html.fromHtml(Name));
+            viewHolder.txtName.setText(Utility.fromHtml(Name));
         }
         if (!TextUtils.isEmpty(requestDetail.getDate().trim())) {
             String date = requestDetail.getDate().trim();

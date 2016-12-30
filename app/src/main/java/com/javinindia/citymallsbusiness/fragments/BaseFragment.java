@@ -132,34 +132,31 @@ public abstract class BaseFragment extends Fragment implements Response.Listener
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    /**
+ /*  *//* *
      * Gets a reference to the global progressbar, which is part of the view
      * for fragment activity
      *
-     * @return ProgressBar
-     */
-  /*  private ProgressBar findLoader() {
+     * @return ProgressBar*//*
+    private ProgressBar findLoader() {
         if (activity != null) {
-            return (ProgressBar) activity.findViewById(R.id.loadProgress);
+            return (ProgressBar) activity.findViewById(R.id.progress);
         } else {
             return null;
         }
-    }*/
+    }
 
-    /**
-     * Makes global progressbar visible
-     */
-   /* public void showLoader() {
+   *//* *
+     * Makes global progressbar visible*//*
+    public void showLoader() {
         ProgressBar progressBar = findLoader();
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
-    }*/
+    }
 
-    /**
-     * Hides global progressbar by setting its visibility to GONE
-     */
-    /*public void hideLoader() {
+*//*    *
+     * Hides global progressbar by setting its visibility to GONE*//*
+    public void hideLoader() {
         ProgressBar progressBar = findLoader();
         if (progressBar != null) {
             findLoader().setVisibility(View.GONE);

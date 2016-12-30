@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.activity.LoginActivity;
@@ -25,6 +26,7 @@ import com.javinindia.citymallsbusiness.utility.CheckConnection;
  */
 
 public class CheckConnectionFragment extends BaseFragment {
+    ProgressBar progressBar;
 
     private OnCallBackInternetListener backInternetListener;
 
@@ -37,11 +39,17 @@ public class CheckConnectionFragment extends BaseFragment {
         this.backInternetListener = callback;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        disableTouchOfBackFragment(savedInstanceState);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        progressBar = (ProgressBar)view.findViewById(R.id.progress);
         AppCompatTextView txtAppName, txtNoInt, txtGotIt;
         txtAppName = (AppCompatTextView) view.findViewById(R.id.txtAppName);
         txtAppName.setTypeface(FontAsapBoldSingleTonClass.getInstance(activity).getTypeFace());

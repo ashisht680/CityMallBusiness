@@ -106,23 +106,22 @@ public class OfferPostFragment extends BaseFragment implements View.OnClickListe
         }else {
             textView.setText("Offer");
         }
-        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
     private void setDataOnView() {
         if (!TextUtils.isEmpty(brandName))
-            txtOfferBrandNamePost.setText(Html.fromHtml(brandName));
+            txtOfferBrandNamePost.setText(Utility.fromHtml(brandName));
 
         if (!TextUtils.isEmpty(offerRating))
             txtRating.setText("Rating:" + offerRating + "/5");
         ratingBar.setRating(Float.valueOf(offerRating));
 
         if (!TextUtils.isEmpty(mallName))
-            txtMallNamePost.setText(Html.fromHtml(mallName + ",\n" + shopName));
+            txtMallNamePost.setText(Utility.fromHtml(mallName + ",\n" + shopName));
 
         if (!TextUtils.isEmpty(offerTitle))
-            txtOfferTitle.setText(Html.fromHtml(offerTitle));
+            txtOfferTitle.setText(Utility.fromHtml(offerTitle));
 
         if (!TextUtils.isEmpty(offerPercentType) && !TextUtils.isEmpty(offerPercentage)) {
             txtOfferPercentage.setText(offerPercentType + " " + offerPercentage + "% off");
@@ -143,14 +142,14 @@ public class OfferPostFragment extends BaseFragment implements View.OnClickListe
         }
 
         if (!TextUtils.isEmpty(offerActualPrice) && !TextUtils.isEmpty(offerDiscountPr)) {
-            txtOfferActualPrice.setText(Html.fromHtml("\u20B9" + offerActualPrice + "/-"));
+            txtOfferActualPrice.setText(Utility.fromHtml("\u20B9" + offerActualPrice + "/-"));
             txtOfferActualPrice.setPaintFlags(txtOfferActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            txtOfferDiscountPrice.setText(Html.fromHtml("\u20B9" + offerDiscountPr + "/-"));
+            txtOfferDiscountPrice.setText(Utility.fromHtml("\u20B9" + offerDiscountPr + "/-"));
         }
 
 
         if (!TextUtils.isEmpty(offerCategory))
-            txtSubcategory.setText(Html.fromHtml("on " + offerCategory + "(" + offerSubCategory + ")"));
+            txtSubcategory.setText(Utility.fromHtml("on " + offerCategory + "(" + offerSubCategory + ")"));
 
         if (!TextUtils.isEmpty(offerStartDate) && !TextUtils.isEmpty(offerCloseDate))
             txtOfferDate.setText(offerStartDate + " till " + offerCloseDate);
@@ -159,7 +158,7 @@ public class OfferPostFragment extends BaseFragment implements View.OnClickListe
             txtShopTiming.setText(shopOpenTime + " to " + shopCloseTime);
 
         if (!TextUtils.isEmpty(offerDescription))
-            txtOfferDiscription.setText(Html.fromHtml("Description: " + offerDescription));
+            txtOfferDiscription.setText(Utility.fromHtml("Description: " + offerDescription));
 
         if (!TextUtils.isEmpty(offerPic)) {
             Utility.imageLoadGlideLibrary(activity, progressBar, imgOffer, offerPic);

@@ -170,7 +170,6 @@ public class FeedbackFragment extends BaseFragment implements CheckConnectionFra
         actionBar.setTitle(null);
         AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
         textView.setText("Feedback");
-        textView.setTextColor(Color.parseColor("#ffffff"));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 

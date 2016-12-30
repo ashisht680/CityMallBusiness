@@ -29,10 +29,8 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, "Message data payload: " + remoteMessage.getData().toString());
             String profile = remoteMessage.getData().get("profile");
             String banner = remoteMessage.getData().get("banner");
             String message = remoteMessage.getData().get("message");
@@ -42,12 +40,10 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
             sendNotification(profile, banner, message, title, body, num);
         } else {
             remoteMessage.getNotification().getTitle();
-            Log.e(TAG, "Message Notification AShish: " + remoteMessage.getNotification().getBody());
             createNotification(remoteMessage.getNotification().getBody());
         }
 
         if (remoteMessage.getNotification() != null) {
-            Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
     }
@@ -118,10 +114,8 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
     public int getNotiSmallIcon() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.notification_logo);
             return R.mipmap.logo;
         } else {
-            // Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.notification_logo);
             return R.mipmap.logo;
         }
     }

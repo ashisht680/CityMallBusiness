@@ -117,7 +117,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
         actionBar.setTitle(null);
         AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
         textView.setText("Add category");
-        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
@@ -341,7 +340,6 @@ public class AddSubCatFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("MasterTags", response);
                         JSONObject jsonObject = null;
                         String status = null, userId = null, socialId = null, msg = null;
                         try {

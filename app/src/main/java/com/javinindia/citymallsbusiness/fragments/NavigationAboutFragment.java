@@ -78,7 +78,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initToolbar(view);
         setupDrawerLayout(view);
-        Log.e("id", SharedPreferencesManager.getUserID(activity));
         initialize(view);
         sendDataOnRegistrationApi();
         return view;
@@ -187,6 +186,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                         SharedPreferencesManager.setLongitude(activity, null);
                         SharedPreferencesManager.setProfileImage(activity, null);
                         SharedPreferencesManager.setOwnerName(activity, null);
+                        SharedPreferencesManager.setDeviceToken(activity,null);
                         Intent refresh = new Intent(activity, LoginActivity.class);
                         startActivity(refresh);//Start the same Activity
                         activity.finish();
@@ -240,7 +240,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("response", response);
                         String status = null, sID = null, msg = null, sPic = null, banner;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance, shopfavCount, sFloor, sNo;
@@ -350,7 +349,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                     public void onResponse(String response) {
                         OfferListResponseparsing responseparsing = new OfferListResponseparsing();
                         responseparsing.responseParseMethod(response);
-                        Log.e("request", response);
                         String status = responseparsing.getStatus().trim();
                         if (status.equals("true")) {
                             if (responseparsing.getDetailsListArrayList().size() > 0) {

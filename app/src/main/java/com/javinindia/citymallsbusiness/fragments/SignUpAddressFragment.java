@@ -427,8 +427,6 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.e("response", response);
                         String status = null, sID = null, msg = null, sPic = null;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         loading.dismiss();
@@ -448,18 +446,14 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
                             sLandline = loginSignupResponseParsing.getLandline();
                             sState = loginSignupResponseParsing.getState();
                             sCity = loginSignupResponseParsing.getCity();
-                            //   sAddress = loginSignupResponseParsing.getAddress();
                             mName = loginSignupResponseParsing.getMallName();
                             mAddress = loginSignupResponseParsing.getMallAddress();
                             mLat = loginSignupResponseParsing.getMallLat();
                             mLong = loginSignupResponseParsing.getMallLong();
-                            Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong);
                             saveDataOnPreference(sEmail, sName, mLat, mLong, sID, sPic,oName);
                             Intent refresh = new Intent(activity, LoginActivity.class);
                             startActivity(refresh);//Start the same Activity
                             activity.finish();
-                           /* fragment = new OffersFragment();
-                            callFragmentMethodDead(fragment, this.getClass().getSimpleName());*/
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod("Sorry, this email account already exists. Please enter a different email id.");

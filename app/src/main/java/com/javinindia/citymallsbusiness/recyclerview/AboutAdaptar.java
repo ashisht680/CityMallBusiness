@@ -191,19 +191,19 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
 
             if (!TextUtils.isEmpty(requestDetail.getOfferBrandDetails().getBrandName().trim())) {
                 String brandName = requestDetail.getOfferBrandDetails().getBrandName().trim();
-                viewHolder.txtShopName.setText(Html.fromHtml(brandName));
+                viewHolder.txtShopName.setText(Utility.fromHtml(brandName));
             }
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferSubcategory().trim())) {
                 String subCategory = requestDetail.getOfferDetails().getOfferSubcategory().trim();
-                viewHolder.txtSubCategoryItem.setText(Html.fromHtml(subCategory));
+                viewHolder.txtSubCategoryItem.setText(Utility.fromHtml(subCategory));
             }
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferTitle().trim())) {
                 String offerTitle = requestDetail.getOfferDetails().getOfferTitle().trim();
-                viewHolder.txtOfferTitle.setText(Html.fromHtml(offerTitle));
+                viewHolder.txtOfferTitle.setText(Utility.fromHtml(offerTitle));
             }
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferCategory().trim())) {
                 String category = requestDetail.getOfferDetails().getOfferCategory().trim();
-                viewHolder.txtOfferCategoryItem.setText(Html.fromHtml("on " + category));
+                viewHolder.txtOfferCategoryItem.setText(Utility.fromHtml("on " + category));
             }
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferOpenDate().trim()) && !TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferCloseDate().trim())) {
                 String openTime = requestDetail.getOfferDetails().getOfferOpenDate().trim();
@@ -247,9 +247,9 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
                 String offerActualPrice = requestDetail.getOfferDetails().getOfferActualPrice().trim();
                 String offerDiscountPrice = requestDetail.getOfferDetails().getOfferDiscountedPrice().trim();
                 //  viewHolder.llOffItem.setBackgroundColor(Color.parseColor("#1da6b9"));
-                viewHolder.txtActualPrice.setText(Html.fromHtml("\u20B9" + offerActualPrice + "/-"));
+                viewHolder.txtActualPrice.setText(Utility.fromHtml("\u20B9" + offerActualPrice + "/-"));
                 viewHolder.txtActualPrice.setPaintFlags(viewHolder.txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                viewHolder.txtDiscountPrice.setText(Html.fromHtml("\u20B9" + offerDiscountPrice + "/-"));
+                viewHolder.txtDiscountPrice.setText(Utility.fromHtml("\u20B9" + offerDiscountPrice + "/-"));
             }
 
             if (!TextUtils.isEmpty(requestDetail.getOfferDetails().getOfferBanner().trim())) {
@@ -304,12 +304,12 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             }
             viewHolder.catRecyclerView.setAdapter(shopCategoryAdaptar);*/
             if (!TextUtils.isEmpty(sName)) {
-                viewHolder.txtShopNameHeader.setText(Html.fromHtml(sName));
+                viewHolder.txtShopNameHeader.setText(Utility.fromHtml(sName));
             } else {
                 viewHolder.txtShopNameHeader.setText("Shop name: Not found");
             }
             if (!TextUtils.isEmpty(openTime)) {
-                viewHolder.txtTimingHeader.setText((Html.fromHtml("<font color=#ffffff>" + openTime + " - " + closeTime + "</font>")));
+                viewHolder.txtTimingHeader.setText((Utility.fromHtml("<font color=#ffffff>" + openTime + " - " + closeTime + "</font>")));
             } else {
                 viewHolder.txtTimingHeader.setText("");
             }
@@ -333,7 +333,7 @@ public class AboutAdaptar extends RecyclerView.Adapter<AboutAdaptar.ViewHolder> 
             if (data.size() > 0) {
                 String str = Arrays.toString(data.toArray());
                 String test = str.replaceAll("[\\[\\](){}]", "");
-                viewHolder.txtLocationHeader.setText(Html.fromHtml(test));
+                viewHolder.txtLocationHeader.setText(Utility.fromHtml(test));
             } else {
                 viewHolder.txtLocationHeader.setText("Address: Not found");
             }

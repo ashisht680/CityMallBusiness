@@ -93,7 +93,6 @@ public class AllViewUserFragment extends BaseFragment implements AllUserAdapter.
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
         textView.setText("Viewers");
-        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 

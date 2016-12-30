@@ -159,7 +159,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("response", response);
                         String status = null, sID = null, msg = null, sPic = null;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, banner;
                         LoginSignupResponseParsing loginSignupResponseParsing = new LoginSignupResponseParsing();
@@ -184,14 +183,10 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                             mAddress = loginSignupResponseParsing.getMallAddress();
                             mLat = loginSignupResponseParsing.getMallLat();
                             mLong = loginSignupResponseParsing.getMallLong();
-                            Log.e("sign up detail", sName + "\t" + oName + "\t" + sEmail + "\t" + sMobileNum + "\t" + sLandline + "\t" + sState + "\t" + sCity + "\t" + sAddress + "\t" + mName + "\t" + mAddress + "\t" + mLat + "\t" + mLong + "\t" + sPic);
                             saveDataOnPreference(sEmail, sName, mLat, mLong, sID, banner, oName);
                             Intent refresh = new Intent(activity, LoginActivity.class);
                             startActivity(refresh);//Start the same Activity
                             activity.finish();
-                            Log.e("image", SharedPreferencesManager.getProfileImage(activity));
-                           /* fragment = new OffersFragment();
-                            callFragmentMethodDead(fragment, this.getClass().getSimpleName());*/
                         } else {
                             if (!TextUtils.isEmpty(msg)) {
                                 showDialogMethod("Invalid username/password.");

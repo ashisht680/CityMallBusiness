@@ -126,7 +126,6 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("forgot",response.toString());
                         responseImplement(response);
                     }
                 },

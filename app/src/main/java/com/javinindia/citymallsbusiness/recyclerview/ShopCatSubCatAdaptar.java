@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.javinindia.citymallsbusiness.R;
 import com.javinindia.citymallsbusiness.apiparsing.productcategory.ShopCategoryList;
 import com.javinindia.citymallsbusiness.font.FontAsapRegularSingleTonClass;
+import com.javinindia.citymallsbusiness.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +58,7 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
 
         if (!TextUtils.isEmpty(shopCategoryDetails.getShopCategory().trim())) {
             String shopCategory = shopCategoryDetails.getShopCategory().trim();
-            viewHolder.txtCategory.setText(Html.fromHtml(shopCategory));
+            viewHolder.txtCategory.setText(Utility.fromHtml(shopCategory));
         }
 
         if (shopCategoryDetails.getSubCatDetailArrayList().size() > 0) {
@@ -74,7 +75,7 @@ public class ShopCatSubCatAdaptar extends RecyclerView.Adapter<ShopCatSubCatAdap
                 String test = Arrays.toString(subBategoryArray);
                 String test1 = test.replaceAll("[\\[\\](){}]", "");
                 if (!TextUtils.isEmpty(test)) {
-                    viewHolder.txtSubCat.setText(Html.fromHtml(test1));
+                    viewHolder.txtSubCat.setText(Utility.fromHtml(test1));
                 }
             }
         }

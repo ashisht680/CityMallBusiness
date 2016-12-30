@@ -167,7 +167,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
         actionBar.setTitle(null);
         AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
         textView.setText("Add offer");
-        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
@@ -264,68 +263,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case R.id.checkboxPercent:
-                if (checkboxPercent.isChecked()) {
-                    checkboxPrise.setChecked(false);
-                    checkboxPercent.setChecked(true);
-
-                    etPercentage.setEnabled(true);
-                    etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etActualPrice.setEnabled(false);
-                    etActualPrice.setBackgroundColor(Color.GRAY);
-                    etActualPrice.setText("");
-
-                    etDiscountPrice.setEnabled(false);
-                    etDiscountPrice.setBackgroundColor(Color.GRAY);
-                    etDiscountPrice.setText("");
-                } else {
-                    checkboxPercent.setChecked(false);
-                    checkboxPrise.setChecked(true);
-
-                    etPercentage.setEnabled(false);
-                    etPercentage.setBackgroundColor(Color.GRAY);
-                    etPercentage.setText("");
-
-                    etActualPrice.setEnabled(true);
-                    etActualPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etDiscountPrice.setEnabled(true);
-                    etDiscountPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-
-                }
-                break;
-            case R.id.checkboxPrise:
-                if (checkboxPrise.isChecked()) {
-                    checkboxPercent.setChecked(false);
-                    checkboxPrise.setChecked(true);
-
-                    etPercentage.setEnabled(false);
-                    etPercentage.setBackgroundColor(Color.GRAY);
-                    etPercentage.setText("");
-
-                    etActualPrice.setEnabled(true);
-                    etActualPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etDiscountPrice.setEnabled(true);
-                    etDiscountPrice.setBackgroundResource(R.drawable.button_border_red_fill_white);
-                } else {
-                    checkboxPrise.setChecked(false);
-                    checkboxPercent.setChecked(true);
-
-                    etPercentage.setEnabled(true);
-                    etPercentage.setBackgroundResource(R.drawable.button_border_red_fill_white);
-
-                    etActualPrice.setEnabled(false);
-                    etActualPrice.setBackgroundColor(Color.GRAY);
-                    etActualPrice.setText("");
-
-                    etDiscountPrice.setEnabled(false);
-                    etDiscountPrice.setBackgroundColor(Color.GRAY);
-                    etDiscountPrice.setText("");
-                }
-                break;*/
             case R.id.btnSubmitOffer:
                 methodSubmit();
                 break;
@@ -431,8 +368,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.e("add response", response);
                         loading.dismiss();
                         JSONObject jsonObject = null;
                         String status = null, userId = null, socialId = null, msg = null;
@@ -524,8 +459,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        //  progressDialog.dismiss();
-                        Log.e("MasterTags", response);
                         final Brandresponse cityMasterParsing = new Brandresponse();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {
@@ -546,10 +479,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                                 // Do something with the selection
                                                 txtChooseBrand.setText(brandArray[item]);
                                                 int index = Arrays.asList(brandArray).indexOf(brandArray[item]);
-                                                ;
                                                 brandId = cityMasterParsing.getBrandDetailArrayList().get(index).getId();
-                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                                Log.e("brandId", brandId + "\t" + index);
                                                 dialog.dismiss();
                                             }
                                         });
@@ -602,7 +532,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("cat", response);
                         final OfferCategoryresponse countryMasterApiParsing = new OfferCategoryresponse();
                         countryMasterApiParsing.responseImplement(response);
                         if (countryMasterApiParsing.getStatus().equals("true")) {
@@ -625,10 +554,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                                 txtChooseSubCategory.setText("Choose subcategory");
                                                 txtChooseBrand.setText("Choose Brand");
                                                 int index = Arrays.asList(categoryArray).indexOf(categoryArray[item]);
-                                                ;
                                                 catId = countryMasterApiParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
-                                                // et_PinCode.setText(shopMallListResponseParsing.getMallDetailsArrayList().get(index).getPincode());
-                                                Log.e("catId", catId + "\t" + index);
                                                 dialog.dismiss();
                                             }
                                         });
@@ -638,11 +564,9 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                 }
                             } else {
                                 dialogBox();
-                               // showDialogMethod("No Category found\nPlease add some categories");
                             }
                         } else {
                             dialogBox();
-                           // showDialogMethod("No Category found\nPlease add some categories");
                         }
                     }
                 },
@@ -708,7 +632,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        Log.e("MasterTags", response);
                         final OfferCategoryresponse cityMasterParsing = new OfferCategoryresponse();
                         cityMasterParsing.responseImplement(response);
                         if (cityMasterParsing.getStatus().equals("true")) {
@@ -728,8 +651,7 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                             public void onClick(DialogInterface dialog, int item) {
                                                 txtChooseSubCategory.setText(suCatArray[item]);
                                                 int index = Arrays.asList(suCatArray).indexOf(suCatArray[item]);
-                                                subCatId = cityMasterParsing.getSetShopCategoryDetailsArrayList().get(index).getId();
-                                                Log.e("subCatId", subCatId + "\t" + index);
+                                                subCatId = cityMasterParsing.getSetShopCategoryDetailsArrayList().get(index).getId().trim();
                                                 dialog.dismiss();
                                             }
                                         });
@@ -738,7 +660,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                     }
                                 }
                             } else {
-                                //A53) please change message to - There are no brands under this category.
                                 showDialogMethod("There are no Subcategory under this category.");
                             }
                         } else {
@@ -800,29 +721,6 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
 
     private void methodAddImages() {
         dialog.show();
-      /*  final CharSequence[] options = {"Take from camera", "Select from gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take from camera")) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-                } else if (options[item].equals("Select from gallery")) {
-                    Intent intent = new Intent();
-                    intent.setType("image*//*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);//
-                    startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-                  *//*  Intent intent = new Intent(activity, CustomPhotoGalleryActivity.class);
-                    startActivityForResult(intent, 2);*//*
-
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();*/
     }
 
     private void captureImageInitialization() {

@@ -2,6 +2,10 @@ package com.javinindia.citymallsbusiness.utility;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -177,5 +181,22 @@ public class Utility {
                 .into(imageView);
     }
 
+    public static Spanned fromHtml(String html){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
+    }
 
+    public static final int getColor(Context context, int id) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 23) {
+            return ContextCompat.getColor(context, id);
+        } else {
+            return context.getResources().getColor(id);
+        }
+    }
 }

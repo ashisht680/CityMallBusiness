@@ -150,7 +150,6 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
         actionBar.setTitle(null);
         AppCompatTextView textView =(AppCompatTextView)view.findViewById(R.id.tittle) ;
         textView.setText("Edit Profile");
-        textView.setTextColor(activity.getResources().getColor(android.R.color.white));
         textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
     }
 
@@ -241,7 +240,6 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("response edit", response);
                         String status = null, sID = null, msg = null, banner;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, sStoreNum, sFloorNum;
                         String shopCategory, shopSubCategory, country, pincode, rating, mallOpenTime, mallCloseTime, distance, dicription, shopOpenTime, shopCloseTime;
@@ -280,40 +278,40 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                             sStoreNum = shopViewResponse.getShopNum().trim();
                             sFloorNum = shopViewResponse.getFloor().trim();
                             if (!TextUtils.isEmpty(sName)) {
-                                etStoreName.setText(Html.fromHtml(sName));
+                                etStoreName.setText(Utility.fromHtml(sName));
                             }
                             if (!TextUtils.isEmpty(oName)) {
-                                etOwner.setText(Html.fromHtml(oName));
+                                etOwner.setText(Utility.fromHtml(oName));
                             }
                             if (!TextUtils.isEmpty(sEmail)) {
-                                etEmailAddress.setText(Html.fromHtml(sEmail));
+                                etEmailAddress.setText(Utility.fromHtml(sEmail));
                             }
                             if (!TextUtils.isEmpty(sMobileNum)) {
-                                etMobile.setText(Html.fromHtml(sMobileNum));
+                                etMobile.setText(Utility.fromHtml(sMobileNum));
                             }
                             if (!TextUtils.isEmpty(sLandline)) {
-                                etLandLine.setText(Html.fromHtml(sLandline));
+                                etLandLine.setText(Utility.fromHtml(sLandline));
                             }
                             if (!TextUtils.isEmpty(sState)){
-                                etState.setText(Html.fromHtml(sState));
+                                etState.setText(Utility.fromHtml(sState));
                             }
                             if (!TextUtils.isEmpty(sCity)){
-                                etCity.setText(Html.fromHtml(sCity));
+                                etCity.setText(Utility.fromHtml(sCity));
                             }
                             if (!TextUtils.isEmpty(mName)) {
-                                etMall.setText(Html.fromHtml(mName));
+                                etMall.setText(Utility.fromHtml(mName));
                             }
                             if (!TextUtils.isEmpty(sStoreNum)) {
-                                etStoreNum.setText(Html.fromHtml(sStoreNum));
+                                etStoreNum.setText(Utility.fromHtml(sStoreNum));
                             }
                             if (!TextUtils.isEmpty(sFloorNum)) {
-                                etFloor.setText(Html.fromHtml(sFloorNum));
+                                etFloor.setText(Utility.fromHtml(sFloorNum));
                             }
                             if (!TextUtils.isEmpty(shopOpenTime)) {
-                                etStartTime.setText(Html.fromHtml(shopOpenTime));
+                                etStartTime.setText(Utility.fromHtml(shopOpenTime));
                             }
                             if (!TextUtils.isEmpty(shopCloseTime)) {
-                                etEndTime.setText(Html.fromHtml(shopCloseTime));
+                                etEndTime.setText(Utility.fromHtml(shopCloseTime));
                             }
                             if (!TextUtils.isEmpty(sPic))
                                 Utility.imageLoadGlideLibraryPic(activity, imgProfilePicNotFound, imgProfilePic, sPic);
