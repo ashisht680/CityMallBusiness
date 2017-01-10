@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/wish_zee_logo"
-        android:text="City Stores Business"
-
+        android:text="Ample Partner"
         android:gravity="center"
         android:textColor="#1b2d5e"
         android:textStyle="italic"

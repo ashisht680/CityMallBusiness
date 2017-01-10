@@ -5,8 +5,6 @@
     android:orientation="vertical"
     android:background="@color/background_color">
 
-    <include layout="@layout/common_toolbar_layout"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,7 +26,7 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="City Stores Business"
+                android:text="Ample Partner"
                 android:textColor="@android:color/black"
                 android:gravity="center_horizontal"
                 android:textSize="18sp" />
@@ -47,16 +45,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="With the number of mobile subscribers reaching 371million, what could be the best medium to advertise? MOBILE! What better than City Store Business that lets you do everything from offer posting to offer analytics?\n" />
+                android:text="With the number of mobile subscribers reaching 371million, what could be the best medium to advertise? MOBILE! What better than Ample Partner that lets you do everything from offer posting to offer analytics?\n" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txtPoints"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="It’s a very simple app that allows all store owners (be it shop, restaurant or any tangible outlet) to post their best offers by uploading a picture of their product simply through their mobiles. Store owners can update their details to maintain their customers’ knowledge about your products and hot offers or happy times as we’d call it!\n\nThe process is really simple and you are only required to enter a few essential details of your store that are requested for at the time of registration which are then verified by us, after which you are good to go!\n\nSimply click the image of the product which you want to advertise and then type in the title of your offer, duration, pricing information and an enticing description. Customers will come running to you!\n\nTrust us; this app opens a wide array of opportunities for your store to increase its footfall. So what are you waiting for? Go ahead, download City Store Business App Business and watch your business boom.\n\nDISCLAIMER: The effectiveness of all features of the app is not a binding promise from the app makers and City Store Business app business shall not be held liable for any discrepancy. It does not promise sale but yet it does promise promotion of the store.\n" />
+                android:text="It’s a very simple app that allows all store owners (be it shop, restaurant or any tangible outlet) to post their best offers by uploading a picture of their product simply through their mobiles. Store owners can update their details to maintain their customers’ knowledge about your products and hot offers or happy times as we’d call it!\n\nThe process is really simple and you are only required to enter a few essential details of your store that are requested for at the time of registration which are then verified by us, after which you are good to go!\n\nSimply click the image of the product which you want to advertise and then type in the title of your offer, duration, pricing information and an enticing description. Customers will come running to you!\n\nTrust us; this app opens a wide array of opportunities for your store to increase its footfall. So what are you waiting for? Go ahead, download Ample Partner App Business and watch your business boom.\n\nDISCLAIMER: The effectiveness of all features of the app is not a binding promise from the app makers and Ample Partner app business shall not be held liable for any discrepancy. It does not promise sale but yet it does promise promotion of the store.\n" />
         </LinearLayout>
 
     </ScrollView>
+
+    <include layout="@layout/common_toolbar_layout"/>
 
 </LinearLayout>
