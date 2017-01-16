@@ -500,16 +500,20 @@ public class SignUpAddressFragment extends BaseFragment implements View.OnClickL
 
     private boolean registerValidation(String state, String city, String pinCode, String storeNum, String mallname, String floor) {
         if (TextUtils.isEmpty(state)) {
-            Toast.makeText(activity, "You are not entered state", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "You have not entered state", Toast.LENGTH_LONG).show();
             return false;
         } else if (TextUtils.isEmpty(city)) {
-            Toast.makeText(activity, "You are not entered city", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "You have not entered city", Toast.LENGTH_LONG).show();
             return false;
         } else if (TextUtils.isEmpty(mallname)) {
-            Toast.makeText(activity, "You are not entered mall", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "You have not entered mall", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (TextUtils.isEmpty(storeNum)) {
+            etStoreNum.setError("You have not entered store number");
+            etStoreNum.requestFocus();
             return false;
         } else if (TextUtils.isEmpty(floor)) {
-            etFloor.setError("You are not entered floor number");
+            etFloor.setError("You have not entered floor number");
             etFloor.requestFocus();
             return false;
         } else if (!radioButton.isChecked()) {

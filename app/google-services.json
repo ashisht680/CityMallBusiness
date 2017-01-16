@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "501751887476",
-    "firebase_url": "https://city-stores-business.firebaseio.com",
-    "project_id": "city-stores-business",
-    "storage_bucket": "city-stores-business.appspot.com"
+    "project_number": "755965588044",
+    "firebase_url": "https://ample-partner.firebaseio.com",
+    "project_id": "ample-partner",
+    "storage_bucket": "ample-partner.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:501751887476:android:224f9cc14b219432",
+        "mobilesdk_app_id": "1:755965588044:android:224f9cc14b219432",
         "android_client_info": {
           "package_name": "com.javinindia.citymallsbusiness"
         }
       },
       "oauth_client": [
         {
-          "client_id": "501751887476-t47apmtqp0s5oo51vt48f1ooumhc80mn.apps.googleusercontent.com",
+          "client_id": "755965588044-bhfkclkc9081ebetti028qhuo2rifjnn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.javinindia.citymallsbusiness",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "501751887476-ui2i31g8aknrf75r33pqk1pa08jfa3gj.apps.googleusercontent.com",
+          "client_id": "755965588044-igs6l445et5094icolajdp6fo8tke48h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDY-d-tinuTTmPqPS-oUP9vvLefoOKz_lM"
+          "current_key": "AIzaSyCgb7Lswh7eFD62Ficg77lmgfIFz55MUDY"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "501751887476-ui2i31g8aknrf75r33pqk1pa08jfa3gj.apps.googleusercontent.com",
+              "client_id": "755965588044-igs6l445et5094icolajdp6fo8tke48h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

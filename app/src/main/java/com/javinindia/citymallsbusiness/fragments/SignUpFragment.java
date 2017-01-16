@@ -149,11 +149,11 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
 
     private boolean registerValidation(String storeName, String owner, String email, String mobileNum, String landline, String password, String confirmPassword) {
         if (TextUtils.isEmpty(storeName)) {
-            et_StoreNum.setError("You are not entered store Name");
+            et_StoreNum.setError("You have not entered any store name.");
             et_StoreNum.requestFocus();
             return false;
         } else if (TextUtils.isEmpty(owner)) {
-            et_owner.setError("You are not entered owner's name");
+            et_owner.setError("You have not entered owner's name");
             et_owner.requestFocus();
             return false;
         } else if (!Utility.isEmailValid(email)) {

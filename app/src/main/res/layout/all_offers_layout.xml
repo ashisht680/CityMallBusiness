@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/background_color"
-    android:layout_height="match_parent">
-    <include layout="@layout/common_toolbar_layout"/>
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar_layout" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtDataNotFound"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:text="You have not published any offer."
-            android:gravity="center"/>
+            android:visibility="gone" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
@@ -20,7 +26,11 @@
             android:layout_alignParentTop="true"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginRight="8dp" />
+
+        <include
+            layout="@layout/common_progressbar"
+            android:visibility="gone" />
     </RelativeLayout>
 
 

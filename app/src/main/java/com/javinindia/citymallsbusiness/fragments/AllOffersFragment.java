@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -48,6 +49,7 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
     private OfferAdapter adapter;
     ArrayList arrayList;
     AppCompatTextView txtDataNotFound;
+    ProgressBar progressBar;
 
     private OnCallBackRefreshListener onCallBackRefreshListener;
 
@@ -109,10 +111,12 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
     }
 
     private void sendRequestOnReplyFeed(final int AstartLimit, final int AcountLimit) {
+        progressBar.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.OFFER_LIST_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressBar.setVisibility(View.GONE);
                         OfferListResponseparsing responseparsing = new OfferListResponseparsing();
                         responseparsing.responseParseMethod(response);
                         String status = responseparsing.getStatus().trim();
@@ -162,6 +166,7 @@ public class AllOffersFragment extends BaseFragment implements OfferAdapter.MyCl
     }
 
     private void initializeMethod(View view) {
+        progressBar = (ProgressBar)view.findViewById(R.id.progress);
         recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
         adapter = new OfferAdapter(activity);
         LinearLayoutManager layoutMangerDestination

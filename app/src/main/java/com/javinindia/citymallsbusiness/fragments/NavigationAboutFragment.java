@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -147,6 +149,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 drawerLayout.closeDrawers();
                 ListShopProductCategoryFragment fragment = new ListShopProductCategoryFragment();
                 callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Looking For(Up coming)")) {
+                drawerLayout.closeDrawers();
+                looking_for_fragment fragment = new looking_for_fragment();
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
             } else if (title.equals("About App")) {
                 drawerLayout.closeDrawers();
                 AboutAppFragments fragment = new AboutAppFragments();
@@ -171,7 +177,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     public void dialogBox() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
         alertDialogBuilder.setTitle("Logout");
-        alertDialogBuilder.setMessage("Thanks for visiting City mall business! Be back soon!");
+        alertDialogBuilder.setMessage("Thanks for visiting Ample Partner! Be back soon!");
         alertDialogBuilder.setPositiveButton("Ok!",
                 new DialogInterface.OnClickListener() {
 
@@ -235,11 +241,13 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
 
     private void sendDataOnRegistrationApi() {
+        progressBar.setVisibility(View.VISIBLE);
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SHOP_PROFILE_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressBar.setVisibility(View.GONE);
                         String status = null, sID = null, msg = null, sPic = null, banner;
                         String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong;
                         String shopCategory, shopSubCategory, country, pincode, rating, openTime, closeTime, distance, shopfavCount, sFloor, sNo;
@@ -396,7 +404,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
     private void initialize(View view) {
-
+        progressBar = (ProgressBar)view.findViewById(R.id.progress);
         recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
         AppCompatButton btnAddOffer = (AppCompatButton) view.findViewById(R.id.btnAddOffer);
         btnAddOffer.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());

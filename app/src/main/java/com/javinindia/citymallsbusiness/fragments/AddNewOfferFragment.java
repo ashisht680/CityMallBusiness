@@ -333,23 +333,23 @@ public class AddNewOfferFragment extends BaseFragment implements View.OnClickLis
                                                 Toast.makeText(activity, "The Discounted Price should always be lesser than the Actual Price.", Toast.LENGTH_LONG).show();
                                             }
                                         } else {
-                                            Toast.makeText(activity, "write discount price", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(activity, "Please enter discounted price of your product.", Toast.LENGTH_LONG).show();
                                         }
                                     } else {
-                                        Toast.makeText(activity, "write actual price", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(activity, "Please enter actual price of your product.", Toast.LENGTH_LONG).show();
                                     }
                                     //  }
                                 } else {
-                                    Toast.makeText(activity, "select End date", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(activity, "Please select end date.", Toast.LENGTH_LONG).show();
                                 }
                             } else {
-                                Toast.makeText(activity, "select Start date", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity, "Please select start date.", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(activity, "write description", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "Please write a description for your offer.", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(activity, "write title", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Please write a suitable title for your offer.", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(activity, "Select Brand first", Toast.LENGTH_LONG).show();

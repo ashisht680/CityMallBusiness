@@ -36,7 +36,7 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="We would love to hear from you! Tell us what you think about the City Malls Business App..."
+                android:text="We would love to hear from you! Tell us what you think about the Ample Partner App..."
                 android:gravity="center"
                 android:textColor="@android:color/black"/>
             <android.support.v7.widget.AppCompatEditText

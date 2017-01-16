@@ -36,7 +36,9 @@
             android:layout_above="@+id/rlAddOffer"
             android:layout_below="@+id/toolbarNav"
             android:padding="10dp" />
-
+        <include
+            layout="@layout/common_progressbar"
+            android:visibility="gone" />
         <RelativeLayout
             android:id="@+id/rlAddOffer"
             android:layout_width="wrap_content"

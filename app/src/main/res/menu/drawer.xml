@@ -22,11 +22,15 @@
             android:icon="@drawable/offers"
             android:title="Add Offer"/>
         <item
-            android:id="@+id/drawer_profile"
+            android:id="@+id/drawer_cat_list"
             android:checkable="false"
             android:icon="@drawable/ic_list_white"
             android:title="Category List"/>
-
+        <item
+            android:id="@+id/drawer_lookin_for"
+            android:checkable="false"
+            android:icon="@drawable/ic_add_white"
+            android:title="Looking For(Up coming)"/>
         <item
             android:id="@+id/drawer_about"
             android:checkable="false"
@@ -39,7 +43,7 @@
             android:title="Rate us"/>
 
         <item
-            android:id="@+id/drawer_favourite"
+            android:id="@+id/drawer_logout"
             android:checkable="false"
             android:icon="@drawable/log_out_black"
             android:title="Logout"/>
