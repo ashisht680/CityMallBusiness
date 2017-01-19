@@ -37,6 +37,11 @@
             android:icon="@drawable/ic_info_black"
             android:title="About App"/>
         <item
+            android:id="@+id/drawer_share"
+            android:checkable="false"
+            android:icon="@drawable/ic_share_black"
+            android:title="Invite"/>
+        <item
             android:id="@+id/drawer_rate"
             android:checkable="false"
             android:icon="@drawable/ic_star_rate_black"

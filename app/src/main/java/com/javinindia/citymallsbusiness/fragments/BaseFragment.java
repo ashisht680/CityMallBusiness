@@ -367,5 +367,7 @@ public abstract class BaseFragment extends Fragment implements Response.Listener
             }
         }
     }
+
+
 }
 

@@ -49,6 +49,9 @@ import com.javinindia.citymallsbusiness.recyclerview.AboutAdaptar;
 import com.javinindia.citymallsbusiness.utility.CheckConnection;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -157,6 +160,20 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 drawerLayout.closeDrawers();
                 AboutAppFragments fragment = new AboutAppFragments();
                 callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Invite")) {
+                drawerLayout.closeDrawers();
+                try {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Ample App");
+                    String sAux = "\nLet me recommend you this application\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.javinindia.citymallsbusiness\n\n";
+                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(i, "choose one"));
+                } catch (Exception e) {
+
+                }
+
             } else if (title.equals("Rate us")) {
                 drawerLayout.closeDrawers();
                 final String appPackageName = activity.getPackageName(); // getPackageName() from Context or Activity object
@@ -183,19 +200,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        SharedPreferencesManager.setUserID(activity, null);
-                        SharedPreferencesManager.setUsername(activity, null);
-                        SharedPreferencesManager.setPassword(activity, null);
-                        SharedPreferencesManager.setEmail(activity, null);
-                        SharedPreferencesManager.setLocation(activity, null);
-                        SharedPreferencesManager.setLatitude(activity, null);
-                        SharedPreferencesManager.setLongitude(activity, null);
-                        SharedPreferencesManager.setProfileImage(activity, null);
-                        SharedPreferencesManager.setOwnerName(activity, null);
-                        SharedPreferencesManager.setDeviceToken(activity,null);
-                        Intent refresh = new Intent(activity, LoginActivity.class);
-                        startActivity(refresh);//Start the same Activity
-                        activity.finish();
+                        sendDataOnLogOutApi();
                     }
                 });
 
@@ -210,6 +215,74 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private void sendDataOnLogOutApi() {
+        final ProgressDialog loading = ProgressDialog.show(activity, "Logging out...", "Please wait...", false, false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.LOGOUT_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+                        responseImplement(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
+                        volleyErrorHandle(error);
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("uid", SharedPreferencesManager.getUserID(activity));
+                params.put("type", "shop");
+                return params;
+            }
+
+        };
+        stringRequest.setTag(this.getClass().getSimpleName());
+        volleyDefaultTimeIncreaseMethod(stringRequest);
+        requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(stringRequest);
+    }
+
+    private void responseImplement(String response) {
+        JSONObject jsonObject = null;
+        String msg = null;
+        int status = 0;
+        try {
+            jsonObject = new JSONObject(response);
+            if (jsonObject.has("status"))
+                status = jsonObject.optInt("status");
+            if (jsonObject.has("msg"))
+                msg = jsonObject.optString("msg");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (status == 1) {
+            SharedPreferencesManager.setUserID(activity, null);
+            SharedPreferencesManager.setUsername(activity, null);
+            SharedPreferencesManager.setPassword(activity, null);
+            SharedPreferencesManager.setEmail(activity, null);
+            SharedPreferencesManager.setLocation(activity, null);
+            SharedPreferencesManager.setLatitude(activity, null);
+            SharedPreferencesManager.setLongitude(activity, null);
+            SharedPreferencesManager.setProfileImage(activity, null);
+            SharedPreferencesManager.setOwnerName(activity, null);
+            SharedPreferencesManager.setDeviceToken(activity, null);
+            Intent refresh = new Intent(activity, LoginActivity.class);
+            startActivity(refresh);//Start the same Activity
+            activity.finish();
+        } else {
+            if (!TextUtils.isEmpty(msg)) {
+                showDialogMethod("Try again");
+            }
+        }
     }
 
     @Override
@@ -404,7 +477,7 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     }
 
     private void initialize(View view) {
-        progressBar = (ProgressBar)view.findViewById(R.id.progress);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress);
         recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
         AppCompatButton btnAddOffer = (AppCompatButton) view.findViewById(R.id.btnAddOffer);
         btnAddOffer.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());

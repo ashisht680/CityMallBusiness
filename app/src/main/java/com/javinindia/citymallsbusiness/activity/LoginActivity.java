@@ -30,7 +30,8 @@ public class LoginActivity extends BaseActivity implements CheckConnectionFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
-
+        MyAndroidFirebaseInstanceIdService service =new MyAndroidFirebaseInstanceIdService(this);
+        service.sendRegistrationToServer();
         if (CheckConnection.haveNetworkConnection(this)) {
             String username = SharedPreferencesManager.getUsername(getApplicationContext());
             if (TextUtils.isEmpty(username)) {

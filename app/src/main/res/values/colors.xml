@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#1da6b9</color>
-    <color name="colorPrimaryDark">#1da6b9</color>
+    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#000000</color>
     <color name="sq_background_blue">#e0e0e0</color>
     <color name="wow_gray">#757575</color>
